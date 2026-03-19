@@ -1,0 +1,3 @@
+[submodule "dev/basecoat"]
+	path = dev/basecoat
+	url = https://github.com/hunvreus/basecoat.git
