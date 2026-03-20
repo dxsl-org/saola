@@ -1,3 +1,4 @@
+import gleam/option.{None}
 import gleam/uri.{type Uri}
 import lustre
 import lustre/attribute as a
@@ -6,10 +7,13 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import modem
 import preview/models.{
-  type Model, type Msg, Alerts, Buttons, Forms, Home, Inputs, Model, OnRouteChange,
+  type Model, type Msg, Alerts, Buttons, Forms, Home, Inputs, Model,
+  OnRouteChange,
 }
-import saola/buttons.{Primary, Secondary, WithIcon, Large, Small, button_full, button_primary, button_close}
-import gleam/option.{None}
+import saola/buttons.{
+  Large, Primary, Secondary, Small, WithIcon, button_close, button_full,
+  button_primary,
+}
 
 pub fn main() {
   let app = lustre.application(init, update, view)
