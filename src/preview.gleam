@@ -19,7 +19,13 @@ pub fn main() {
 }
 
 fn init(_args) -> #(Model, Effect(Msg)) {
-  #(Model(route: Home), modem.init(on_url_change))
+  #(Model(route: Home), effect.batch([
+    modem.init(on_url_change),
+    case modem.initial_uri() {
+      Ok(uri) -> effect.from(fn(dispatch) { dispatch(on_url_change(uri)) })
+      Error(_) -> effect.none()
+    }
+  ]))
 }
 
 fn on_url_change(uri: Uri) -> Msg {

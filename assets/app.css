@@ -65,10 +65,13 @@
 .page-title {
   margin-top: 0;
   color: #212529;
+  font-size: 2.5rem;
+  font-weight: 600;
 }
 
 .page-description {
   color: #6c757d;
+  margin-bottom: 2rem;
 }
 
 /* Button Grid for showcase */
@@ -79,6 +82,11 @@
   margin-top: 1.5rem;
   align-items: center;
   width: 100%;
+}
+
+/* Add gap under h2 elements */
+h2 {
+  margin-bottom: 1.5rem;
 }
 
 /* Flex and items-center classes */
