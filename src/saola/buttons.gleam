@@ -108,15 +108,11 @@ pub fn button_full(
   )
 }
 
-// -- Function to produce default values --
+// -- Default values. Useful for compositon  --
 
-pub fn default_extra_attrs() {
-  ButtonExtraAttrs(False, None, default_aria())
-}
+pub const default_aria = ButtonAria("", None)
 
-pub fn default_aria() {
-  ButtonAria("", None)
-}
+pub const default_extra_attrs = ButtonExtraAttrs(False, None, default_aria)
 
 // -- Some common used buttons --
 
@@ -132,7 +128,7 @@ pub fn default_aria() {
 /// ```
 /// 
 pub fn button_primary(label: String, click_message: msg) -> Element(msg) {
-  button_full(Primary, label, Large, Some(click_message), default_extra_attrs())
+  button_full(Primary, label, Large, Some(click_message), default_extra_attrs)
 }
 
 pub fn button_close(click_message: msg) -> Element(msg) {
@@ -141,6 +137,6 @@ pub fn button_close(click_message: msg) -> Element(msg) {
     "",
     Small,
     Some(click_message),
-    default_extra_attrs(),
+    default_extra_attrs,
   )
 }

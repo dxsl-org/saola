@@ -4,6 +4,7 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import preview/models.{type Msg, Home, OnRouteChange}
 import saola/buttons
+import saola/checkboxes
 
 pub fn view_alerts() -> Element(Msg) {
   h.div([], [
@@ -20,6 +21,16 @@ pub fn view_inputs() -> Element(Msg) {
     h.p([a.class("page-description")], [
       text("Showcase of text inputs, checkboxes, etc."),
     ]),
+    h.h2([], [text("Checkboxes")]),
+    h.div([a.class("grid gap-4")], [
+      checkboxes.checkbox_basic("Basic Checkbox"),
+      checkboxes.checkbox_full(
+        "Checkbox with help text",
+        checkboxes.default_check_status,
+        checkboxes.default_form_attr,
+        "This is a help text for the checkbox.",
+      ),
+    ]),
   ])
 }
 
@@ -34,15 +45,11 @@ pub fn view_forms() -> Element(Msg) {
 
 pub fn view_buttons() -> Element(Msg) {
   let attrs_disabled =
-    buttons.ButtonExtraAttrs(True, None, buttons.default_aria())
+    buttons.ButtonExtraAttrs(True, None, buttons.default_aria)
   let attrs_submit =
-    buttons.ButtonExtraAttrs(
-      False,
-      Some(buttons.Submit),
-      buttons.default_aria(),
-    )
+    buttons.ButtonExtraAttrs(False, Some(buttons.Submit), buttons.default_aria)
   let attrs_reset =
-    buttons.ButtonExtraAttrs(False, Some(buttons.Reset), buttons.default_aria())
+    buttons.ButtonExtraAttrs(False, Some(buttons.Reset), buttons.default_aria)
   let attrs_aria_label =
     buttons.ButtonExtraAttrs(
       False,
@@ -69,21 +76,21 @@ pub fn view_buttons() -> Element(Msg) {
         "Secondary Button",
         buttons.Large,
         None,
-        buttons.default_extra_attrs(),
+        buttons.default_extra_attrs,
       ),
       buttons.button_full(
         buttons.WithIcon("check"),
         "With Icon",
         buttons.Large,
         None,
-        buttons.default_extra_attrs(),
+        buttons.default_extra_attrs,
       ),
       buttons.button_full(
         buttons.Primary,
         "Small Primary",
         buttons.Small,
         None,
-        buttons.default_extra_attrs(),
+        buttons.default_extra_attrs,
       ),
       buttons.button_close(OnRouteChange(Home)),
     ]),
