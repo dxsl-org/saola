@@ -19,23 +19,25 @@ pub fn main() {
 }
 
 fn init(_args) -> #(Model, Effect(Msg)) {
-  #(Model(route: Home), effect.batch([
-    modem.init(on_url_change),
-    case modem.initial_uri() {
-      Ok(uri) -> effect.from(fn(dispatch) { dispatch(on_url_change(uri)) })
-      Error(_) -> effect.none()
+  let whatnext = case modem.initial_uri() {
+    Ok(uri) -> {
+      use dispatch <- effect.from
+      dispatch(on_url_change(uri))
     }
-  ]))
+    Error(_) -> effect.none()
+  }
+  #(Model(route: Home), effect.batch([modem.init(on_url_change), whatnext]))
 }
 
 fn on_url_change(uri: Uri) -> Msg {
-  case uri.path {
-    "/alerts" -> OnRouteChange(Alerts)
-    "/buttons" -> OnRouteChange(Buttons)
-    "/inputs" -> OnRouteChange(Inputs)
-    "/forms" -> OnRouteChange(Forms)
-    _ -> OnRouteChange(Home)
+  let route = case uri.path {
+    "/alerts" -> Alerts
+    "/buttons" -> Buttons
+    "/inputs" -> Inputs
+    "/forms" -> Forms
+    _ -> Home
   }
+  OnRouteChange(route)
 }
 
 fn update(_model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
