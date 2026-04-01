@@ -2,6 +2,7 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import preview/buttons
+import preview/dropdown_menus
 import preview/inputs
 import preview/models.{type Msg}
 
@@ -20,6 +21,10 @@ pub fn view_inputs() -> Element(Msg) {
 
 pub fn view_buttons() -> Element(Msg) {
   buttons.view_buttons()
+}
+
+pub fn view_dropdown_menus() -> Element(Msg) {
+  dropdown_menus.view_dropdown_menus()
 }
 
 pub fn view_forms() -> Element(Msg) {

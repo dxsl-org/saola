@@ -1,3 +1,5 @@
+import gleam/result
+
 import lustre/attribute as a
 import lustre/element/html as h
 import typeid
@@ -98,14 +100,12 @@ pub fn checkbox_full(
       // Prepare `id` attribute for the `<input>` element, so that we can use with `<label for >`.
       // If the `id` is not provided by the caller, and when the `<label>` does not grab the `<input>`
       // (when we need `id` and `for`), we generate it from `typeid`.
-      let input_id = case id {
-        "" ->
-          case typeid.new(prefix: "chkbx") {
-            Ok(tid) -> typeid.to_string(tid)
-            Error(_) -> "checkbox-fallback"
-          }
-        id -> id
-      }
+      let input_id =
+        case id {
+          "" -> typeid.new(prefix: "chkbx") |> result.map(typeid.to_string)
+          id -> Ok(id)
+        }
+        |> result.unwrap("checkbox-fallback")
       h.div([a.class("flex items-start gap-3")], [
         h.input([
           a.type_("checkbox"),
