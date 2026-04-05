@@ -7,8 +7,8 @@ import lustre/element/html as h
 import modem
 
 import saola/preview/models.{
-  type Model, type Msg, Alerts, Buttons, Forms, Home, Inputs, Model,
-  OnRouteChange,
+  type Model, type Msg, Alerts, Buttons, DropdownMenus, Forms, Home, Inputs,
+  Model, OnRouteChange,
 }
 import saola/preview/views
 
@@ -36,6 +36,7 @@ fn on_url_change(uri: Uri) -> Msg {
     "/buttons" -> Buttons
     "/inputs" -> Inputs
     "/forms" -> Forms
+    "/dropdown-menus" -> DropdownMenus
     _ -> Home
   }
   OnRouteChange(route)
@@ -61,6 +62,11 @@ fn sidebar(current_route: models.Route) -> Element(Msg) {
     nav_link("/buttons", "Buttons", current_route == Buttons),
     nav_link("/inputs", "Inputs", current_route == Inputs),
     nav_link("/forms", "Forms", current_route == Forms),
+    nav_link(
+      "/dropdown-menus",
+      "Dropdown Menus",
+      current_route == models.DropdownMenus,
+    ),
   ])
 }
 
@@ -87,6 +93,7 @@ fn main_pane(route: models.Route) -> Element(Msg) {
       Buttons -> views.view_buttons()
       Inputs -> views.view_inputs()
       Forms -> views.view_forms()
+      DropdownMenus -> views.view_dropdown_menus()
     },
   ])
 }
