@@ -966,40 +966,6 @@ pub fn text_search(attributes: List(Attribute(a))) {
 }
 
 
-pub fn text_select(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([a("d", "M14 21h1")]),
-      svg.path([a("d", "M14 3h1")]),
-      svg.path([a("d", "M19 3a2 2 0 0 1 2 2")]),
-      svg.path([a("d", "M21 14v1")]),
-      svg.path([a("d", "M21 19a2 2 0 0 1-2 2")]),
-      svg.path([a("d", "M21 9v1")]),
-      svg.path([a("d", "M3 14v1")]),
-      svg.path([a("d", "M3 9v1")]),
-      svg.path([a("d", "M5 21a2 2 0 0 1-2-2")]),
-      svg.path([a("d", "M5 3a2 2 0 0 0-2 2")]),
-      svg.path([a("d", "M7 12h10")]),
-      svg.path([a("d", "M7 16h6")]),
-      svg.path([a("d", "M7 8h8")]),
-      svg.path([a("d", "M9 21h1")]),
-      svg.path([a("d", "M9 3h1")]),
-    ],
-  )
-}
-
-
 pub fn text_wrap(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -2237,45 +2203,6 @@ pub fn trees(attributes: List(Attribute(a))) {
 }
 
 
-pub fn trello(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.rect([
-        a("ry", "2"),
-        a("rx", "2"),
-        a("y", "3"),
-        a("x", "3"),
-        a("height", "18"),
-        a("width", "18"),
-      ]),
-      svg.rect([
-        a("y", "7"),
-        a("x", "7"),
-        a("height", "9"),
-        a("width", "3"),
-      ]),
-      svg.rect([
-        a("y", "7"),
-        a("x", "14"),
-        a("height", "5"),
-        a("width", "3"),
-      ]),
-    ],
-  )
-}
-
-
 pub fn trending_down(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -2724,49 +2651,6 @@ pub fn tv_minimal_play(attributes: List(Attribute(a))) {
         a("x", "2"),
         a("height", "14"),
         a("width", "20"),
-      ]),
-    ],
-  )
-}
-
-
-pub fn twitch(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [svg.path([a("d", "M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7")])],
-  )
-}
-
-
-pub fn twitter(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a(
-          "d",
-          "M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z",
-        ),
       ]),
     ],
   )

@@ -1,8 +1,8 @@
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/models.{type Msg}
 import saola/checkboxes
+import saola/preview/models.{type Msg}
 
 fn checkbox_examples() -> List(Element(Msg)) {
   [
@@ -16,11 +16,7 @@ fn checkbox_examples() -> List(Element(Msg)) {
     checkboxes.checkbox_full(
       "Checkbox with composed attributes",
       checkboxes.default_check_status,
-      checkboxes.ExtraAttrs(
-        checkboxes.default_form_attr,
-        "",
-        "custom-class",
-      ),
+      checkboxes.ExtraAttrs(checkboxes.default_form_attr, "", "custom-class"),
       "This checkbox uses composed attributes from default constants.",
     ),
     checkboxes.checkbox_full(

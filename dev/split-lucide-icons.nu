@@ -1,17 +1,18 @@
 #!/usr/bin/env nu
 #
-# This script is to split the "src/saola/internal/lucide_lustre.gleam" file to smaller files
+# This script is to split the "src/saola/icons/lucide.gleam" file to smaller files
 # in a subfolder structure like this:
 #
 # ```
-# src/saola/internal/lucide_lustre/
-# ├── group_a.gleam
-# └── group_z.gleam
+# src/saola/icons/
+# ├── la.gleam
+# ├── lb.gleam
+# ├── lz.gleam
 # ```
 
 def main [] {
-  let source_file = "src/saola/internal/lucide_lustre.gleam"
-  let target_dir = "src/saola/internal/lucide_lustre/"
+  let source_file = "src/saola/icons/lucide.gleam"
+  let target_dir = "src/saola/icons/"
   
   # Read the entire file
   let content = open --raw $source_file
@@ -55,7 +56,7 @@ def main [] {
     
     let file_content = $import_header + ($sorted_funcs | get text | str join "\n\n")
     
-    let output_file = $target_dir + $"group_($group_name).gleam"
+    let output_file = $target_dir + $"l($group_name).gleam"
     $file_content | save --force $output_file
     
     print $"Created ($output_file) with ($sorted_funcs | length) functions"

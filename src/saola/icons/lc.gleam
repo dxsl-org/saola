@@ -1592,6 +1592,41 @@ pub fn cctv(attributes: List(Attribute(a))) {
 }
 
 
+pub fn cctv_off(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([
+        a(
+          "d",
+          "m12.309 6.652 4.797 2.401a1 1 0 0 1 .447 1.341l-.501 1.001.605.605h2.725a1 1 0 0 1 .894 1.447l-.724 1.448",
+        ),
+      ]),
+      svg.path([
+        a(
+          "d",
+          "m15.166 15.166-.719 1.439a1 1 0 0 1-1.342.447L3.61 12.3a2.92 2.92 0 0 1-1.3-3.91L3.69 5.6a2.9 2.9 0 0 1 .873-1.037",
+        ),
+      ]),
+      svg.path([a("d", "M2 19h3.76a2 2 0 0 0 1.8-1.1l1.441-2.902")]),
+      svg.path([a("d", "m2 2 20 20")]),
+      svg.path([a("d", "M2 21v-4")]),
+      svg.path([a("d", "M7 9h.01")]),
+    ],
+  )
+}
+
+
 pub fn chart_area(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -2864,38 +2899,6 @@ pub fn chevrons_up_down(attributes: List(Attribute(a))) {
     [
       svg.path([a("d", "m7 15 5 5 5-5")]),
       svg.path([a("d", "m7 9 5-5 5 5")]),
-    ],
-  )
-}
-
-
-pub fn chromium(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([a("d", "M10.88 21.94 15.46 14")]),
-      svg.path([a("d", "M21.17 8H12")]),
-      svg.path([a("d", "M3.95 6.06 8.54 14")]),
-      svg.circle([
-        a("r", "10"),
-        a("cy", "12"),
-        a("cx", "12"),
-      ]),
-      svg.circle([
-        a("r", "4"),
-        a("cy", "12"),
-        a("cx", "12"),
-      ]),
     ],
   )
 }
@@ -4199,10 +4202,10 @@ pub fn circle_user_round(attributes: List(Attribute(a))) {
       ..attributes
     ],
     [
-      svg.path([a("d", "M18 20a6 6 0 0 0-12 0")]),
+      svg.path([a("d", "M17.925 20.056a6 6 0 0 0-11.851.001")]),
       svg.circle([
         a("r", "4"),
-        a("cy", "10"),
+        a("cy", "11"),
         a("cx", "12"),
       ]),
       svg.circle([
@@ -5880,77 +5883,6 @@ pub fn code_xml(attributes: List(Attribute(a))) {
       svg.path([a("d", "m18 16 4-4-4-4")]),
       svg.path([a("d", "m6 8-4 4 4 4")]),
       svg.path([a("d", "m14.5 4-5 16")]),
-    ],
-  )
-}
-
-
-pub fn codepen(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.polygon([
-        a("points", "12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"),
-      ]),
-      svg.line([
-        a("y2", "15.5"),
-        a("y1", "22"),
-        a("x2", "12"),
-        a("x1", "12"),
-      ]),
-      svg.polyline([a("points", "22 8.5 12 15.5 2 8.5")]),
-      svg.polyline([a("points", "2 15.5 12 8.5 22 15.5")]),
-      svg.line([
-        a("y2", "8.5"),
-        a("y1", "2"),
-        a("x2", "12"),
-        a("x1", "12"),
-      ]),
-    ],
-  )
-}
-
-
-pub fn codesandbox(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a(
-          "d",
-          "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z",
-        ),
-      ]),
-      svg.polyline([a("points", "7.5 4.21 12 6.81 16.5 4.21")]),
-      svg.polyline([a("points", "7.5 19.79 7.5 14.6 3 12")]),
-      svg.polyline([a("points", "21 12 16.5 14.6 16.5 19.79")]),
-      svg.polyline([a("points", "3.27 6.96 12 12.01 20.73 6.96")]),
-      svg.line([
-        a("y2", "12"),
-        a("y1", "22.08"),
-        a("x2", "12"),
-        a("x1", "12"),
-      ]),
     ],
   )
 }

@@ -1160,6 +1160,31 @@ pub fn line_squiggle(attributes: List(Attribute(a))) {
 }
 
 
+pub fn line_style(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "M11 5h2")]),
+      svg.path([a("d", "M15 12h6")]),
+      svg.path([a("d", "M19 5h2")]),
+      svg.path([a("d", "M3 12h6")]),
+      svg.path([a("d", "M3 19h18")]),
+      svg.path([a("d", "M3 5h2")]),
+    ],
+  )
+}
+
+
 pub fn link(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -1239,42 +1264,6 @@ pub fn link_2_off(attributes: List(Attribute(a))) {
         a("y1", "2"),
         a("x2", "22"),
         a("x1", "2"),
-      ]),
-    ],
-  )
-}
-
-
-pub fn linkedin(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a(
-          "d",
-          "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",
-        ),
-      ]),
-      svg.rect([
-        a("y", "9"),
-        a("x", "2"),
-        a("height", "12"),
-        a("width", "4"),
-      ]),
-      svg.circle([
-        a("r", "2"),
-        a("cy", "4"),
-        a("cx", "4"),
       ]),
     ],
   )

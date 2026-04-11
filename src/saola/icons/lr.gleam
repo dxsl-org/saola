@@ -152,6 +152,31 @@ pub fn radio(attributes: List(Attribute(a))) {
 }
 
 
+pub fn radio_off(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "M13.414 13.414a2 2 0 1 1-2.828-2.828")]),
+      svg.path([a("d", "M16.247 7.761a6 6 0 0 1 1.744 4.572")]),
+      svg.path([a("d", "M19.075 4.933a10 10 0 0 1 2.234 10.72")]),
+      svg.path([a("d", "m2 2 20 20")]),
+      svg.path([a("d", "M4.925 19.067a10 10 0 0 1 0-14.134")]),
+      svg.path([a("d", "M7.753 16.239a6 6 0 0 1 0-8.478")]),
+    ],
+  )
+}
+
+
 pub fn radio_receiver(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -237,28 +262,6 @@ pub fn radius(attributes: List(Attribute(a))) {
         a("cy", "12"),
         a("cx", "12"),
       ]),
-    ],
-  )
-}
-
-
-pub fn rail_symbol(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([a("d", "M5 15h14")]),
-      svg.path([a("d", "M5 9h14")]),
-      svg.path([a("d", "m14 20-5-5 6-6-5-5")]),
     ],
   )
 }
@@ -1315,6 +1318,34 @@ pub fn ribbon(attributes: List(Attribute(a))) {
         a(
           "d",
           "M9.35 14.53C7.728 12.246 6 10.221 6 7a6 5 0 0 1 12 0c-.005 3.22-1.778 5.235-3.43 7.5l3.557 4.527a1 1 0 0 1-.203 1.43l-1.894 1.36a1 1 0 0 1-1.384-.215L12 18l-2.679 3.593a1 1 0 0 1-1.39.213l-1.865-1.353a1 1 0 0 1-.203-1.422z",
+        ),
+      ]),
+    ],
+  )
+}
+
+
+pub fn road(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "M12 17v4")]),
+      svg.path([a("d", "M12 5V3")]),
+      svg.path([a("d", "M12 9v3")]),
+      svg.path([
+        a(
+          "d",
+          "M2.077 18.449A2 2 0 0 0 4 21h16a2 2 0 0 0 1.924-2.55l-4-14A2 2 0 0 0 16 3H8a2 2 0 0 0-1.924 1.45z",
         ),
       ]),
     ],

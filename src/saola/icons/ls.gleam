@@ -1676,6 +1676,82 @@ pub fn shield_check(attributes: List(Attribute(a))) {
 }
 
 
+pub fn shield_cog(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "m10.929 14.467-.383.924")]),
+      svg.path([a("d", "M10.929 8.923 10.546 8")]),
+      svg.path([a("d", "M13.225 8.923 13.608 8")]),
+      svg.path([a("d", "m13.607 15.391-.382-.924")]),
+      svg.path([a("d", "m14.849 10.547.923-.383")]),
+      svg.path([a("d", "m14.849 12.843.923.383")]),
+      svg.path([
+        a(
+          "d",
+          "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+        ),
+      ]),
+      svg.path([a("d", "m9.305 10.547-.923-.383")]),
+      svg.path([a("d", "m9.305 12.843-.923.383")]),
+      svg.circle([
+        a("r", "3"),
+        a("cy", "11.695"),
+        a("cx", "12.077"),
+      ]),
+    ],
+  )
+}
+
+
+pub fn shield_cog_corner(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([
+        a(
+          "d",
+          "M11 22c-3.806-1.45-7-3.966-7-9V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v4",
+        ),
+      ]),
+      svg.path([a("d", "M14.923 16.547 14 16.164")]),
+      svg.path([a("d", "m14.923 18.843-.923.383")]),
+      svg.path([a("d", "M16.547 14.923 16.164 14")]),
+      svg.path([a("d", "m16.547 20.467-.383.924")]),
+      svg.path([a("d", "m18.843 14.923.383-.923")]),
+      svg.path([a("d", "m19.225 21.391-.382-.924")]),
+      svg.path([a("d", "m20.467 16.547.923-.383")]),
+      svg.path([a("d", "m20.467 18.843.923.383")]),
+      svg.circle([
+        a("r", "3"),
+        a("cy", "17.695"),
+        a("cx", "17.695"),
+      ]),
+    ],
+  )
+}
+
+
 pub fn shield_ellipsis(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -2458,7 +2534,7 @@ pub fn signpost(attributes: List(Attribute(a))) {
       svg.path([
         a(
           "d",
-          "M18 6a2 2 0 0 1 1.387.56l2.307 2.22a1 1 0 0 1 0 1.44l-2.307 2.22A2 2 0 0 1 18 13H6a2 2 0 0 1-1.387-.56l-2.306-2.22a1 1 0 0 1 0-1.44l2.306-2.22A2 2 0 0 1 6 6z",
+          "M2.354 10.354a1.207 1.207 0 0 1 0-1.708l2.06-2.06A2 2 0 0 1 5.828 6h12.344a2 2 0 0 1 1.414.586l2.06 2.06a1.207 1.207 0 0 1 0 1.708l-2.06 2.06a2 2 0 0 1-1.414.586H5.828a2 2 0 0 1-1.414-.586z",
         ),
       ]),
     ],
@@ -2604,57 +2680,6 @@ pub fn skull(attributes: List(Attribute(a))) {
         a("cy", "12"),
         a("cx", "9"),
       ]),
-    ],
-  )
-}
-
-
-pub fn slack(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.rect([
-        a("rx", "1.5"),
-        a("y", "2"),
-        a("x", "13"),
-        a("height", "8"),
-        a("width", "3"),
-      ]),
-      svg.path([a("d", "M19 8.5V10h1.5A1.5 1.5 0 1 0 19 8.5")]),
-      svg.rect([
-        a("rx", "1.5"),
-        a("y", "14"),
-        a("x", "8"),
-        a("height", "8"),
-        a("width", "3"),
-      ]),
-      svg.path([a("d", "M5 15.5V14H3.5A1.5 1.5 0 1 0 5 15.5")]),
-      svg.rect([
-        a("rx", "1.5"),
-        a("y", "13"),
-        a("x", "14"),
-        a("height", "3"),
-        a("width", "8"),
-      ]),
-      svg.path([a("d", "M15.5 19H14v1.5a1.5 1.5 0 1 0 1.5-1.5")]),
-      svg.rect([
-        a("rx", "1.5"),
-        a("y", "8"),
-        a("x", "2"),
-        a("height", "3"),
-        a("width", "8"),
-      ]),
-      svg.path([a("d", "M8.5 5H10V3.5A1.5 1.5 0 1 0 8.5 5")]),
     ],
   )
 }
@@ -3433,6 +3458,33 @@ pub fn spool(attributes: List(Attribute(a))) {
         a(
           "d",
           "m7 10.56 12.558-3.642A2 2 0 0 0 19.018 3H5a2 2 0 0 0-.558 3.921l1.115.32A2 2 0 0 1 7 9.163v7.178",
+        ),
+      ]),
+    ],
+  )
+}
+
+
+pub fn sport_shoe(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "m15 10.42 4.8-5.07")]),
+      svg.path([a("d", "M19 18h3")]),
+      svg.path([
+        a(
+          "d",
+          "M9.5 22 21.414 9.415A2 2 0 0 0 21.2 6.4l-5.61-4.208A1 1 0 0 0 14 3v2a2 2 0 0 1-1.394 1.906L8.677 8.053A1 1 0 0 0 8 9c-.155 6.393-2.082 9-4 9a2 2 0 0 0 0 4h14",
         ),
       ]),
     ],
@@ -4487,6 +4539,40 @@ pub fn square_dashed_mouse_pointer(attributes: List(Attribute(a))) {
       svg.path([a("d", "M3 9v1")]),
       svg.path([a("d", "M21 9v2")]),
       svg.path([a("d", "M3 14v1")]),
+    ],
+  )
+}
+
+
+pub fn square_dashed_text(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "M14 21h1")]),
+      svg.path([a("d", "M14 3h1")]),
+      svg.path([a("d", "M19 3a2 2 0 0 1 2 2")]),
+      svg.path([a("d", "M21 14v1")]),
+      svg.path([a("d", "M21 19a2 2 0 0 1-2 2")]),
+      svg.path([a("d", "M21 9v1")]),
+      svg.path([a("d", "M3 14v1")]),
+      svg.path([a("d", "M3 9v1")]),
+      svg.path([a("d", "M5 21a2 2 0 0 1-2-2")]),
+      svg.path([a("d", "M5 3a2 2 0 0 0-2 2")]),
+      svg.path([a("d", "M7 12h10")]),
+      svg.path([a("d", "M7 16h6")]),
+      svg.path([a("d", "M7 8h8")]),
+      svg.path([a("d", "M9 21h1")]),
+      svg.path([a("d", "M9 3h1")]),
     ],
   )
 }

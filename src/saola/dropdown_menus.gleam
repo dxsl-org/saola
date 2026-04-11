@@ -8,29 +8,27 @@ import lustre/element/html as h
 import lustre/event as e
 import typeid
 
-import saola/icons
-
-pub type BaseDropdownMenuItem {
+pub type BaseDropdownMenuItem(a) {
   /// A clickable menu item (text only)
   Item(label: String)
   /// A clickable menu item with an icon
-  ItemWithIcon(name: String, label: String)
+  ItemWithIcon(icon: Element(a), label: String)
   /// A clickable menu item that links to a URL
   Link(label: String, url: String)
   /// A link with an icon
-  LinkWithIcon(name: String, label: String, url: String)
+  LinkWithIcon(icon: Element(a), label: String, url: String)
   Separator
 }
 
-pub type DropdownMenuItem {
-  Flat(BaseDropdownMenuItem)
+pub type DropdownMenuItem(a) {
+  Flat(BaseDropdownMenuItem(a))
   /// A group of items with a label
-  Group(label: String, items: List(BaseDropdownMenuItem))
+  Group(label: String, items: List(BaseDropdownMenuItem(a)))
 }
 
 /// Attributes for the trigger button
-pub type TriggerAttrs {
-  TriggerAttrs(label: String, icon: Option(String), class: String)
+pub type TriggerAttrs(a) {
+  TriggerAttrs(label: String, icon: Option(Element(a)), class: String)
 }
 
 pub type MinorAttrs {
@@ -46,23 +44,21 @@ pub const default_trigger_attrs = TriggerAttrs("Open", None, "")
 
 pub const default_minor_attrs = MinorAttrs("", "", "", "")
 
-fn render_menu_item(item: DropdownMenuItem) -> Element(msg) {
+fn render_menu_item(item: DropdownMenuItem(a)) -> Element(a) {
   case item {
     Flat(base_item) -> render_base_item(base_item)
     Group(label, items) -> render_item_group(label, items)
   }
 }
 
-fn render_base_item(item: BaseDropdownMenuItem) -> Element(msg) {
+fn render_base_item(item: BaseDropdownMenuItem(a)) -> Element(a) {
   case item {
     Item(label) -> h.div([a.role("menuitem")], [h.text(label)])
-    ItemWithIcon(name, label) -> {
-      let icon = icons.get_icon(name)
+    ItemWithIcon(icon, label) -> {
       h.div([a.role("menuitem")], [icon, h.text(label)])
     }
     Link(label, url) -> h.a([a.role("menuitem"), a.href(url)], [h.text(label)])
-    LinkWithIcon(name, label, url) -> {
-      let icon = icons.get_icon(name)
+    LinkWithIcon(icon, label, url) -> {
       h.a([a.role("menuitem"), a.href(url)], [icon, h.text(label)])
     }
     Separator -> h.hr([a.role("separator")])
@@ -71,8 +67,8 @@ fn render_base_item(item: BaseDropdownMenuItem) -> Element(msg) {
 
 fn render_item_group(
   label: String,
-  items: List(BaseDropdownMenuItem),
-) -> Element(msg) {
+  items: List(BaseDropdownMenuItem(a)),
+) -> Element(a) {
   let group_id =
     typeid.new(prefix: "grp")
     |> result.map(typeid.to_string)
@@ -111,12 +107,12 @@ fn render_item_group(
 /// )
 /// ```
 pub fn dropdown_menu_full(
-  items items: List(DropdownMenuItem),
-  trigger_attrs trigger_attrs: TriggerAttrs,
+  items items: List(DropdownMenuItem(a)),
+  trigger_attrs trigger_attrs: TriggerAttrs(a),
   is_open is_open: Bool,
-  trigger_click trigger_click: msg,
+  trigger_click trigger_click: a,
   minor_attrs minor_attrs: MinorAttrs,
-) -> Element(msg) {
+) -> Element(a) {
   let base_id =
     case minor_attrs.id {
       "" -> typeid.new(prefix: "menu") |> result.map(typeid.to_string)
@@ -143,7 +139,7 @@ pub fn dropdown_menu_full(
   }
   let trigger_icon = case trigger_attrs.icon {
     None -> element.none()
-    Some(name) -> icons.get_icon(name)
+    Some(icon) -> icon
   }
   let trigger_label = h.text(trigger_attrs.label)
 
@@ -197,10 +193,10 @@ pub fn dropdown_menu_full(
 /// )
 /// ```
 pub fn dropdown_simple(
-  items items: List(DropdownMenuItem),
+  items items: List(DropdownMenuItem(a)),
   is_open is_open: Bool,
-  trigger_click trigger_click: msg,
-) -> Element(msg) {
+  trigger_click trigger_click: a,
+) -> Element(a) {
   dropdown_menu_full(
     items: items,
     trigger_attrs: default_trigger_attrs,
@@ -222,11 +218,11 @@ pub fn dropdown_simple(
 /// )
 /// ```
 pub fn dropdown_with_trigger(
-  items items: List(DropdownMenuItem),
+  items items: List(DropdownMenuItem(a)),
   trigger_label trigger_label: String,
   is_open is_open: Bool,
-  trigger_click trigger_click: msg,
-) -> Element(msg) {
+  trigger_click trigger_click: a,
+) -> Element(a) {
   dropdown_menu_full(
     items: items,
     trigger_attrs: TriggerAttrs(trigger_label, None, ""),

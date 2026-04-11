@@ -686,6 +686,42 @@ pub fn map_pin_plus_inside(attributes: List(Attribute(a))) {
 }
 
 
+pub fn map_pin_search(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([
+        a(
+          "d",
+          "M 12.248 21.969 a 1 1 0 0 1 -0.849 -0.17 C 9.539 20.193 4 14.993 4 10 a 8 8 0 0 1 16 0 C 20 10.42 19.961 10.841 19.888 11.262",
+        ),
+      ]),
+      svg.path([a("d", "m22 22-1.88-1.88")]),
+      svg.circle([
+        a("r", "3"),
+        a("cy", "10"),
+        a("cx", "12"),
+      ]),
+      svg.circle([
+        a("r", "3"),
+        a("cy", "18"),
+        a("cx", "18"),
+      ]),
+    ],
+  )
+}
+
+
 pub fn map_pin_x(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -2220,7 +2256,7 @@ pub fn milestone(attributes: List(Attribute(a))) {
       svg.path([
         a(
           "d",
-          "M4 6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h13a2 2 0 0 0 1.152-.365l3.424-2.317a1 1 0 0 0 0-1.635l-3.424-2.318A2 2 0 0 0 17 6z",
+          "M18.172 6a2 2 0 0 1 1.414.586l2.06 2.06a1.207 1.207 0 0 1 0 1.708l-2.06 2.06a2 2 0 0 1-1.414.586H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z",
         ),
       ]),
     ],

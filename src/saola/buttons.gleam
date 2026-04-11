@@ -5,13 +5,15 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
-import saola/icons
+// The icons are group by the starting letter, and placed in the modules
+// of corresponding letter. For example, "arrow" icon is in "icons/la" module.
+import saola/icons/lx
 
-pub type ButtonVariant {
+pub type ButtonVariant(a) {
   Primary
   Secondary
-  // It hold a string of icon name, like "badge-check"
-  WithIcon(String)
+  // It holds an element created by the functions in `icons/l*` modules.
+  WithIcon(Element(a))
 }
 
 pub type ButtonSize {
@@ -53,7 +55,7 @@ pub type ButtonExtraAttrs {
 /// button_full(Secondary, "Pay", Small, None)
 /// ```
 pub fn button_full(
-  variant: ButtonVariant,
+  variant: ButtonVariant(msg),
   label: String,
   size: ButtonSize,
   // Note: `msg` is lowercase, it is a generic (type parameter)
@@ -73,7 +75,7 @@ pub fn button_full(
   let event_handler =
     click_message |> option.map(e.on_click) |> option.unwrap(a.none())
   let icon = case variant {
-    WithIcon(icon_name) -> icons.get_icon(icon_name)
+    WithIcon(icon) -> icon
     _ -> element.none()
   }
   let label = case string.trim(label) {
@@ -133,7 +135,7 @@ pub fn button_primary(label: String, click_message: msg) -> Element(msg) {
 
 pub fn button_close(click_message: msg) -> Element(msg) {
   button_full(
-    WithIcon("x"),
+    WithIcon(lx.x([])),
     "",
     Small,
     Some(click_message),

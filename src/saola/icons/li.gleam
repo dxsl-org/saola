@@ -585,42 +585,6 @@ pub fn inspection_panel(attributes: List(Attribute(a))) {
 }
 
 
-pub fn instagram(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.rect([
-        a("ry", "5"),
-        a("rx", "5"),
-        a("y", "2"),
-        a("x", "2"),
-        a("height", "20"),
-        a("width", "20"),
-      ]),
-      svg.path([
-        a("d", "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"),
-      ]),
-      svg.line([
-        a("y2", "6.5"),
-        a("y1", "6.5"),
-        a("x2", "17.51"),
-        a("x1", "17.5"),
-      ]),
-    ],
-  )
-}
-
-
 pub fn italic(attributes: List(Attribute(a))) {
   svg.svg(
     [

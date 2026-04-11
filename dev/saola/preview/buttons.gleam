@@ -4,6 +4,7 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 
 import saola/buttons
+import saola/icons/lc
 import saola/preview/models.{type Msg, Home, OnRouteChange}
 
 pub fn view_buttons() -> Element(Msg) {
@@ -42,7 +43,7 @@ pub fn view_buttons() -> Element(Msg) {
         buttons.default_extra_attrs,
       ),
       buttons.button_full(
-        buttons.WithIcon("check"),
+        buttons.WithIcon(lc.check([])),
         "With Icon",
         buttons.Large,
         None,
@@ -74,7 +75,7 @@ pub fn view_buttons() -> Element(Msg) {
         attrs_disabled,
       ),
       buttons.button_full(
-        buttons.WithIcon("check"),
+        buttons.WithIcon(lc.check([])),
         "Disabled Icon",
         buttons.Large,
         None,
@@ -108,7 +109,7 @@ pub fn view_buttons() -> Element(Msg) {
         attrs_aria_label,
       ),
       buttons.button_full(
-        buttons.WithIcon("chevron-down"),
+        buttons.WithIcon(lc.chevron_down([])),
         "Menu",
         buttons.Large,
         None,

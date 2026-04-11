@@ -1353,6 +1353,41 @@ pub fn beef(attributes: List(Attribute(a))) {
 }
 
 
+pub fn beef_off(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([a("d", "M11.771 6.109a2.5 2.5 0 0 1 3.12 3.12")]),
+      svg.path([a("d", "M17.852 12.185a6.5 6.5 0 0 0-9.035-9.04")]),
+      svg.path([
+        a(
+          "d",
+          "M18.013 18.013C15.029 20.349 10.831 22 7 22a3 3 0 0 1-2.68-1.66L2.4 16.5",
+        ),
+      ]),
+      svg.path([a("d", "m18.5 6 2.19 4.5a6.48 6.48 0 0 1-.139 4.393")]),
+      svg.path([a("d", "m2 2 20 20")]),
+      svg.path([
+        a(
+          "d",
+          "M6.355 6.37a7 7 0 0 0-.075.23c-1.1 3.13-.78 3.9-3.18 6.08A3 3 0 0 0 5 18c3.356 0 6.993-1.267 9.85-3.151",
+        ),
+      ]),
+    ],
+  )
+}
+
+
 pub fn beer(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -3119,6 +3154,33 @@ pub fn bookmark_minus(attributes: List(Attribute(a))) {
           "M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z",
         ),
       ]),
+    ],
+  )
+}
+
+
+pub fn bookmark_off(attributes: List(Attribute(a))) {
+  svg.svg(
+    [
+      a("stroke-linejoin", "round"),
+      a("stroke-linecap", "round"),
+      a("stroke-width", "2"),
+      a("stroke", "currentColor"),
+      a("fill", "none"),
+      a("viewBox", "0 0 24 24"),
+      a("height", "24"),
+      a("width", "24"),
+      ..attributes
+    ],
+    [
+      svg.path([
+        a(
+          "d",
+          "M19 19v1a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5",
+        ),
+      ]),
+      svg.path([a("d", "m2 2 20 20")]),
+      svg.path([a("d", "M8.656 3H17a2 2 0 0 1 2 2v8.344")]),
     ],
   )
 }

@@ -2445,29 +2445,6 @@ pub fn plus(attributes: List(Attribute(a))) {
 }
 
 
-pub fn pocket(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a("d", "M20 3a2 2 0 0 1 2 2v6a1 1 0 0 1-20 0V5a2 2 0 0 1 2-2z"),
-      ]),
-      svg.path([a("d", "m8 10 4 4 4-4")]),
-    ],
-  )
-}
-
-
 pub fn pocket_knife(attributes: List(Attribute(a))) {
   svg.svg(
     [

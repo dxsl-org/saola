@@ -1,31 +1,6 @@
 import lustre/attribute.{type Attribute, attribute as a}
 import lustre/element/svg
 
-pub fn facebook(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a(
-          "d",
-          "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
-        ),
-      ]),
-    ],
-  )
-}
-
-
 pub fn factory(attributes: List(Attribute(a))) {
   svg.svg(
     [
@@ -191,36 +166,6 @@ pub fn ferris_wheel(attributes: List(Attribute(a))) {
       svg.path([a("d", "m9 22 3-8 3 8")]),
       svg.path([a("d", "M8 22h8")]),
       svg.path([a("d", "M18 18.7a9 9 0 1 0-12 0")]),
-    ],
-  )
-}
-
-
-pub fn figma(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [
-      svg.path([
-        a("d", "M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"),
-      ]),
-      svg.path([a("d", "M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z")]),
-      svg.path([a("d", "M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z")]),
-      svg.path([
-        a("d", "M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"),
-      ]),
-      svg.path([
-        a("d", "M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"),
-      ]),
     ],
   )
 }
@@ -3764,24 +3709,6 @@ pub fn frame(attributes: List(Attribute(a))) {
         a("x1", "18"),
       ]),
     ],
-  )
-}
-
-
-pub fn framer(attributes: List(Attribute(a))) {
-  svg.svg(
-    [
-      a("stroke-linejoin", "round"),
-      a("stroke-linecap", "round"),
-      a("stroke-width", "2"),
-      a("stroke", "currentColor"),
-      a("fill", "none"),
-      a("viewBox", "0 0 24 24"),
-      a("height", "24"),
-      a("width", "24"),
-      ..attributes
-    ],
-    [svg.path([a("d", "M5 16V9h14V2H5l14 14h-7m-7 0 7 7v-7m-7 0h7")])],
   )
 }
 

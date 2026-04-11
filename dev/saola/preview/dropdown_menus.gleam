@@ -4,6 +4,10 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/dropdown_menus as dd
+import saola/icons/lc
+import saola/icons/lp
+import saola/icons/ls
+import saola/icons/lt
 import saola/preview/models.{type Model, type Msg, ToggleDropdown}
 
 fn is_dropdown_open(model: Model, id: String) -> Bool {
@@ -22,10 +26,10 @@ pub fn view_dropdown_menus(model: Model) -> Element(Msg) {
   ]
 
   let items_with_icons = [
-    dd.Flat(dd.ItemWithIcon("plus", "New Item")),
-    dd.Flat(dd.ItemWithIcon("edit", "Edit Item")),
+    dd.Flat(dd.ItemWithIcon(lp.plus([]), "New Item")),
+    dd.Flat(dd.ItemWithIcon(lp.pencil([]), "Edit Item")),
     dd.Flat(dd.Separator),
-    dd.Flat(dd.ItemWithIcon("trash", "Delete Item")),
+    dd.Flat(dd.ItemWithIcon(lt.trash([]), "Delete Item")),
   ]
 
   let items_with_links = [
@@ -49,9 +53,9 @@ pub fn view_dropdown_menus(model: Model) -> Element(Msg) {
 
   let mixed_items = [
     dd.Flat(dd.Item("Plain Item")),
-    dd.Flat(dd.ItemWithIcon("star", "Starred Item")),
+    dd.Flat(dd.ItemWithIcon(ls.star([]), "Starred Item")),
     dd.Flat(dd.Link("External Link", "https://example.com")),
-    dd.Flat(dd.LinkWithIcon("download", "Download", "/download")),
+    dd.Flat(dd.LinkWithIcon(lc.chevron_down([]), "Download", "/download")),
     dd.Flat(dd.Separator),
     dd.Group("Submenu", [
       dd.Item("Sub Item 1"),
@@ -63,9 +67,9 @@ pub fn view_dropdown_menus(model: Model) -> Element(Msg) {
     dd.MinorAttrs("my-dropdown", "custom-main", "custom-popover", "custom-menu")
 
   let custom_trigger_with_icon =
-    dd.TriggerAttrs("Menu Options", Some("chevron-down"), "btn-custom")
+    dd.TriggerAttrs("Menu Options", Some(lc.chevron_down([])), "btn-custom")
 
-  let trigger_with_icon_only = dd.TriggerAttrs("", Some("settings"), "")
+  let trigger_with_icon_only = dd.TriggerAttrs("", Some(ls.settings([])), "")
 
   h.div([], [
     h.h1([a.class("page-title")], [text("Dropdown Menus")]),
