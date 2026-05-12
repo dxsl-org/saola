@@ -7,7 +7,7 @@ import lustre/event as e
 
 // The icons are group by the starting letter, and placed in the modules
 // of corresponding letter. For example, "arrow" icon is in "icons/la" module.
-import saola/icons/lx
+import saola/icon/lx
 
 pub type ButtonVariant(a) {
   Primary

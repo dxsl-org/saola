@@ -53,7 +53,7 @@ To think: Where the generated code in step 1 is placed to? Could be _src/saola/r
 We use icons from [Lucide]. Because the number of icons is big, we split them to modules whose names match the starting letter of the icon name.
 
 ```
-src/saola/icons/
+src/saola/icon/
 ├── la.gleam
 ├── lb.gleam
 ├── lz.gleam
@@ -62,7 +62,7 @@ src/saola/icons/
 We need to use "code generation" technique to maintain them.
 
 - We use tool from [lucide_lustre] to generate a big *lucide.gleam* file. The import line is changed to using alias to make code shorter, then we move it
-  to *src/saola/icons/lucide.gleam*.
+  to *src/saola/icon/lucide.gleam*.
 - We the use *dev/split-lucide-icons.nu* script to split that *lucide.gleam* file to smaller *l\_\*.gleam* files.
 
 TODO: How to tree-shake?

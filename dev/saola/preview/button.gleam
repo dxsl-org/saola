@@ -3,28 +3,28 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 
-import saola/buttons
-import saola/icons/lc
-import saola/preview/models.{type Msg, Home, OnRouteChange}
+import saola/button
+import saola/icon/lc
+import saola/preview/model.{type Msg, Home, OnRouteChange}
 
 pub fn view_buttons() -> Element(Msg) {
   let attrs_disabled =
-    buttons.ButtonExtraAttrs(True, None, buttons.default_aria)
+    button.ButtonExtraAttrs(True, None, button.default_aria)
   let attrs_submit =
-    buttons.ButtonExtraAttrs(False, Some(buttons.Submit), buttons.default_aria)
+    button.ButtonExtraAttrs(False, Some(button.Submit), button.default_aria)
   let attrs_reset =
-    buttons.ButtonExtraAttrs(False, Some(buttons.Reset), buttons.default_aria)
+    button.ButtonExtraAttrs(False, Some(button.Reset), button.default_aria)
   let attrs_aria_label =
-    buttons.ButtonExtraAttrs(
+    button.ButtonExtraAttrs(
       False,
       None,
-      buttons.ButtonAria("Save changes", None),
+      button.ButtonAria("Save changes", None),
     )
   let attrs_aria_expanded =
-    buttons.ButtonExtraAttrs(
+    button.ButtonExtraAttrs(
       False,
       None,
-      buttons.ButtonAria("Expand menu", Some(True)),
+      button.ButtonAria("Expand menu", Some(True)),
     )
 
   h.div([], [
@@ -34,84 +34,84 @@ pub fn view_buttons() -> Element(Msg) {
     ]),
     h.h2([], [text("Basic")]),
     h.div([a.class("button-grid")], [
-      buttons.button_primary("Primary Button", OnRouteChange(Home)),
-      buttons.button_full(
-        buttons.Secondary,
+      button.button_primary("Primary Button", OnRouteChange(Home)),
+      button.button_full(
+        button.Secondary,
         "Secondary Button",
-        buttons.Large,
+        button.Large,
         None,
-        buttons.default_extra_attrs,
+        button.default_extra_attrs,
       ),
-      buttons.button_full(
-        buttons.WithIcon(lc.check([])),
+      button.button_full(
+        button.WithIcon(lc.check([])),
         "With Icon",
-        buttons.Large,
+        button.Large,
         None,
-        buttons.default_extra_attrs,
+        button.default_extra_attrs,
       ),
-      buttons.button_full(
-        buttons.Primary,
+      button.button_full(
+        button.Primary,
         "Small Primary",
-        buttons.Small,
+        button.Small,
         None,
-        buttons.default_extra_attrs,
+        button.default_extra_attrs,
       ),
-      buttons.button_close(OnRouteChange(Home)),
+      button.button_close(OnRouteChange(Home)),
     ]),
     h.h2([a.class("mt-4")], [text("Disabled")]),
     h.div([a.class("button-grid")], [
-      buttons.button_full(
-        buttons.Primary,
+      button.button_full(
+        button.Primary,
         "Disabled Primary",
-        buttons.Large,
+        button.Large,
         None,
         attrs_disabled,
       ),
-      buttons.button_full(
-        buttons.Secondary,
+      button.button_full(
+        button.Secondary,
         "Disabled Secondary",
-        buttons.Large,
+        button.Large,
         None,
         attrs_disabled,
       ),
-      buttons.button_full(
-        buttons.WithIcon(lc.check([])),
+      button.button_full(
+        button.WithIcon(lc.check([])),
         "Disabled Icon",
-        buttons.Large,
+        button.Large,
         None,
         attrs_disabled,
       ),
     ]),
     h.h2([a.class("mt-4")], [text("Button Types")]),
     h.div([a.class("button-grid")], [
-      buttons.button_full(
-        buttons.Primary,
+      button.button_full(
+        button.Primary,
         "Submit",
-        buttons.Large,
+        button.Large,
         None,
         attrs_submit,
       ),
-      buttons.button_full(
-        buttons.Primary,
+      button.button_full(
+        button.Primary,
         "Reset",
-        buttons.Large,
+        button.Large,
         None,
         attrs_reset,
       ),
     ]),
     h.h2([a.class("mt-4")], [text("Accessibility (ARIA)")]),
     h.div([a.class("button-grid")], [
-      buttons.button_full(
-        buttons.Primary,
+      button.button_full(
+        button.Primary,
         "Save",
-        buttons.Large,
+        button.Large,
         None,
         attrs_aria_label,
       ),
-      buttons.button_full(
-        buttons.WithIcon(lc.chevron_down([])),
+      button.button_full(
+        button.WithIcon(lc.chevron_down([])),
         "Menu",
-        buttons.Large,
+        button.Large,
         None,
         attrs_aria_expanded,
       ),

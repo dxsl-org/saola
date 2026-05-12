@@ -11,8 +11,8 @@
 # ```
 
 def main [] {
-  let source_file = "src/saola/icons/lucide.gleam"
-  let target_dir = "src/saola/icons/"
+  let source_file = "src/saola/icon/lucide.gleam"
+  let target_dir = "src/saola/icon/"
   
   # Read the entire file
   let content = open --raw $source_file

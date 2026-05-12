@@ -8,11 +8,11 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import modem
 
-import saola/preview/models.{
+import saola/preview/model.{
   type Model, type Msg, Alerts, Buttons, DropdownMenus, Forms, Home, Inputs,
   Model, OnRouteChange, ToggleDropdown,
 }
-import saola/preview/views
+import saola/preview/view as views
 
 pub fn main() {
   let app = lustre.application(init, update, view)
@@ -68,7 +68,7 @@ fn view(model: Model) -> Element(Msg) {
   ])
 }
 
-fn sidebar(current_route: models.Route) -> Element(Msg) {
+fn sidebar(current_route: model.Route) -> Element(Msg) {
   h.div([a.class("sidebar")], [
     h.h2([a.class("sidebar-title")], [element.text("UI Showcase")]),
     nav_link("/alerts", "Alerts", current_route == Alerts),
@@ -78,7 +78,7 @@ fn sidebar(current_route: models.Route) -> Element(Msg) {
     nav_link(
       "/dropdown-menus",
       "Dropdown Menus",
-      current_route == models.DropdownMenus,
+      current_route == model.DropdownMenus,
     ),
   ])
 }

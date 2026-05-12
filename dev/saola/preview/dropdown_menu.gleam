@@ -3,12 +3,12 @@ import gleam/option.{None, Some}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/dropdown_menus as dd
-import saola/icons/lc
-import saola/icons/lp
-import saola/icons/ls
-import saola/icons/lt
-import saola/preview/models.{type Model, type Msg, ToggleDropdown}
+import saola/dropdown_menu as dd
+import saola/icon/lc
+import saola/icon/lp
+import saola/icon/ls
+import saola/icon/lt
+import saola/preview/model.{type Model, type Msg, ToggleDropdown}
 
 fn is_dropdown_open(model: Model, id: String) -> Bool {
   case model.open_dropdown {
