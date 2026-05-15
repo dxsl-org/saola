@@ -1,0 +1,16 @@
+*.beam
+*.ez
+build
+erl_crash.dump
+
+#Added automatically by Lustre Dev Tools
+.lustre
+dist
+node_modules
+
+*.env.nu
+.bk.yaml
+
+# AI agents config
+.crush
+.codex
