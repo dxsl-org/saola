@@ -54,8 +54,8 @@ pub fn d3_bar_chart_renders_custom_element_test() {
     |> element.to_string
 
   assert string.contains(html, "saola-d3-bar-chart")
-  assert string.contains(html, "data-series=")
   assert string.contains(html, "chart-title=\"Revenue\"")
+  assert string.contains(html, "height=\"280\"")
 }
 
 pub fn lustre_bar_chart_renders_svg_test() {

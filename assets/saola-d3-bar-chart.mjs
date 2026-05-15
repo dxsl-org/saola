@@ -57,24 +57,8 @@ template.innerHTML = `
   </figure>
 `
 
-function parseSeries(value) {
-  try {
-    const parsed = JSON.parse(value || '[]')
-    if (!Array.isArray(parsed)) return []
-
-    return parsed
-      .map((item) => ({
-        label: String(item?.label ?? ''),
-        value: Number(item?.value ?? 0),
-      }))
-      .filter((item) => item.label && Number.isFinite(item.value))
-  } catch {
-    return []
-  }
-}
-
 class SaolaD3BarChart extends HTMLElement {
-  static observedAttributes = ['data-series', 'chart-title', 'height']
+  static observedAttributes = ['chart-title', 'height']
 
   constructor() {
     super()
@@ -83,6 +67,11 @@ class SaolaD3BarChart extends HTMLElement {
     this.caption = this.shadowRoot.querySelector('.title')
     this.svg = d3.select(this.shadowRoot.querySelector('svg'))
     this.resizeObserver = new ResizeObserver(() => this.render())
+  }
+
+  set series(value) {
+    this._series = Array.isArray(value) ? value : []
+    if (this.isConnected) this.render()
   }
 
   connectedCallback() {
@@ -101,7 +90,7 @@ class SaolaD3BarChart extends HTMLElement {
   render() {
     if (!this.isConnected) return
 
-    const data = parseSeries(this.getAttribute('data-series'))
+    const data = this._series || []
     const title = this.getAttribute('chart-title') || ''
     const height = Math.max(Number(this.getAttribute('height') || 280), 180)
     const width = Math.max(this.clientWidth || 640, 320)

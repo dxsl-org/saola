@@ -40,7 +40,7 @@ pub fn bar_chart(
       value -> a.id(value)
     },
     a.class("saola-d3-bar-chart " <> class),
-    a.attribute("data-series", encode_points(data)),
+    a.property("series", encode_points(data)),
     a.attribute("chart-title", title),
     a.attribute("height", height |> int.to_string),
     a.aria_label(aria_label),
@@ -51,14 +51,12 @@ pub fn bar_chart_simple(data: List(ChartPoint)) -> Element(msg) {
   bar_chart(data, attrs: default_bar_chart_attrs)
 }
 
-fn encode_points(points: List(ChartPoint)) -> String {
-  points
-  |> json.array(of: fn(point) {
+fn encode_points(points: List(ChartPoint)) -> json.Json {
+  json.array(points, of: fn(point) {
     let ChartPoint(label:, value:) = point
     json.object([
       #("label", json.string(label)),
       #("value", json.float(value)),
     ])
   })
-  |> json.to_string
 }
