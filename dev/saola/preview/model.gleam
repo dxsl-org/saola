@@ -20,6 +20,12 @@ pub type Route {
   MonacoEditor
   ExampleForm
   ExampleSite
+  Separators
+  Tooltips
+  Switches
+  Sliders
+  Selects
+  Fields
 }
 
 pub type Model {
@@ -38,6 +44,15 @@ pub type Model {
     form_email: String,
     form_message: String,
     form_submitted_values: List(#(String, String)),
+    // Switch preview state: keyed by switch ID
+    switch_notifications: Bool,
+    switch_marketing: Bool,
+    // Slider preview state
+    slider_volume: Int,
+    slider_brightness: Int,
+    // Select preview state
+    select_fruit: String,
+    select_timezone: String,
   )
 }
 
@@ -54,4 +69,7 @@ pub type Msg {
   FormMessageChanged(String)
   FormSubmitted(List(#(String, String)))
   StartedTrial
+  SwitchToggled(id: String, value: Bool)
+  SliderChanged(id: String, value: String)
+  SelectChanged(id: String, value: String)
 }

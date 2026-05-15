@@ -1,3 +1,4 @@
+import gleam/int
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/uri.{type Uri}
@@ -10,11 +11,13 @@ import lustre/element/html as h
 import modem
 
 import saola/preview/model.{
-  type Model, type Msg, Alerts, Badges, Buttons, Cards, CloseDialog,
-  D3Charts, Dialogs, DropdownMenus, ExampleForm, ExampleSite, Forms,
+  type Model, type Msg, Alerts, Badges, Buttons, Cards, CloseDialog, D3Charts,
+  Dialogs, DropdownMenus, ExampleForm, ExampleSite, Fields, Forms,
   FormEmailChanged, FormMessageChanged, FormNameChanged, FormSubmitted, Home,
-  Inputs, Model, MonacoEditor, OnRouteChange, OpenDialog, StartedTrial, Tables,
-  Tabs, Toasts, ToggleDropdown, TabChanged, AddToast, DismissToast,
+  Inputs, Model, MonacoEditor, OnRouteChange, OpenDialog, SelectChanged,
+  Selects, Separators, SliderChanged, Sliders, StartedTrial, Switches,
+  SwitchToggled, Tables, Tabs, Toasts, Tooltips, ToggleDropdown, TabChanged,
+  AddToast, DismissToast,
 }
 import saola/preview/view as views
 
@@ -44,6 +47,12 @@ fn init(_args) -> #(Model, Effect(Msg)) {
       form_email: "",
       form_message: "",
       form_submitted_values: [],
+      switch_notifications: True,
+      switch_marketing: False,
+      slider_volume: 60,
+      slider_brightness: 80,
+      select_fruit: "apple",
+      select_timezone: "asia/ho_chi_minh",
     ),
     effect.batch([modem.init(on_url_change), whatnext]),
   )
@@ -66,6 +75,12 @@ fn on_url_change(uri: Uri) -> Msg {
     "/monaco-editor" -> MonacoEditor
     "/example-form" -> ExampleForm
     "/example-site" -> ExampleSite
+    "/separators" -> Separators
+    "/tooltips" -> Tooltips
+    "/switches" -> Switches
+    "/sliders" -> Sliders
+    "/selects" -> Selects
+    "/fields" -> Fields
     _ -> Home
   }
   OnRouteChange(route)
@@ -96,7 +111,10 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       effect.none(),
     )
     FormNameChanged(name) -> #(Model(..model, form_name: name), effect.none())
-    FormEmailChanged(email) -> #(Model(..model, form_email: email), effect.none())
+    FormEmailChanged(email) -> #(
+      Model(..model, form_email: email),
+      effect.none(),
+    )
     FormMessageChanged(message) -> #(
       Model(..model, form_message: message),
       effect.none(),
@@ -106,6 +124,39 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
       effect.none(),
     )
     StartedTrial -> #(model, effect.none())
+    SwitchToggled(id, value) ->
+      case id {
+        "notifications" -> #(
+          Model(..model, switch_notifications: value),
+          effect.none(),
+        )
+        "marketing" -> #(
+          Model(..model, switch_marketing: value),
+          effect.none(),
+        )
+        _ -> #(model, effect.none())
+      }
+    SliderChanged(id, value) -> {
+      let n = int.parse(value) |> result_unwrap(0)
+      case id {
+        "volume" -> #(Model(..model, slider_volume: n), effect.none())
+        "brightness" -> #(Model(..model, slider_brightness: n), effect.none())
+        _ -> #(model, effect.none())
+      }
+    }
+    SelectChanged(id, value) ->
+      case id {
+        "fruit" -> #(Model(..model, select_fruit: value), effect.none())
+        "timezone" -> #(Model(..model, select_timezone: value), effect.none())
+        _ -> #(model, effect.none())
+      }
+  }
+}
+
+fn result_unwrap(r: Result(a, e), default: a) -> a {
+  case r {
+    Ok(v) -> v
+    Error(_) -> default
   }
 }
 
@@ -125,6 +176,12 @@ fn sidebar(current_route: model.Route) -> Element(Msg) {
     nav_link("/buttons", "Buttons", current_route == Buttons),
     nav_link("/inputs", "Inputs", current_route == Inputs),
     nav_link("/forms", "Forms", current_route == Forms),
+    nav_link("/separators", "Separator", current_route == Separators),
+    nav_link("/tooltips", "Tooltip", current_route == Tooltips),
+    nav_link("/switches", "Switch", current_route == Switches),
+    nav_link("/sliders", "Slider", current_route == Sliders),
+    nav_link("/selects", "Select", current_route == Selects),
+    nav_link("/fields", "Field", current_route == Fields),
     nav_link("/dropdown-menus", "Dropdown Menus", current_route == DropdownMenus),
     nav_link("/tabs", "Tabs", current_route == Tabs),
     nav_link("/dialogs", "Dialogs", current_route == Dialogs),
@@ -158,6 +215,12 @@ fn main_pane(model: Model) -> Element(Msg) {
       Buttons -> views.view_buttons()
       Inputs -> views.view_inputs()
       Forms -> views.view_forms()
+      Separators -> views.view_separators()
+      Tooltips -> views.view_tooltips()
+      Switches -> views.view_switches(model)
+      Sliders -> views.view_sliders(model)
+      Selects -> views.view_selects(model)
+      Fields -> views.view_fields(model)
       DropdownMenus -> views.view_dropdown_menus(model)
       Tabs -> views.view_tabs(model)
       Dialogs -> views.view_dialogs(model)

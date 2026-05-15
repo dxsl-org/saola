@@ -9,13 +9,19 @@ import saola/preview/card
 import saola/preview/chart_examples
 import saola/preview/dialog
 import saola/preview/dropdown_menu
+import saola/preview/field as field_preview
 import saola/preview/form_example
 import saola/preview/input
 import saola/preview/model.{type Model, type Msg}
+import saola/preview/select as select_preview
+import saola/preview/separator as separator_preview
 import saola/preview/site_example
+import saola/preview/slider as slider_preview
+import saola/preview/switch as switch_preview
 import saola/preview/table
 import saola/preview/tabs
 import saola/preview/toast
+import saola/preview/tooltip as tooltip_preview
 
 pub fn view_alerts() -> Element(Msg) {
   alert.view_alerts()
@@ -71,6 +77,30 @@ pub fn view_d3_charts() -> Element(Msg) {
 
 pub fn view_monaco_editor() -> Element(Msg) {
   chart_examples.view_monaco_editor()
+}
+
+pub fn view_separators() -> Element(Msg) {
+  separator_preview.view_separators()
+}
+
+pub fn view_tooltips() -> Element(Msg) {
+  tooltip_preview.view_tooltips()
+}
+
+pub fn view_switches(model: Model) -> Element(Msg) {
+  switch_preview.view_switches(model.switch_notifications, model.switch_marketing)
+}
+
+pub fn view_sliders(model: Model) -> Element(Msg) {
+  slider_preview.view_sliders(model.slider_volume, model.slider_brightness)
+}
+
+pub fn view_selects(model: Model) -> Element(Msg) {
+  select_preview.view_selects(model.select_fruit, model.select_timezone)
+}
+
+pub fn view_fields(model: Model) -> Element(Msg) {
+  field_preview.view_fields(model.form_name, model.form_email)
 }
 
 pub fn view_forms() -> Element(Msg) {
