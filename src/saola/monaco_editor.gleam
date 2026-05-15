@@ -41,20 +41,24 @@ pub fn editor(attrs attrs: EditorAttrs) -> Element(msg) {
     class:,
     aria_label:,
   ) = attrs
-  element.element("saola-monaco-editor", [
-    case id {
-      "" -> a.none()
-      value -> a.id(value)
-    },
-    a.class("saola-monaco-editor " <> class),
-    a.attribute("value", value),
-    a.attribute("language", language),
-    a.attribute("theme", theme),
-    a.attribute("height", height |> int.to_string),
-    a.attribute("read-only", case read_only {
-      True -> "true"
-      False -> "false"
-    }),
-    a.aria_label(aria_label),
-  ], [])
+  element.element(
+    "saola-monaco-editor",
+    [
+      case id {
+        "" -> a.none()
+        value -> a.id(value)
+      },
+      a.class("saola-monaco-editor " <> class),
+      a.attribute("value", value),
+      a.attribute("language", language),
+      a.attribute("theme", theme),
+      a.attribute("height", height |> int.to_string),
+      a.attribute("read-only", case read_only {
+        True -> "true"
+        False -> "false"
+      }),
+      a.aria_label(aria_label),
+    ],
+    [],
+  )
 }

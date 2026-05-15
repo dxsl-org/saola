@@ -182,19 +182,23 @@ pub fn view_monaco_editor() -> Element(Msg) {
     h.header([a.class("grid gap-2")], [
       h.h1([a.class("page-title")], [h.text("Monaco Editor")]),
       h.p([a.class("page-description")], [
-        h.text("A heavier blackbox widget: Saola renders one custom element, Monaco owns the editor runtime and interactions."),
+        h.text(
+          "A heavier blackbox widget: Saola renders one custom element, Monaco owns the editor runtime and interactions.",
+        ),
       ]),
     ]),
     card.card(card.CardAttrs(
       title: "Interactive code editor",
       description: "Try typing, selection, keyboard shortcuts, minimap scrolling, and syntax highlighting.",
       content: [
-        monaco_editor.editor(attrs: monaco_editor.EditorAttrs(
-          ..monaco_editor.default_editor_attrs,
-          value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + Monaco\")\n}\n",
-          language: "javascript",
-          height: 420,
-        )),
+        monaco_editor.editor(
+          attrs: monaco_editor.EditorAttrs(
+            ..monaco_editor.default_editor_attrs,
+            value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + Monaco\")\n}\n",
+            language: "javascript",
+            height: 420,
+          ),
+        ),
       ],
       footer: None,
     )),

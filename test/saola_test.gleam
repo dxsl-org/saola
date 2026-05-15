@@ -4,6 +4,7 @@ import gleeunit
 import lustre/element
 import saola/d3_bar_chart
 import saola/lustre_bar_chart
+import saola/monaco_editor
 import small_site_example
 
 pub fn main() -> Nil {
@@ -75,4 +76,21 @@ pub fn lustre_bar_chart_renders_svg_test() {
   assert string.contains(html, "<svg")
   assert string.contains(html, "<rect")
   assert string.contains(html, "Revenue")
+}
+
+pub fn monaco_editor_renders_custom_element_test() {
+  let html =
+    monaco_editor.editor(
+      attrs: monaco_editor.EditorAttrs(
+        ..monaco_editor.default_editor_attrs,
+        value: "console.log(\"hello\")",
+        language: "javascript",
+        height: 420,
+      ),
+    )
+    |> element.to_string
+
+  assert string.contains(html, "saola-monaco-editor")
+  assert string.contains(html, "language=\"javascript\"")
+  assert string.contains(html, "height=\"420\"")
 }
