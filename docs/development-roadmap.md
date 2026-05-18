@@ -1,6 +1,19 @@
 # Saola Development Roadmap
 
-**Last updated:** 2026-05-18 (Batch 11 Complete: 8 additional widgets finalized for v1.0.0)
+**Last updated:** 2026-05-18 (Canvas Architecture Complete: Display List rendering + D3 graph layout; Batch 11 Complete: 8 widgets)
+
+## Phase 0: Visualization Architecture (Complete)
+
+Canvas-based rendering with D3 force layout for scalable, performant data visualization.
+
+| Component | Status | Completion |
+|-----------|--------|-----------|
+| CanvasCommand ADT | Complete | 100% |
+| Hit-testing system | Complete | 100% |
+| `<saola-canvas>` custom element | Complete | 100% |
+| D3 Force Layout Worker | Complete | 100% |
+| Entity Graph Canvas | Complete | 100% |
+| Bar Chart Canvas Renderer | Complete | 100% |
 
 ## Phase 1: Core Widgets (In Progress)
 
@@ -108,6 +121,7 @@ Complex data widgets.
 
 ## Key Milestones
 
+- 2026-05-18: **Canvas Architecture complete** (Display List rendering: CanvasCommand ADT, `<saola-canvas>` custom element, hit-testing system; D3 Force Layout Worker for graph visualization; entity_graph_canvas and bar_chart_canvas implementations; replaced Cytoscape with pure Gleam + Canvas 2D)
 - 2026-05-18: **Batch 11 complete** (8 additional widgets: rating, search, time_picker, multiselect, navigation_bar, stepper, tree_view, timeline — all with tests; `saola/form` removed; 307 tests passing)
 - 2026-05-17: **Phase 4 complete** (publish and DX: consumer setup guide, asset implementation, pre-publish verification; awaiting manual `gleam publish` with HEXPM_API_KEY)
 - 2026-05-17: Phase 3 complete (dynamic theme listener: OS dark mode changes now update UI in real-time)

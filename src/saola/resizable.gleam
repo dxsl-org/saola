@@ -6,6 +6,9 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
+@external(javascript, "./resizable_ffi.mjs", "ensure_registered")
+fn ensure_registered() -> Nil
+
 pub type ResizableDirection {
   Horizontal
   Vertical
@@ -90,6 +93,7 @@ pub fn resizable_full(
   on_resize: fn(List(Float)) -> msg,
   attrs: ResizableAttrs,
 ) -> Element(msg) {
+  ensure_registered()
   let min_sizes = list.map(panels, fn(p) { p.min_size })
   let extra_class = case attrs.class {
     "" -> a.none()

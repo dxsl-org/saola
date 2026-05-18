@@ -2,6 +2,8 @@ import gleam/int
 import lustre/attribute as a
 import lustre/element.{type Element}
 
+@external(javascript, "./code_editor_ffi.mjs", "ensure_registered")
+fn ensure_registered() -> Nil
 
 pub type EditorAttrs {
   EditorAttrs(
@@ -27,11 +29,8 @@ pub const default_editor_attrs = EditorAttrs(
   aria_label: "Code editor",
 )
 
-/// Render a CodeMirror-powered code editor as a blackbox custom element.
-///
-/// Import `assets/saola-codemirror-editor.mjs` once in the host app. CodeMirror owns the
-/// editor runtime, workers, keyboard interaction, and text model.
 pub fn editor(attrs attrs: EditorAttrs) -> Element(msg) {
+  ensure_registered()
   let EditorAttrs(
     id:,
     value:,

@@ -5,6 +5,9 @@ import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/event as e
 
+@external(javascript, "./multiselect_ffi.mjs", "ensure_registered")
+fn ensure_registered() -> Nil
+
 pub type MultiselectAttrs {
   MultiselectAttrs(
     placeholder: String,
@@ -41,6 +44,7 @@ pub fn multiselect_full(
   on_change: fn(List(String)) -> msg,
   attrs: MultiselectAttrs,
 ) -> Element(msg) {
+  ensure_registered()
   let root_class = case attrs.class {
     "" -> "multiselect"
     c -> "multiselect " <> c

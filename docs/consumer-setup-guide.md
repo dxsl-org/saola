@@ -68,32 +68,26 @@ Every widget follows the pattern:
 
 ## 4. Web Component Widgets
 
-Some widgets are backed by custom elements (JavaScript required). Copy the `.mjs` file
-from the Saola package and include it before using the widget:
+Some widgets are backed by custom elements. Their JavaScript is co-located in the Saola
+package and bundled automatically by Vite — no manual file copying or `<script>` tags needed.
+
+Widgets with external peer dependencies lazy-load those libraries on first render.
+Install only the ones you use:
 
 ```sh
-cp build/packages/saola/assets/saola-carousel.mjs public/
-cp build/packages/saola/assets/saola-resizable-panels.mjs public/
-cp build/packages/saola/assets/saola-multiselect.mjs public/
-cp build/packages/saola/assets/saola-d3-bar-chart.mjs public/
-cp build/packages/saola/assets/saola-codemirror-editor.mjs public/
+npm install d3          # saola/d3_bar_chart
+npm install codemirror @codemirror/lang-javascript @codemirror/state  # saola/code_editor
+npm install cytoscape cytoscape-fcose  # saola/entity_graph
 ```
 
-Reference in your HTML shell — only include scripts for widgets you actually use:
-
-```html
-<script type="module" src="/saola-carousel.mjs"></script>
-<script type="module" src="/saola-resizable-panels.mjs"></script>
-<script type="module" src="/saola-multiselect.mjs"></script>
-```
-
-| Widget | Script file | Gleam module | Extra deps |
-|--------|------------|--------------|------------|
-| Carousel | `saola-carousel.mjs` | `saola/carousel` | — |
-| Resizable panels | `saola-resizable-panels.mjs` | `saola/resizable` | — |
-| Multi-select | `saola-multiselect.mjs` | `saola/multiselect` | — |
-| D3 bar chart | `saola-d3-bar-chart.mjs` | `saola/d3_bar_chart` | D3.js v7 via CDN |
-| CodeMirror editor | `saola-codemirror-editor.mjs` | `saola/codemirror_editor` | CodeMirror 6 via CDN |
+| Widget | Gleam module | Peer dependency |
+|--------|--------------|-----------------|
+| Carousel | `saola/carousel` | — |
+| Resizable panels | `saola/resizable` | — |
+| Multi-select | `saola/multiselect` | — |
+| D3 bar chart | `saola/d3_bar_chart` | `d3` |
+| CodeMirror editor | `saola/code_editor` | `codemirror`, `@codemirror/lang-javascript`, `@codemirror/state` |
+| Entity graph | `saola/entity_graph` | `cytoscape`, `cytoscape-fcose` |
 
 ---
 

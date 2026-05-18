@@ -155,7 +155,7 @@ set series(value) {
 
 ### 5. Shadow DOM + template
 
-Always use Shadow DOM for encapsulation. Define the template once outside the class, clone it in the constructor:
+Use Shadow DOM by default for encapsulation. Define the template once outside the class, clone it in the constructor:
 
 ```js
 const template = document.createElement('template')
@@ -168,6 +168,8 @@ class MyElement extends HTMLElement {
   }
 }
 ```
+
+**Exception — canvas-based renderers (Cytoscape.js, sigma.js, raw `<canvas>`):** use light DOM (no `attachShadow`). Shadow DOM breaks canvas mouse event retargeting, causing drag and hover to malfunction (Cytoscape.js bug #3273).
 
 ### 6. element.to_string skips properties
 

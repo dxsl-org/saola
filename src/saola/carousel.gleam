@@ -5,6 +5,9 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
+@external(javascript, "./carousel_ffi.mjs", "ensure_registered")
+fn ensure_registered() -> Nil
+
 pub type CarouselOrientation {
   Horizontal
   Vertical
@@ -44,6 +47,7 @@ pub fn carousel_full(
   on_change: fn(Int, Bool, Bool) -> msg,
   attrs: CarouselAttrs,
 ) -> Element(msg) {
+  ensure_registered()
   let _ = current_index
   let _ = can_scroll_prev
   let _ = can_scroll_next

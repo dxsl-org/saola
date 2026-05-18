@@ -3,6 +3,9 @@ import gleam/json
 import lustre/attribute as a
 import lustre/element.{type Element}
 
+@external(javascript, "./d3_bar_chart_ffi.mjs", "ensure_registered")
+fn ensure_registered() -> Nil
+
 pub type ChartPoint {
   ChartPoint(label: String, value: Float)
 }
@@ -25,14 +28,11 @@ pub const default_bar_chart_attrs = BarChartAttrs(
   aria_label: "Bar chart",
 )
 
-/// Render a D3-powered bar chart as a blackbox custom element.
-///
-/// The Gleam side owns typed data and attributes. The JavaScript custom element
-/// registered from `assets/saola-d3-bar-chart.mjs` owns all D3 rendering.
 pub fn bar_chart(
   data: List(ChartPoint),
   attrs attrs: BarChartAttrs,
 ) -> Element(msg) {
+  ensure_registered()
   let BarChartAttrs(id:, title:, height:, class:, aria_label:) = attrs
   element.element("saola-d3-bar-chart", [
     case id {

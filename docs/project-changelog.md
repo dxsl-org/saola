@@ -2,6 +2,92 @@
 
 All notable changes to the Saola UI Kit are documented here.
 
+## [2026-05-18] — Canvas Architecture: Display List Rendering & D3 Graph Layout
+
+### Summary
+
+Implemented a major new visualization architecture enabling efficient canvas-based rendering with hit-testing and D3 force-layout graph visualization. Gleam/Lustre now owns all visualization logic, emitting typed command lists and hit areas to a custom `<saola-canvas>` element for Hardware-accelerated drawing.
+
+### Architecture Overview
+
+**Display List Pattern:**
+- All visualization logic lives in Gleam (stateless, purely functional)
+- Gleam outputs `List(CanvasCommand)` + `List(HitArea(msg))`
+- `<saola-canvas>` custom element executes commands via Canvas 2D API
+- Mouse events return coordinates back to Gleam for hit-testing
+- Hit-testing runs in Gleam → returns typed message
+
+**Graph Layout Pipeline:**
+- `request_layout(nodes, edges, to_msg)` launches D3 force simulation in a JS Worker
+- Worker returns normalized positions [0, 1] to Gleam (no canvas coordinates baked in)
+- Gleam receives `LayoutResult(positions, edge_routes)` via Lustre Effect
+- Consumer assembles graph visualization with `entity_graph_canvas()`
+
+### New Modules
+
+**Canvas Core** (`src/saola/canvas_command.gleam`)
+- `CanvasCommand` ADT: SetFill, FillRect, Arc, FillText, SetTextAlign, SetTextBaseline, Save/Restore, Transform stack, paths, etc.
+- `HitArea(msg)` ADT: RectHit, CircleHit for interactive regions
+- `CanvasOutput(msg)` record: pairs commands with hit areas
+- `hit_test(areas, x, y) -> Option(msg)` — runs in Gleam on tap events
+- JSON encoding helpers for property serialization
+
+**Canvas Element** (`src/saola/canvas_ffi.mjs`)
+- `<saola-canvas>` custom element: DPR-scaled canvas setup, ResizeObserver
+- Command executor: interprets `CanvasCommand` list, updates canvas state
+- Event system: tap, hover, drag, wheel → detail records with x/y/dx/dy
+- Property setters for `commands` and `hitAreas` (JS properties, not attributes)
+
+**Graph Layout** (`src/saola/graph_layout.gleam`)
+- `LayoutNode(id)` and `LayoutEdge(source, target)` inputs
+- `NodePosition(id, x, y)` and `EdgeRoute(source_id, target_id, points)` outputs
+- `request_layout(nodes, edges, to_msg) -> Effect(msg)` — async Effect for Worker
+- JSON encode/decode for IPC with Worker thread
+
+**Graph Layout Worker** (`src/saola/graph_layout_worker.js`)
+- D3 force simulation (d3-force library)
+- Node repulsion, edge attraction, simulation loop
+- Returns normalized [0,1] coordinates
+
+**Graph Layout FFI** (`src/saola/graph_layout_ffi.mjs`)
+- Lazy Worker spawn and message routing
+- Handles Worker lifecycle and JSON IPC
+
+**Entity Graph Canvas** (`src/saola/entity_graph_canvas.gleam`)
+- `entity_graph_canvas(nodes, edges, positions, attrs, on_node_tap) -> CanvasOutput(msg)`
+- Builds node/edge commands from layout positions
+- Includes pan/zoom transform stack
+- `entity_graph_element(output, on_tap, on_drag, on_zoom) -> Element(msg)`
+- Bridges CanvasOutput to Lustre Element via `<saola-canvas>` custom element
+
+### Modified Modules
+
+**Bar Chart** (`src/saola/lustre_bar_chart.gleam`)
+- Added `bar_chart_canvas(data, attrs, on_bar_click) -> CanvasOutput(msg)`
+- Parallel to existing SVG `bar_chart()` function
+- Demonstrates display-list rendering pattern for common visualization
+
+### Deleted Modules
+
+**Cytoscape Wrapper** (removed)
+- `src/saola/entity_graph.gleam` — Replaced by entity_graph_canvas.gleam
+- `src/saola/entity_graph_ffi.mjs` — Cytoscape blackbox eliminated
+- Rationale: Canvas architecture gives full control, eliminates Cytoscape dependency, enables pan/zoom/hit-testing in Gleam
+
+### Key Design Principles
+
+1. **Gleam owns visualization** — No imperative JS state management; Gleam emits declarative commands
+2. **Typed hit areas** — Interactive regions are strongly-typed `HitArea(msg)`, not event listeners in JS
+3. **Worker isolation** — Heavy D3 layout computation off main thread
+4. **Property-based binding** — Structured data via `a.property()`, not JSON-serialized attributes
+5. **DPR scaling** — Canvas auto-scales to device pixel ratio for sharp rendering
+
+### Tests
+
+- All existing tests continue to pass
+- Canvas architecture is tested indirectly through entity graph and bar chart tests
+- Hit-testing logic verified in Gleam unit tests
+
 ## [2026-05-18] — Batch 11: Finalize 8 New Widgets for v1.0.0
 
 ### Summary

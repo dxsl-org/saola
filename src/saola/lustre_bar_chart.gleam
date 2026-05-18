@@ -1,9 +1,11 @@
 import gleam/int
 import gleam/list
+import gleam/option.{type Option, None, Some}
 import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/element/svg
+import saola/canvas_command as canvas
 import saola/lustre_bar_chart_helpers as chart
 
 pub type ChartPoint {
@@ -205,5 +207,157 @@ fn values(data: List(ChartPoint)) -> List(Float) {
   |> list.map(fn(point) {
     let ChartPoint(value:, ..) = point
     value
+  })
+}
+
+// ---------------------------------------------------------------------------
+// Canvas renderer — outputs CanvasOutput(msg) instead of Element(msg)
+// ---------------------------------------------------------------------------
+
+pub fn bar_chart_canvas(
+  data: List(ChartPoint),
+  attrs: BarChartAttrs,
+  on_bar_click: Option(fn(ChartPoint) -> msg),
+) -> canvas.CanvasOutput(msg) {
+  let layout = chart.new_layout(attrs.width, attrs.height)
+  let max_val = data |> values |> chart.max_value
+  let inner = case data {
+    [] -> [
+      canvas.SetFill("currentColor"),
+      canvas.SetFont("12px sans-serif"),
+      canvas.SetTextAlign("center"),
+      canvas.FillText("No data", layout.inner_width /. 2.0, layout.inner_height /. 2.0),
+    ]
+    _ ->
+      list.flatten([
+        canvas_grid(layout, max_val),
+        canvas_bars(data, layout, max_val),
+        canvas_x_axis(data, layout),
+        canvas_y_axis(layout, max_val),
+      ])
+  }
+  let title_cmds = case attrs.title {
+    "" -> []
+    t -> [
+      canvas.SetFill("currentColor"),
+      canvas.SetFont("600 14px sans-serif"),
+      canvas.SetTextAlign("center"),
+      canvas.FillText(t, layout.width /. 2.0, 14.0),
+    ]
+  }
+  let commands =
+    list.flatten([
+      title_cmds,
+      [canvas.Save, canvas.Translate(layout.left, layout.top)],
+      inner,
+      [canvas.Restore],
+    ])
+  let hit_areas = case on_bar_click {
+    None -> []
+    Some(handler) -> canvas_bar_hit_areas(data, layout, max_val, handler)
+  }
+  canvas.CanvasOutput(commands:, hit_areas:)
+}
+
+fn canvas_grid(
+  layout: chart.Layout,
+  max_val: Float,
+) -> List(canvas.CanvasCommand) {
+  let path_cmds =
+    chart.ticks(max_val)
+    |> list.map(fn(tick) {
+      let y = layout.inner_height -. chart.scaled(tick, max_val, layout.inner_height)
+      [canvas.MoveTo(0.0, y), canvas.LineTo(layout.inner_width, y)]
+    })
+    |> list.flatten
+  list.flatten([
+    [
+      canvas.SetStroke("hsl(214 32% 91%)"),
+      canvas.SetLineWidth(0.5),
+      canvas.BeginPath,
+    ],
+    path_cmds,
+    [canvas.Stroke],
+  ])
+}
+
+fn canvas_bars(
+  data: List(ChartPoint),
+  layout: chart.Layout,
+  max_val: Float,
+) -> List(canvas.CanvasCommand) {
+  let count = data |> list.length |> int.to_float
+  let gap = 18.0
+  let band = layout.inner_width /. count
+  let bar_width = chart.max_pair(band -. gap, 1.0)
+  let bar_cmds =
+    chart.indexed_map(data, fn(point, index) {
+      let ChartPoint(value:, ..) = point
+      let x = int.to_float(index) *. band +. gap /. 2.0
+      let h = chart.scaled(value, max_val, layout.inner_height)
+      let y = layout.inner_height -. h
+      canvas.FillRect(x, y, bar_width, h)
+    })
+  [canvas.SetFill("#2563eb"), ..bar_cmds]
+}
+
+fn canvas_x_axis(
+  data: List(ChartPoint),
+  layout: chart.Layout,
+) -> List(canvas.CanvasCommand) {
+  let count = data |> list.length |> int.to_float
+  let band = layout.inner_width /. count
+  let label_cmds =
+    chart.indexed_map(data, fn(point, index) {
+      let ChartPoint(label:, ..) = point
+      let x = int.to_float(index) *. band +. band /. 2.0
+      canvas.FillText(label, x, layout.inner_height +. 26.0)
+    })
+  list.flatten([
+    [
+      canvas.SetFill("currentColor"),
+      canvas.SetFont("12px sans-serif"),
+      canvas.SetTextAlign("center"),
+    ],
+    label_cmds,
+  ])
+}
+
+fn canvas_y_axis(
+  layout: chart.Layout,
+  max_val: Float,
+) -> List(canvas.CanvasCommand) {
+  let tick_cmds =
+    chart.ticks(max_val)
+    |> list.map(fn(tick) {
+      let y = layout.inner_height -. chart.scaled(tick, max_val, layout.inner_height)
+      canvas.FillText(chart.f(tick), -8.0, y +. 4.0)
+    })
+  list.flatten([
+    [
+      canvas.SetFill("currentColor"),
+      canvas.SetFont("12px sans-serif"),
+      canvas.SetTextAlign("right"),
+    ],
+    tick_cmds,
+  ])
+}
+
+fn canvas_bar_hit_areas(
+  data: List(ChartPoint),
+  layout: chart.Layout,
+  max_val: Float,
+  handler: fn(ChartPoint) -> msg,
+) -> List(canvas.HitArea(msg)) {
+  let count = data |> list.length |> int.to_float
+  let gap = 18.0
+  let band = layout.inner_width /. count
+  let bar_width = chart.max_pair(band -. gap, 1.0)
+  chart.indexed_map(data, fn(point, index) {
+    let ChartPoint(value:, ..) = point
+    let x = int.to_float(index) *. band +. gap /. 2.0 +. layout.left
+    let h = chart.scaled(value, max_val, layout.inner_height)
+    let y = layout.inner_height -. h +. layout.top
+    canvas.RectHit(x, y, bar_width, h, handler(point))
   })
 }
