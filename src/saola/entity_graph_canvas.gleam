@@ -1,6 +1,7 @@
 import gleam/dict.{type Dict}
 import gleam/dynamic/decode
 import gleam/float
+import gleam/int
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/result
@@ -26,6 +27,7 @@ pub type EntityGraphCanvasAttrs {
     zoom: Float,
     selected_ids: List(String),
     dimmed_ids: List(String),
+    node_radius: Float,
   )
 }
 
@@ -36,9 +38,8 @@ pub const default_entity_graph_canvas_attrs = EntityGraphCanvasAttrs(
   zoom: 1.0,
   selected_ids: [],
   dimmed_ids: [],
+  node_radius: 18.0,
 )
-
-const node_radius = 20.0
 
 const padding = 60.0
 
@@ -51,7 +52,7 @@ pub fn entity_graph_canvas(
   attrs: EntityGraphCanvasAttrs,
   on_node_tap: Option(fn(String) -> msg),
 ) -> canvas.CanvasOutput(msg) {
-  let EntityGraphCanvasAttrs(width:, height:, pan:, zoom:, selected_ids:, dimmed_ids:) = attrs
+  let EntityGraphCanvasAttrs(width:, height:, pan:, zoom:, selected_ids:, dimmed_ids:, node_radius:) = attrs
   let pos_map = build_position_map(positions)
   let #(px, py) = pan
   let commands =
@@ -62,14 +63,14 @@ pub fn entity_graph_canvas(
         canvas.Scale(zoom, zoom),
         canvas.Translate(float.negate(width /. 2.0), float.negate(height /. 2.0)),
       ],
-      edge_commands(edges, pos_map, width, height, dimmed_ids),
-      node_commands(nodes, pos_map, width, height, selected_ids, dimmed_ids),
+      edge_commands(edges, pos_map, width, height, dimmed_ids, node_radius),
+      node_commands(nodes, pos_map, width, height, selected_ids, dimmed_ids, node_radius),
       [canvas.Restore],
     ])
   let hit_areas = case on_node_tap {
     None -> []
     Some(handler) ->
-      node_hit_areas(nodes, pos_map, pan, zoom, width, height, handler)
+      node_hit_areas(nodes, pos_map, pan, zoom, width, height, node_radius, handler)
   }
   canvas.CanvasOutput(commands:, hit_areas:)
 }
@@ -118,6 +119,15 @@ fn scale_position(nx: Float, ny: Float, w: Float, h: Float) -> #(Float, Float) {
   #(padding +. nx *. { w -. 2.0 *. padding }, padding +. ny *. { h -. 2.0 *. padding })
 }
 
+fn group_color(group: String) -> String {
+  case group {
+    "critical" -> "#ef4444"
+    "high" -> "#f59e0b"
+    "medium" -> "#a855f7"
+    _ -> "#6b7280"
+  }
+}
+
 fn node_commands(
   nodes: List(GraphNode),
   pos_map: Dict(String, #(Float, Float)),
@@ -125,34 +135,47 @@ fn node_commands(
   h: Float,
   selected_ids: List(String),
   dimmed_ids: List(String),
+  nr: Float,
 ) -> List(canvas.CanvasCommand) {
   let normal = list.filter(nodes, fn(n) { !list.contains(selected_ids, n.id) && !list.contains(dimmed_ids, n.id) })
   let dimmed = list.filter(nodes, fn(n) { list.contains(dimmed_ids, n.id) })
   let selected = list.filter(nodes, fn(n) { list.contains(selected_ids, n.id) })
 
-  let draw_circles = fn(ns: List(GraphNode)) {
-    list.flat_map(ns, fn(node) {
-      case dict.get(pos_map, node.id) {
-        Error(_) -> []
-        Ok(#(nx, ny)) -> {
-          let #(cx, cy) = scale_position(nx, ny, w, h)
-          [canvas.BeginPath, canvas.Arc(cx, cy, node_radius, 0.0, two_pi, False), canvas.Fill]
-        }
+  let draw_circle = fn(node: GraphNode) -> List(canvas.CanvasCommand) {
+    case dict.get(pos_map, node.id) {
+      Error(_) -> []
+      Ok(#(nx, ny)) -> {
+        let #(cx, cy) = scale_position(nx, ny, w, h)
+        [canvas.BeginPath, canvas.Arc(cx, cy, nr, 0.0, two_pi, False), canvas.Fill]
+      }
+    }
+  }
+
+  // Draw a group of nodes, setting fill color per severity group
+  let draw_by_severity = fn(ns: List(GraphNode)) {
+    list.flat_map(["critical", "high", "medium", "low"], fn(g) {
+      let group_nodes = list.filter(ns, fn(n) { n.group == g })
+      case group_nodes {
+        [] -> []
+        _ -> list.flatten([[canvas.SetFill(group_color(g))], list.flat_map(group_nodes, draw_circle)])
       }
     })
   }
 
-  let draw_labels = fn(ns: List(GraphNode)) {
-    list.flat_map(ns, fn(node) {
+  let font_size = float.round(nr *. 1.6)
+  let font = int.to_string(font_size) <> "px sans-serif"
+
+  // Labels only for selected nodes — too cluttered otherwise
+  let draw_selected_labels =
+    list.flat_map(selected, fn(node) {
       case dict.get(pos_map, node.id) {
         Error(_) -> []
         Ok(#(nx, ny)) -> {
           let #(cx, cy) = scale_position(nx, ny, w, h)
-          [canvas.FillText(node.label, cx, cy)]
+          [canvas.FillText(node.label, cx, cy -. nr -. 4.0)]
         }
       }
     })
-  }
 
   let draw_selected_rings =
     list.flat_map(selected, fn(node) {
@@ -160,38 +183,26 @@ fn node_commands(
         Error(_) -> []
         Ok(#(nx, ny)) -> {
           let #(cx, cy) = scale_position(nx, ny, w, h)
-          [
-            canvas.BeginPath,
-            canvas.Arc(cx, cy, node_radius +. 3.0, 0.0, two_pi, False),
-            canvas.Stroke,
-          ]
+          [canvas.BeginPath, canvas.Arc(cx, cy, nr +. 3.0, 0.0, two_pi, False), canvas.Stroke]
         }
       }
     })
 
   list.flatten([
-    // dimmed nodes at 25% alpha
-    [canvas.Save, canvas.SetAlpha(0.25), canvas.SetFill("#2563eb")],
-    draw_circles(dimmed),
+    [canvas.Save, canvas.SetAlpha(0.18)],
+    draw_by_severity(dimmed),
     [canvas.Restore],
-    // normal nodes
-    [canvas.SetFill("#2563eb")],
-    draw_circles(normal),
-    // selected nodes in amber
-    [canvas.SetFill("#f59e0b")],
-    draw_circles(selected),
-    // selected ring (white stroke)
+    draw_by_severity(normal),
+    draw_by_severity(selected),
     [canvas.SetStroke("#ffffff"), canvas.SetLineWidth(2.0)],
     draw_selected_rings,
-    // labels for all non-dimmed
     [
       canvas.SetFill("#ffffff"),
-      canvas.SetFont("11px sans-serif"),
+      canvas.SetFont(font),
       canvas.SetTextAlign("center"),
       canvas.SetTextBaseline("middle"),
     ],
-    draw_labels(normal),
-    draw_labels(selected),
+    draw_selected_labels,
   ])
 }
 
@@ -201,8 +212,9 @@ fn edge_commands(
   w: Float,
   h: Float,
   dimmed_ids: List(String),
+  nr: Float,
 ) -> List(canvas.CanvasCommand) {
-  let edge_color = "hsl(215 16% 47%)"
+  let edge_color = "hsl(215 30% 58%)"
   let normal_edges =
     list.filter(edges, fn(edge) {
       !list.contains(dimmed_ids, edge.source) || !list.contains(dimmed_ids, edge.target)
@@ -218,7 +230,7 @@ fn edge_commands(
         Ok(#(snx, sny)), Ok(#(tnx, tny)) -> {
           let #(sx, sy) = scale_position(snx, sny, w, h)
           let #(tx, ty) = scale_position(tnx, tny, w, h)
-          draw_edge(sx, sy, tx, ty)
+          draw_edge(sx, sy, tx, ty, nr)
         }
         _, _ -> []
       }
@@ -234,7 +246,7 @@ fn edge_commands(
   ])
 }
 
-fn draw_edge(sx: Float, sy: Float, tx: Float, ty: Float) -> List(canvas.CanvasCommand) {
+fn draw_edge(sx: Float, sy: Float, tx: Float, ty: Float, nr: Float) -> List(canvas.CanvasCommand) {
   let dx = tx -. sx
   let dy = ty -. sy
   let len = float.square_root(dx *. dx +. dy *. dy) |> result.unwrap(1.0)
@@ -243,14 +255,14 @@ fn draw_edge(sx: Float, sy: Float, tx: Float, ty: Float) -> List(canvas.CanvasCo
     False -> {
       let ux = dx /. len
       let uy = dy /. len
-      let start_x = sx +. ux *. node_radius
-      let start_y = sy +. uy *. node_radius
-      let tip_x = tx -. ux *. node_radius
-      let tip_y = ty -. uy *. node_radius
+      let start_x = sx +. ux *. nr
+      let start_y = sy +. uy *. nr
+      let tip_x = tx -. ux *. nr
+      let tip_y = ty -. uy *. nr
       let perp_x = float.negate(uy)
       let perp_y = ux
-      let arrow_len = 10.0
-      let arrow_w = 4.0
+      let arrow_len = nr *. 0.6
+      let arrow_w = nr *. 0.25
       let base_x = tip_x -. ux *. arrow_len
       let base_y = tip_y -. uy *. arrow_len
       [
@@ -276,6 +288,7 @@ fn node_hit_areas(
   zoom: Float,
   w: Float,
   h: Float,
+  nr: Float,
   handler: fn(String) -> msg,
 ) -> List(canvas.HitArea(msg)) {
   let #(px, py) = pan
@@ -287,7 +300,7 @@ fn node_hit_areas(
         let #(gx, gy) = scale_position(nx, ny, w, h)
         let cx = { gx -. w /. 2.0 } *. zoom +. px +. w /. 2.0
         let cy = { gy -. h /. 2.0 } *. zoom +. py +. h /. 2.0
-        [canvas.CircleHit(cx, cy, node_radius *. zoom, handler(id))]
+        [canvas.CircleHit(cx, cy, nr *. zoom, handler(id))]
       }
     }
   })

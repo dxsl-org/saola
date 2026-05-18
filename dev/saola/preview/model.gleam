@@ -196,6 +196,7 @@ pub type Model {
     threat_selected_ids: List(String),
     threat_severity_filter: List(String),
     threat_search: String,
+    threat_map_country_filter: Option(String),
     threat_graph_positions: List(NodePosition),
     threat_graph_layout_done: Bool,
     threat_graph_pan: #(Float, Float),
@@ -322,6 +323,7 @@ pub type Msg {
   ThreatTimelineEntityChanged(Option(String))
   ThreatLayoutReceived(graph_layout.LayoutResult)
   ThreatFiltersCleared
+  ThreatMapCountryClicked(String)
   // Heatmap comparison
   HeatmapSizeChanged(Int)
   HeatmapCellPxChanged(Int)

@@ -1,10 +1,10 @@
+import gleam/dict
+import gleam/int
 import gleam/list
-import gleam/option.{type Option, None, Some}
+import gleam/option
+import gleam/result
+import gleam/string
 import saola/timeline
-
-// ---------------------------------------------------------------------------
-// Domain types
-// ---------------------------------------------------------------------------
 
 pub type Severity {
   Critical
@@ -17,11 +17,13 @@ pub type ThreatActor {
   ThreatActor(
     id: String,
     name: String,
-    severity: Severity,
     country: String,
+    severity: Severity,
     ip: String,
-    last_seen: String,
+    lat: Float,
+    lng: Float,
     connections: Int,
+    last_seen: String,
   )
 }
 
@@ -31,7 +33,6 @@ pub type ThreatEdge {
 
 pub type ThreatEvent {
   ThreatEvent(
-    entity_id: String,
     time: String,
     title: String,
     description: String,
@@ -40,24 +41,15 @@ pub type ThreatEvent {
 }
 
 // ---------------------------------------------------------------------------
-// Severity helpers
+// Public API
 // ---------------------------------------------------------------------------
 
-pub fn severity_label(s: Severity) -> String {
-  case s {
+pub fn severity_label(sev: Severity) -> String {
+  case sev {
     Critical -> "critical"
     High -> "high"
     Medium -> "medium"
     Low -> "low"
-  }
-}
-
-pub fn severity_from_index(i: Int) -> Severity {
-  case i % 4 {
-    0 -> Critical
-    1 -> High
-    2 -> Medium
-    _ -> Low
   }
 }
 
@@ -70,116 +62,282 @@ pub fn all_severity_options() -> List(#(String, String)) {
   ]
 }
 
-// ---------------------------------------------------------------------------
-// Static deterministic data
-// ---------------------------------------------------------------------------
-
 pub fn all_actors() -> List(ThreatActor) {
-  [
-    ThreatActor("t01", "APT-Phantom", Critical, "Russia", "185.220.101.42", "2026-05-18", 5),
-    ThreatActor("t02", "DarkNebula", High, "China", "103.224.182.17", "2026-05-17", 4),
-    ThreatActor("t03", "GhostRidge", High, "Iran", "91.108.4.121", "2026-05-17", 3),
-    ThreatActor("t04", "SilentFang", Medium, "N.Korea", "175.45.176.0", "2026-05-16", 2),
-    ThreatActor("t05", "IronVeil", Critical, "Russia", "194.165.16.77", "2026-05-18", 6),
-    ThreatActor("t06", "BlueLotus", Medium, "China", "58.42.10.211", "2026-05-15", 2),
-    ThreatActor("t07", "VoidCobra", High, "Iran", "5.79.66.25", "2026-05-17", 4),
-    ThreatActor("t08", "RedAster", Low, "Unknown", "192.0.2.45", "2026-05-14", 1),
-    ThreatActor("t09", "CrimsonDawn", Critical, "Russia", "45.142.212.100", "2026-05-18", 5),
-    ThreatActor("t10", "SandStorm", High, "Iran", "188.209.52.14", "2026-05-16", 3),
-    ThreatActor("t11", "FrostMoth", Medium, "China", "60.190.200.8", "2026-05-15", 2),
-    ThreatActor("t12", "EmberPulse", Low, "Unknown", "203.0.113.88", "2026-05-13", 1),
-    ThreatActor("t13", "NovaBreach", High, "N.Korea", "175.45.176.11", "2026-05-17", 3),
-    ThreatActor("t14", "IceThorn", Medium, "Russia", "82.102.11.64", "2026-05-16", 2),
-    ThreatActor("t15", "SolarFlare", Critical, "Unknown", "104.18.44.229", "2026-05-18", 7),
-    ThreatActor("t16", "DuskRaven", Low, "China", "123.125.114.0", "2026-05-12", 1),
-    ThreatActor("t17", "VolcanicKite", High, "Iran", "78.159.99.200", "2026-05-17", 4),
-    ThreatActor("t18", "SteelThread", Medium, "Russia", "37.49.230.0", "2026-05-15", 2),
-    ThreatActor("t19", "NightOwl", Critical, "N.Korea", "175.45.176.33", "2026-05-18", 5),
-    ThreatActor("t20", "ClearWater", Low, "Unknown", "198.51.100.77", "2026-05-11", 1),
-    ThreatActor("t21", "OrangeDrift", Medium, "China", "27.159.255.55", "2026-05-16", 2),
-    ThreatActor("t22", "TangleSea", High, "Russia", "185.107.56.20", "2026-05-17", 3),
-    ThreatActor("t23", "WildFrost", Low, "Unknown", "192.168.0.0", "2026-05-10", 1),
-    ThreatActor("t24", "Ouroboros", Critical, "Unknown", "193.56.255.200", "2026-05-18", 8),
-    ThreatActor("t25", "PurpleShard", Medium, "Iran", "46.36.199.188", "2026-05-14", 2),
-    ThreatActor("t26", "MidnightHex", High, "China", "122.194.0.0", "2026-05-16", 3),
-    ThreatActor("t27", "CopperGate", Low, "Russia", "91.234.254.0", "2026-05-09", 1),
-    ThreatActor("t28", "BlazeLink", High, "Iran", "5.159.58.0", "2026-05-17", 4),
-    ThreatActor("t29", "ZeroBloom", Critical, "N.Korea", "175.45.177.0", "2026-05-18", 6),
-    ThreatActor("t30", "GrayEcho", Medium, "Unknown", "203.78.12.44", "2026-05-15", 2),
-  ]
+  generate_actors()
 }
 
 pub fn all_edges() -> List(ThreatEdge) {
-  [
-    ThreatEdge("e01", "t01", "t05", "coordinates"),
-    ThreatEdge("e02", "t01", "t09", "shared-infra"),
-    ThreatEdge("e03", "t01", "t22", "funds"),
-    ThreatEdge("e04", "t05", "t09", "coordinates"),
-    ThreatEdge("e05", "t05", "t15", "shares-tools"),
-    ThreatEdge("e06", "t05", "t19", "recruits"),
-    ThreatEdge("e07", "t09", "t29", "C2"),
-    ThreatEdge("e08", "t02", "t06", "coordinates"),
-    ThreatEdge("e09", "t02", "t11", "shared-infra"),
-    ThreatEdge("e10", "t02", "t26", "funds"),
-    ThreatEdge("e11", "t06", "t16", "phishing-kit"),
-    ThreatEdge("e12", "t11", "t21", "lateral-move"),
-    ThreatEdge("e13", "t03", "t07", "coordinates"),
-    ThreatEdge("e14", "t03", "t10", "shared-infra"),
-    ThreatEdge("e15", "t07", "t17", "exploits"),
-    ThreatEdge("e16", "t07", "t28", "C2"),
-    ThreatEdge("e17", "t10", "t25", "recruits"),
-    ThreatEdge("e18", "t04", "t13", "coordinates"),
-    ThreatEdge("e19", "t13", "t19", "shared-infra"),
-    ThreatEdge("e20", "t19", "t29", "C2"),
-    ThreatEdge("e21", "t15", "t24", "coordinates"),
-    ThreatEdge("e22", "t24", "t29", "funds"),
-    ThreatEdge("e23", "t24", "t15", "shared-infra"),
-    ThreatEdge("e24", "t14", "t18", "exploits"),
-    ThreatEdge("e25", "t14", "t22", "lateral-move"),
-    ThreatEdge("e26", "t22", "t01", "C2"),
-    ThreatEdge("e27", "t08", "t12", "phishing-kit"),
-    ThreatEdge("e28", "t08", "t23", "shares-tools"),
-    ThreatEdge("e29", "t12", "t20", "coordinates"),
-    ThreatEdge("e30", "t23", "t27", "lateral-move"),
-    ThreatEdge("e31", "t30", "t25", "exploits"),
-    ThreatEdge("e32", "t30", "t21", "C2"),
-    ThreatEdge("e33", "t26", "t16", "phishing-kit"),
-    ThreatEdge("e34", "t17", "t10", "coordinates"),
-    ThreatEdge("e35", "t28", "t03", "shared-infra"),
-    ThreatEdge("e36", "t29", "t04", "funds"),
-  ]
+  generate_edges()
+}
+
+pub fn find_actor(id: String) -> option.Option(ThreatActor) {
+  all_actors()
+  |> list.find(fn(a) { a.id == id })
+  |> option.from_result
+}
+
+pub fn events_for(entity_id: String) -> List(ThreatEvent) {
+  let seed = str_hash(entity_id)
+  list.map(range(0, 7), fn(i) { gen_event(seed, i) })
 }
 
 // ---------------------------------------------------------------------------
-// Timeline events — 4–6 events per actor, derived from id
+// Actor generation — 500 actors across 15 country clusters
 // ---------------------------------------------------------------------------
 
-fn events_for_actor(id: String, name: String, severity: Severity) -> List(ThreatEvent) {
-  let v = case severity {
-    Critical -> timeline.Error
-    High -> timeline.Warning
-    Medium -> timeline.Default
-    Low -> timeline.Success
-  }
+// #(country, id_prefix, base_lat, base_lng, count)
+fn country_configs() -> List(#(String, String, Float, Float, Int)) {
   [
-    ThreatEvent(id, "2026-05-18 14:32", "C2 beacon detected", "Outbound connection to known C2 server", v),
-    ThreatEvent(id, "2026-05-17 09:15", "Lateral movement", name <> " moved to adjacent subnet", timeline.Warning),
-    ThreatEvent(id, "2026-05-16 22:08", "Credential harvest", "Extracted credentials from memory", v),
-    ThreatEvent(id, "2026-05-15 11:44", "Initial access", "Spear-phishing email opened by target", timeline.Default),
-    ThreatEvent(id, "2026-05-14 07:30", "Reconnaissance", "Port scan of DMZ observed", timeline.Success),
+    #("Russia", "ru", 55.75, 37.62, 60),
+    #("China", "cn", 39.90, 116.40, 60),
+    #("Iran", "ir", 35.69, 51.42, 45),
+    #("North Korea", "kp", 39.02, 125.75, 40),
+    #("United States", "us", 37.09, -95.71, 35),
+    #("Ukraine", "ua", 50.45, 30.52, 30),
+    #("Germany", "de", 52.52, 13.40, 25),
+    #("India", "in", 28.61, 77.21, 25),
+    #("Brazil", "br", -15.78, -47.93, 25),
+    #("Vietnam", "vn", 21.03, 105.85, 25),
+    #("Romania", "ro", 44.43, 26.10, 25),
+    #("Nigeria", "ng", 9.07, 7.49, 25),
+    #("Pakistan", "pk", 33.72, 73.06, 25),
+    #("Turkey", "tr", 39.92, 32.86, 25),
+    #("Unknown", "xx", 0.0, 0.0, 50),
   ]
 }
 
-pub fn events_for(id: String) -> List(ThreatEvent) {
-  case list.find(all_actors(), fn(a) { a.id == id }) {
-    Error(_) -> []
-    Ok(actor) -> events_for_actor(actor.id, actor.name, actor.severity)
+fn generate_actors() -> List(ThreatActor) {
+  let #(actors, _) =
+    list.fold(country_configs(), #([], 0), fn(acc, cfg) {
+      let #(prev, global_start) = acc
+      let #(country, prefix, base_lat, base_lng, count) = cfg
+      let new_actors =
+        list.map(range(0, count - 1), fn(local_i) {
+          gen_actor(country, prefix, base_lat, base_lng, local_i, global_start + local_i)
+        })
+      #(list.append(prev, new_actors), global_start + count)
+    })
+  actors
+}
+
+fn gen_actor(
+  country: String,
+  prefix: String,
+  base_lat: Float,
+  base_lng: Float,
+  local_i: Int,
+  global_i: Int,
+) -> ThreatActor {
+  let n = local_i + 1
+  let id =
+    prefix
+    <> case n < 10 {
+      True -> "0" <> int.to_string(n)
+      False -> int.to_string(n)
+    }
+  // "Unknown" actors scatter pseudo-randomly across the globe
+  let scatter = country == "Unknown"
+  let lat =
+    case scatter {
+      True -> int.to_float(local_i * 37 % 180 - 90)
+      False -> base_lat +. int.to_float(local_i % 11 - 5) *. 0.55
+    }
+  let lng =
+    case scatter {
+      True -> int.to_float(local_i * 73 % 360 - 180)
+      False -> base_lng +. int.to_float(local_i / 11 % 11 - 5) *. 0.70
+    }
+  ThreatActor(
+    id: id,
+    name: gen_name(global_i),
+    country: country,
+    severity: gen_severity(country, global_i),
+    ip: "10."
+      <> int.to_string(global_i / 256 % 256)
+      <> "."
+      <> int.to_string(global_i % 256)
+      <> ".1",
+    lat: lat,
+    lng: lng,
+    connections: 1 + global_i % 13,
+    last_seen: date_at(global_i),
+  )
+}
+
+fn gen_name(i: Int) -> String {
+  let adjs = [
+    "Phantom", "Shadow", "Silent", "Dark", "Crimson", "Iron", "Storm", "Ghost",
+    "Viper", "Ember", "Frost", "Acid", "Neon", "Void", "Steel", "Night",
+    "Toxic", "Cyber", "Rogue", "Null",
+  ]
+  let nouns = [
+    "Bear", "Dragon", "Cobra", "Wolf", "Eagle", "Tiger", "Fox", "Hawk",
+    "Lynx", "Crow", "Spider", "Mantis", "Hornet", "Raven", "Jackal", "Wasp",
+    "Kraken", "Hydra", "Phoenix", "Basilisk",
+    "Chimera", "Medusa", "Sphinx", "Cyclops", "Minotaur",
+  ]
+  let adj = at(adjs, i % 20, "Agent")
+  let noun = at(nouns, i / 20 % 25, "Zero")
+  adj <> noun
+}
+
+fn gen_severity(country: String, i: Int) -> Severity {
+  let b = i % 10
+  case country {
+    "Russia" | "China" | "Iran" | "North Korea" ->
+      case b {
+        0 | 1 | 2 -> Critical
+        3 | 4 | 5 -> High
+        6 | 7 -> Medium
+        _ -> Low
+      }
+    _ ->
+      case b {
+        0 | 1 -> Critical
+        2 | 3 | 4 -> High
+        5 | 6 -> Medium
+        _ -> Low
+      }
   }
 }
 
-pub fn find_actor(id: String) -> Option(ThreatActor) {
-  case list.find(all_actors(), fn(a) { a.id == id }) {
-    Error(_) -> None
-    Ok(actor) -> Some(actor)
+fn date_at(i: Int) -> String {
+  let pool = [
+    "2025-01-03", "2025-01-11", "2025-01-19", "2025-01-28",
+    "2025-02-05", "2025-02-14", "2025-02-21", "2025-03-02",
+    "2025-03-10", "2025-03-18", "2025-03-26", "2025-04-04",
+    "2025-04-12", "2025-04-20", "2025-04-29", "2025-05-07",
+    "2025-05-15", "2025-05-23", "2025-05-31", "2025-06-08",
+  ]
+  at(pool, i % 20, "2025-01-01")
+}
+
+// ---------------------------------------------------------------------------
+// Edge generation — ~883 edges via 5 sparse connection patterns
+// ---------------------------------------------------------------------------
+
+fn generate_edges() -> List(ThreatEdge) {
+  let actors = all_actors()
+  let n = list.length(actors)
+  // O(1) index lookup via dict
+  let id_dict =
+    actors
+    |> list.index_map(fn(a, i) { #(i, a.id) })
+    |> dict.from_list
+  // #(step_modulo, target_offset, kind)
+  // step=1 → every node, step=3 → every 3rd, etc.
+  let patterns = [
+    #(1, 1, 0),
+    #(3, 7, 1),
+    #(5, 13, 2),
+    #(7, 23, 3),
+    #(11, 37, 4),
+  ]
+  list.flat_map(range(0, n - 1), fn(i) {
+    list.filter_map(patterns, fn(pat) {
+      let #(step, offset, kind) = pat
+      case i % step == 0 {
+        False -> Error(Nil)
+        True ->
+          case dict.get(id_dict, i), dict.get(id_dict, { i + offset } % n) {
+            Ok(src), Ok(tgt) ->
+              Ok(ThreatEdge(
+                id: "e" <> int.to_string(i * 5 + kind),
+                source: src,
+                target: tgt,
+                label: edge_label(kind),
+              ))
+            _, _ -> Error(Nil)
+          }
+      }
+    })
+  })
+}
+
+fn edge_label(kind: Int) -> String {
+  case kind {
+    0 -> "C2"
+    1 -> "Exfil"
+    2 -> "Lateral"
+    3 -> "Recon"
+    _ -> "Supply"
   }
+}
+
+// ---------------------------------------------------------------------------
+// Event generation — 8 events per actor, deterministic from ID hash
+// ---------------------------------------------------------------------------
+
+fn str_hash(s: String) -> Int {
+  s
+  |> string.to_utf_codepoints
+  |> list.map(string.utf_codepoint_to_int)
+  |> list.fold(0, fn(acc, x) { acc * 31 + x })
+}
+
+fn gen_event(seed: Int, offset: Int) -> ThreatEvent {
+  let h = { seed + offset * 7919 } % 1_000_003
+  let titles = [
+    "Initial Access", "Spear-Phishing Campaign", "Zero-Day Exploit Deployed",
+    "Credential Harvest", "Lateral Movement Detected", "Data Exfiltration",
+    "C2 Beacon Established", "Privilege Escalation", "Persistence Installed",
+    "Domain Enumeration", "VPN Pivot", "Supply Chain Compromise",
+    "Malware Deployed", "Ransomware Stage 1", "Ransomware Stage 2",
+    "Backdoor Planted", "Network Scan", "Insider Contact",
+    "Infrastructure Rotated", "New TTP Observed",
+  ]
+  let descs = [
+    "Sent targeted spear-phishing email with malicious Office macro to three executives.",
+    "Exploited unpatched CVE in public-facing VPN appliance to gain initial entry.",
+    "Harvested credentials via lookalike SSO portal mimicking corporate login page.",
+    "Moved laterally using compromised service account with Domain Admin privileges.",
+    "Exfiltrated 4.2 GB of intellectual property to overseas staging server via SFTP.",
+    "Established encrypted C2 channel over HTTPS port 443 blending with web traffic.",
+    "Elevated to SYSTEM privileges via token impersonation exploit on unpatched host.",
+    "Installed scheduled task and WMI subscription for boot-persistent execution.",
+    "Enumerated entire AD forest; catalogued 12 tier-0 assets and service accounts.",
+    "Pivoted through compromised VPN concentrator to reach isolated OT segment.",
+    "Tampered with CI/CD pipeline to inject signed payload into production release.",
+    "Deployed custom RAT with keylogging, clipboard capture, and covert exfil modules.",
+    "Initiated file encryption across 3 file servers — approximately 800k files affected.",
+    "Dropped ransom note, deleted VSS snapshots, and disabled all recovery mechanisms.",
+    "Planted dormant backdoor in authentication library with encrypted remote config.",
+    "Conducted stealth internal network scan; discovered 340 live hosts across 12 VLANs.",
+    "Coordinated with malicious insider to obtain physical badge access to data centre.",
+    "Rotated C2 infrastructure to fresh bulletproof hosting provider in new jurisdiction.",
+    "First observed use of process hollowing technique to evade endpoint detection.",
+    "Gained initial foothold via compromised third-party vendor remote-access credentials.",
+  ]
+  let times = [
+    "2025-01-03 02:14", "2025-01-11 08:47", "2025-01-19 14:22", "2025-01-28 21:05",
+    "2025-02-05 04:38", "2025-02-14 11:11", "2025-02-21 17:44", "2025-03-02 00:17",
+    "2025-03-10 06:50", "2025-03-18 13:23", "2025-03-26 19:56", "2025-04-04 03:29",
+    "2025-04-12 09:02", "2025-04-20 15:35", "2025-04-29 22:08", "2025-05-07 05:41",
+    "2025-05-15 12:14", "2025-05-23 18:47", "2025-05-31 01:20", "2025-06-08 07:53",
+  ]
+  let variants = [
+    timeline.Error, timeline.Default, timeline.Warning,
+    timeline.Default, timeline.Error,
+  ]
+  let title = at(titles, h % 20, "Activity Detected")
+  let desc = at(descs, h / 20 % 20, "Suspicious activity observed.")
+  let time = at(times, h / 400 % 20, "2025-01-01 00:00")
+  let variant = at(variants, h % 5, timeline.Default)
+  ThreatEvent(time: time, title: title, description: desc, variant: variant)
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+fn range(from: Int, to: Int) -> List(Int) {
+  case from > to {
+    True -> []
+    False -> [from, ..range(from + 1, to)]
+  }
+}
+
+fn at(lst: List(a), i: Int, default: a) -> a {
+  let #(_, rest) = list.split(lst, i)
+  list.first(rest) |> result.unwrap(default)
 }

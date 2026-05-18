@@ -65,6 +65,7 @@ import saola/preview/model.{
   ThreatSearchCleared, ThreatGraphPanned, ThreatGraphZoomed,
   ThreatTableSortChanged, ThreatTablePageChanged, ThreatTableRowSelected,
   ThreatTimelineEntityChanged, ThreatLayoutReceived, ThreatFiltersCleared,
+  ThreatMapCountryClicked,
 }
 import saola/preview/view as views
 
@@ -161,6 +162,7 @@ fn init(_args) -> #(Model, Effect(Msg)) {
       threat_selected_ids: [],
       threat_severity_filter: [],
       threat_search: "",
+      threat_map_country_filter: None,
       threat_graph_positions: [],
       threat_graph_layout_done: False,
       threat_graph_pan: #(0.0, 0.0),
@@ -874,8 +876,25 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
         threat_search: "",
         threat_selected_ids: [],
         threat_timeline_entity: None,
+        threat_map_country_filter: None,
         threat_table_state: data_table.DataTableState(
           ..data_table.set_filter(model.threat_table_state, ""),
+          selected: [],
+        ),
+      ),
+      effect.none(),
+    )
+    ThreatMapCountryClicked(country) -> #(
+      Model(
+        ..model,
+        threat_map_country_filter: case model.threat_map_country_filter {
+          Some(c) if c == country -> None
+          _ -> Some(country)
+        },
+        threat_selected_ids: [],
+        threat_timeline_entity: None,
+        threat_table_state: data_table.DataTableState(
+          ..model.threat_table_state,
           selected: [],
         ),
       ),
