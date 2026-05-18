@@ -30,12 +30,16 @@ coming with its own Lustre runtime instance.
 
 The project is in form of a library, where the to-be-distributed code is in _src_ folder.
 We have a small "Gallery" app to see how the widgets are rendered, which is the _preview.gleam_ code.
-To run the preview server, run `just preview` (detailed command in _justfile_.)
+To run the preview server, run `just vite-dev-preview` (detailed command in _justfile_.)
 This preview app code should not be packaged.
 
 Some code are tools for development, placed in _dev_ folder.
 The _dev/basecoat_ is a Git submodule of the [Basecoat] source.
 It is chosen because it already ported the React-based Shadcn code to pure HTML.
+
+*Notes*:
+
+The `just preview` does not work for now, due to the bug #167 in "Lustre Dev Tools".
 
 ## How to develop
 
