@@ -25,7 +25,7 @@ Initial public release.
 
 ### Features
 
-- **Theme system** (`saola/theme`) — `Light`, `Dark`, `System` variants; `theme_sub` for reactive OS dark-mode listener; `get_system_dark()` for init-time state; dark mode via `.dark` class on root element
+- **Theme system** (`saola/theme`) — `Light`, `Dark`, `System` variants; `watch_system_dark` for reactive OS dark-mode listener; `get_system_dark()` for init-time state; dark mode via `.dark` class on root element
 - **Form field** (`saola/field`) — label, description, hint, error, required indicator, ARIA attributes
 - **Two-tier API** — every widget exposes `_full()` for complete control + shortcut functions for common cases
 - **Typed variants** — all visual variants are Gleam ADTs (`ButtonVariant`, `BadgeVariant`, etc.) — no magic strings

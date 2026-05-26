@@ -20,17 +20,17 @@ pub fn theme_attr(theme: Theme) -> Attribute(msg) {
 }
 
 /// Returns an Effect that registers a one-time OS dark-mode listener.
-/// Pass `is_system_active: True` when your app is in System theme mode.
+/// Pass `is_active: True` when your app is in System theme mode.
 /// The listener persists for the page lifetime and fires `to_msg` on OS preference changes.
-pub fn theme_sub(
-  is_system_active: Bool,
+pub fn watch_system_dark(
+  is_active: Bool,
   to_msg: fn(Bool) -> msg,
 ) -> Effect(msg) {
-  case is_system_active {
+  case is_active {
     False -> effect.none()
     True -> {
       use dispatch <- effect.from
-      do_media_query_sub("(prefers-color-scheme: dark)", fn(is_dark) {
+      do_watch_media_query("(prefers-color-scheme: dark)", fn(is_dark) {
         dispatch(to_msg(is_dark))
       })
     }
@@ -52,8 +52,8 @@ pub fn apply_to_html(theme: Theme, system_os_dark: Bool) -> Effect(msg) {
 @external(javascript, "./theme_ffi.mjs", "getCurrentDarkMode")
 pub fn get_system_dark() -> Bool
 
-@external(javascript, "./theme_ffi.mjs", "mediaQuerySub")
-fn do_media_query_sub(query: String, callback: fn(Bool) -> Nil) -> Nil
+@external(javascript, "./theme_ffi.mjs", "watchMediaQuery")
+fn do_watch_media_query(query: String, callback: fn(Bool) -> Nil) -> Nil
 
 @external(javascript, "./theme_ffi.mjs", "setHtmlTheme")
 fn do_set_html_theme(is_dark: Bool) -> Nil

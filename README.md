@@ -66,7 +66,7 @@ Built on top of [Basecoat CSS](https://basecoatui.com/) (a pure-HTML port of sha
 | `saola/navigation_menu` | `navigation_menu_simple` | `navigation_menu_full` |
 | `saola/spinner` | `spinner_simple` | `spinner_full` |
 | `saola/stepper` | `stepper_simple` | `stepper_full` |
-| `saola/theme` | `theme_attr` | — |
+| `saola/theme` | `theme_attr` | `apply_to_html`, `watch_system_dark`, `get_system_dark` |
 | `saola/time_picker` | `time_picker_simple` | `time_picker_full` |
 | `saola/timeline` | `timeline_simple` | `timeline_full` |
 | `saola/toggle_group` | `toggle_group_simple` | `toggle_group_full` |
@@ -85,19 +85,30 @@ These wrappers ship as custom elements (`<script>` required separately):
 
 ## Dark Mode / Theming
 
-Apply `theme_attr` to your root element:
+`Theme` variants: `theme.Light` (default) | `theme.Dark` | `theme.System` (follows OS preference).
+
+### Apps with a theme toggle (recommended)
+
+Use `apply_to_html` as an effect when the theme changes, and `watch_system_dark` to track OS preference changes:
 
 ```gleam
 import saola/theme
 
-fn view(model: Model) -> Element(Msg) {
-  h.html([theme.theme_attr(model.theme)], [
-    // ...
-  ])
+// In init — apply initial theme and subscribe to OS preference changes
+fn init(_flags) -> #(Model, lustre.Effect(Msg)) {
+  #(
+    Model(theme: theme.Light, system_os_dark: theme.get_system_dark(), ...),
+    effect.batch([
+      theme.watch_system_dark(True, SystemOsDarkChanged),
+      theme.apply_to_html(theme.Light, theme.get_system_dark()),
+    ]),
+  )
 }
-```
 
-`Theme` variants: `theme.Light` (default) | `theme.Dark` | `theme.System` (follows OS preference).
+// In update — apply theme on change
+ThemeToggled(t) -> #(Model(..model, theme: t), theme.apply_to_html(t, model.system_os_dark))
+SystemOsDarkChanged(is_dark) -> #(Model(..model, system_os_dark: is_dark), theme.apply_to_html(model.theme, is_dark))
+```
 
 Add this script to `<head>` to avoid flash-of-wrong-theme on load:
 
@@ -107,6 +118,22 @@ Add this script to `<head>` to avoid flash-of-wrong-theme on load:
     document.documentElement.classList.add('dark')
 </script>
 ```
+
+`apply_to_html` explicitly calls `classList.add/remove('dark')` on `<html>`, so it always overrides whatever the inline script set — no conflict.
+
+### Static theme (no toggle)
+
+If the theme is fixed at startup and never changes at runtime, `theme_attr` on the root element is enough:
+
+```gleam
+fn view(model: Model) -> Element(Msg) {
+  h.html([theme.theme_attr(model.theme)], [
+    // ...
+  ])
+}
+```
+
+> **Do not combine `theme_attr` with the inline script when using a theme toggle.** `theme_attr(Light)` emits `a.none()`, so Lustre will not remove the `dark` class the script already added — the page stays dark. Use `apply_to_html` instead when the theme can change at runtime.
 
 ## Form Fields and Validation
 

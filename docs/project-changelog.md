@@ -174,7 +174,7 @@ Phase 4 of the Saola upgrade plan is now complete. Pre-publish verification pass
   - CSS Setup: basecoat.css + app.css integration
   - Web Components: table of all 5 custom elements (carousel, multiselect, resizable, etc.)
   - Quick Start: minimal Lustre app example with button widget
-  - Dark Mode: `theme_attr(Dark)` + System mode with `theme_sub` reactive subscription example
+  - Dark Mode: `theme_attr(Dark)` + System mode with `watch_system_dark` reactive subscription example
   - Form Validation: `field_attrs_from_result` bridge pattern and `formal` library integration
   - Icons: `lucide_lustre` integration guide
   - Widget Reference: links to full widget catalog
@@ -219,12 +219,12 @@ Implemented reactive OS dark-mode preference detection. When `Theme.System` is a
 
 **New Module Additions**
 - Created `src/saola/theme_ffi.mjs` — JavaScript FFI layer for media query listening
-  - `mediaQuerySub(query, toMsg)` — addEventListener on matchMedia, returns unsubscribe teardown function
+  - `watchMediaQuery(query, toMsg)` — addEventListener on matchMedia, returns unsubscribe teardown function
   - Guards against duplicate listeners with closure pattern
   - Integrates with Lustre's subscription lifecycle
 
 **Theme Module Enhancements** (`src/saola/theme.gleam`)
-- Added `theme_sub(is_system_active: Bool, to_msg: fn(Bool) -> msg) -> lustre.Sub(msg)`
+- Added `watch_system_dark(is_system_active: Bool, to_msg: fn(Bool) -> msg) -> lustre.Sub(msg)`
   - Subscription that fires whenever OS dark-mode preference changes
   - Only active when `is_system_active == True`; returns `lustre.none()` otherwise
   - Consumer must dispatch returned message to update UI theme
@@ -238,7 +238,7 @@ Implemented reactive OS dark-mode preference detection. When `Theme.System` is a
   - Added `system_os_dark: Bool` field to track current OS preference
   - Added `SystemOsDarkChanged(Bool)` message variant
 - Updated `preview.gleam`:
-  - Wired `theme_sub` subscription in init effect batch
+  - Wired `watch_system_dark` subscription in init effect batch
   - Added `SystemOsDarkChanged` update handler (syncs to model, updates root `.dark` class dynamically)
   - Sidebar theme toggle now includes System button that activates subscription
 - View now applies `.dark` class dynamically when `theme == System && model.system_os_dark == True`
@@ -249,8 +249,8 @@ Implemented reactive OS dark-mode preference detection. When `Theme.System` is a
 
 **Tests**
 - Added 3 tests to `test/new_widget_tests7.gleam`:
-  - `test_theme_sub_compiles_when_inactive` — verifies `theme_sub(False, ...)` builds
-  - `test_theme_sub_compiles_when_active` — verifies `theme_sub(True, ...)` builds
+  - `test_watch_system_dark_compiles_when_inactive` — verifies `watch_system_dark(False, ...)` builds
+  - `test_watch_system_dark_compiles_when_active` — verifies `watch_system_dark(True, ...)` builds
   - `test_get_system_dark_compiles` — verifies `get_system_dark()` is callable
 - Total test suite: **284 tests passing** (no failures)
 

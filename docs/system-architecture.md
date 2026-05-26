@@ -376,11 +376,11 @@ pub fn theme_attr(theme: Theme) -> Attribute(msg)
 // Returns .dark class for Dark, or a.none() for Light
 // System preference handled by index.html media query script
 
-pub fn theme_sub(
-  is_system_active: Bool,
+pub fn watch_system_dark(
+  is_active: Bool,
   to_msg: fn(Bool) -> msg,
 ) -> lustre.Sub(msg)
-// Subscription fires when OS dark-mode preference changes
+// Fires to_msg when the OS dark-mode preference changes
 ```
 
 ### CSS Tokens

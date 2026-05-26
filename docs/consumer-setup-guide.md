@@ -123,7 +123,7 @@ Add this inline script to `<head>` **before** any stylesheet:
 ### Reactive System mode (OS preference changes)
 
 `theme_attr(System)` returns `a.none()` — it does not manage the `.dark` class.
-When using System mode reactively, skip `theme_attr` entirely and manage the class yourself via `theme_sub`:
+When using System mode reactively, skip `theme_attr` entirely and manage the class yourself via `watch_system_dark`:
 
 ```gleam
 import saola/theme
@@ -141,7 +141,7 @@ fn init(_) -> #(Model, Effect(Msg)) {
     ),
     effect.batch([
       // other effects...
-      theme.theme_sub(True, SystemOsDarkChanged),
+      theme.watch_system_dark(True, SystemOsDarkChanged),
     ]),
   )
 }
@@ -167,7 +167,7 @@ fn view(model: Model) -> Element(Msg) {
 }
 ```
 
-`theme_sub(is_system_active, to_msg)` returns `effect.none()` when `False`,
+`watch_system_dark(is_system_active, to_msg)` returns `effect.none()` when `False`,
 so it's safe to call even when the user is on Light or Dark theme.
 
 ---

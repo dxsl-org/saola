@@ -184,7 +184,7 @@ fn init(_args) -> #(Model, Effect(Message)) {
     effect.batch([
       modem.init(on_url_change),
       whatnext,
-      theme.theme_sub(True, SystemOsDarkChanged),
+      theme.watch_system_dark(True, SystemOsDarkChanged),
       theme.apply_to_html(theme.Light, theme.get_system_dark()),
     ]),
   )
