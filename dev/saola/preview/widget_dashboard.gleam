@@ -11,7 +11,7 @@ import saola/canvas_command as canvas
 import saola/drawer
 import saola/lustre_bar_chart
 import saola/preview/model.{
-  type Model, type Msg, DashDrawerClosed, DashPageChanged, DashRowClicked,
+  type Message, type Model, DashDrawerClosed, DashPageChanged, DashRowClicked,
   DashSearchChanged,
 }
 import saola/progress
@@ -82,7 +82,7 @@ const page_size = 8
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_widget_dashboard(model: Model) -> Element(Msg) {
+pub fn view_widget_dashboard(model: Model) -> Element(Message) {
   let all = all_employees()
   let total = list.length(all)
   let filtered = filter_employees(all, model.dash_search)
@@ -178,7 +178,7 @@ pub fn view_widget_dashboard(model: Model) -> Element(Msg) {
 fn employee_table(
   employees: List(Employee),
   selected_id: Option(String),
-) -> Element(Msg) {
+) -> Element(Message) {
   h.div([a.class("rounded-md border overflow-hidden")], [
     h.table([a.class("w-full text-sm")], [
       h.thead([], [
@@ -236,7 +236,7 @@ fn dept_badge_variant(dept: String) -> badge.BadgeVariant {
   }
 }
 
-fn pagination_controls(page: Int, max_page: Int) -> Element(Msg) {
+fn pagination_controls(page: Int, max_page: Int) -> Element(Message) {
   h.div([a.class("flex justify-between items-center text-sm")], [
     h.button(
       [
@@ -262,7 +262,7 @@ fn pagination_controls(page: Int, max_page: Int) -> Element(Msg) {
   ])
 }
 
-fn score_chart(employees: List(Employee), no_op: Msg) -> Element(Msg) {
+fn score_chart(employees: List(Employee), no_op: Message) -> Element(Message) {
   let buckets = [
     #("< 60", list.filter(employees, fn(emp) { emp.score < 60 }) |> list.length),
     #(
@@ -295,7 +295,7 @@ fn score_chart(employees: List(Employee), no_op: Msg) -> Element(Msg) {
   canvas.canvas_element(output, fn(_, _) { no_op })
 }
 
-fn employee_detail(emp: Employee) -> Element(Msg) {
+fn employee_detail(emp: Employee) -> Element(Message) {
   h.div([a.class("grid gap-4 p-4")], [
     h.div([a.class("grid gap-1")], [
       h.p([a.class("text-xs text-muted-foreground uppercase tracking-wide")], [

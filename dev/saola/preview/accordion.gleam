@@ -2,9 +2,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/accordion
-import saola/preview/model.{type Model, type Msg, AccordionToggled}
+import saola/preview/model.{type Message, type Model, AccordionToggled}
 
-pub fn view_accordions(model: Model) -> Element(Msg) {
+pub fn view_accordions(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Accordion")]),
     h.p([a.class("page-description")], [
@@ -17,7 +17,7 @@ pub fn view_accordions(model: Model) -> Element(Msg) {
   ])
 }
 
-fn multi_open_example(model: Model) -> Element(Msg) {
+fn multi_open_example(model: Model) -> Element(Message) {
   h.div([a.class("grid gap-4")], [
     h.h2([], [text("Multi-open")]),
     accordion.accordion_simple(
@@ -50,7 +50,7 @@ fn multi_open_example(model: Model) -> Element(Msg) {
   ])
 }
 
-fn single_open_example(model: Model) -> Element(Msg) {
+fn single_open_example(model: Model) -> Element(Message) {
   let open_ids = case model.accordion_open {
     [first, ..] -> [first]
     [] -> []

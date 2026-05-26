@@ -4,9 +4,9 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/button
 import saola/navigation_bar as nav_bar
-import saola/preview/model.{type Msg, StartedTrial}
+import saola/preview/model.{type Message, StartedTrial}
 
-pub fn view_navigation_bars() -> Element(Msg) {
+pub fn view_navigation_bars() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Navigation Bar")]),
     h.p([a.class("page-description")], [

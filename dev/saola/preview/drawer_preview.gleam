@@ -4,9 +4,9 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import lustre/event as e
 import saola/drawer
-import saola/preview/model.{type Model, type Msg, DrawerClosed, DrawerOpened}
+import saola/preview/model.{type Message, type Model, DrawerClosed, DrawerOpened}
 
-pub fn view_drawers(model: Model) -> Element(Msg) {
+pub fn view_drawers(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Drawer")]),
     h.p([a.class("page-description")], [

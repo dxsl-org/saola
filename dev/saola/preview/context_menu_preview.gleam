@@ -3,10 +3,10 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/context_menu
 import saola/preview/model.{
-  type Model, type Msg, ContextMenuClosed, ContextMenuOpened,
+  type Message, type Model, ContextMenuClosed, ContextMenuOpened,
 }
 
-pub fn view_context_menus(model: Model) -> Element(Msg) {
+pub fn view_context_menus(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Context Menu")]),
     h.p([a.class("page-description")], [

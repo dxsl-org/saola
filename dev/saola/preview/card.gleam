@@ -4,9 +4,9 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/button
 import saola/card
-import saola/preview/model.{type Msg, Home, OnRouteChange}
+import saola/preview/model.{type Message, Home, OnRouteChange}
 
-pub fn view_cards() -> Element(Msg) {
+pub fn view_cards() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Cards")]),
     h.p([a.class("page-description")], [

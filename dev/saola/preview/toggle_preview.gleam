@@ -2,11 +2,11 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/preview/model.{
-  type Model, type Msg, ToggleBoldChanged, ToggleItalicChanged,
+  type Message, type Model, ToggleBoldChanged, ToggleItalicChanged,
 }
 import saola/toggle
 
-pub fn view_toggles(model: Model) -> Element(Msg) {
+pub fn view_toggles(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Toggle")]),
     h.p([a.class("page-description")], [

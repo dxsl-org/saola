@@ -2,9 +2,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/carousel
-import saola/preview/model.{type Model, type Msg, CarouselChanged}
+import saola/preview/model.{type Message, type Model, CarouselChanged}
 
-pub fn view_carousels(model: Model) -> Element(Msg) {
+pub fn view_carousels(model: Model) -> Element(Message) {
   let slides = [
     h.div([a.class("carousel-slide-demo")], [h.span([], [text("Slide 1")])]),
     h.div([a.class("carousel-slide-demo")], [h.span([], [text("Slide 2")])]),

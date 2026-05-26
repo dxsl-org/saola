@@ -6,11 +6,11 @@ import saola/alert
 import saola/badge
 import saola/button
 import saola/card
-import saola/preview/model.{type Model, type Msg, StartedTrial, TabChanged}
+import saola/preview/model.{type Message, type Model, StartedTrial, TabChanged}
 import saola/table
 import saola/tabs
 
-pub fn view_small_site_example(model: Model) -> Element(Msg) {
+pub fn view_small_site_example(model: Model) -> Element(Message) {
   h.main([a.class("grid gap-8")], [
     hero(),
     alert.alert_default(
@@ -33,7 +33,7 @@ pub fn view_small_site_example(model: Model) -> Element(Msg) {
   ])
 }
 
-fn hero() -> Element(Msg) {
+fn hero() -> Element(Message) {
   h.header([a.class("grid gap-4")], [
     h.div([a.class("flex items-center gap-2")], [
       badge.badge_secondary("Saola demo"),
@@ -65,7 +65,7 @@ fn metric_card(
   title: String,
   value: String,
   description: String,
-) -> Element(Msg) {
+) -> Element(Message) {
   card.card(card.CardAttrs(
     title: title,
     description: description,
@@ -74,7 +74,7 @@ fn metric_card(
   ))
 }
 
-fn overview_panel() -> Element(Msg) {
+fn overview_panel() -> Element(Message) {
   card.card_simple("Overview", [
     h.p([], [
       h.text(
@@ -84,7 +84,7 @@ fn overview_panel() -> Element(Msg) {
   ])
 }
 
-fn plans_panel() -> Element(Msg) {
+fn plans_panel() -> Element(Message) {
   table.table_simple(
     headers: ["Plan", "Price", "Status"],
     rows: [
@@ -103,7 +103,7 @@ fn plans_panel() -> Element(Msg) {
   )
 }
 
-fn team_panel() -> Element(Msg) {
+fn team_panel() -> Element(Message) {
   card.card(card.CardAttrs(
     title: "Team workflow",
     description: "A compact panel rendered inside a Saola tab.",

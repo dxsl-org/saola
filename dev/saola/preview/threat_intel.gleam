@@ -13,7 +13,7 @@ import saola/entity_graph_3d
 import saola/entity_graph_canvas as egc
 import saola/multiselect
 import saola/preview/model.{
-  type Model, type Msg, ThreatEntitySelected, ThreatFiltersCleared,
+  type Message, type Model, ThreatEntitySelected, ThreatFiltersCleared,
   ThreatMapCountryClicked, ThreatSearchChanged, ThreatSearchCleared,
   ThreatSeverityFilterChanged, ThreatTablePageChanged, ThreatTableRowSelected,
   ThreatTableSortChanged,
@@ -28,7 +28,7 @@ import saola/world_map
 // Public entry point
 // ---------------------------------------------------------------------------
 
-pub fn view_threat_intel_network(model: Model) -> Element(Msg) {
+pub fn view_threat_intel_network(model: Model) -> Element(Message) {
   h.div([a.class("threat-intel-root")], [
     map_column(model),
     data_column(model),
@@ -39,7 +39,7 @@ pub fn view_threat_intel_network(model: Model) -> Element(Msg) {
 // Left — full-height world map
 // ---------------------------------------------------------------------------
 
-fn map_column(model: Model) -> Element(Msg) {
+fn map_column(model: Model) -> Element(Message) {
   let actors = threat_intel_data.all_actors()
   let severity_dimmed_ids = case model.threat_severity_filter {
     [] -> []
@@ -86,7 +86,7 @@ fn map_column(model: Model) -> Element(Msg) {
   ])
 }
 
-fn map_overlay_header(model: Model) -> Element(Msg) {
+fn map_overlay_header(model: Model) -> Element(Message) {
   h.div([a.class("threat-intel-map-overlay")], [
     h.span([a.class("threat-intel-map-title")], [h.text("Threat Actor Network")]),
     case model.threat_map_country_filter {
@@ -155,7 +155,7 @@ fn compute_arcs(selected_ids: List(String)) -> List(world_map.WorldMapArc) {
 // Right — all data panels stacked
 // ---------------------------------------------------------------------------
 
-fn data_column(model: Model) -> Element(Msg) {
+fn data_column(model: Model) -> Element(Message) {
   h.div([a.class("threat-intel-data-col")], [
     controls_panel(model),
     graph_panel(model),
@@ -168,7 +168,7 @@ fn data_column(model: Model) -> Element(Msg) {
 // Controls — search + severity filter + metrics
 // ---------------------------------------------------------------------------
 
-fn controls_panel(model: Model) -> Element(Msg) {
+fn controls_panel(model: Model) -> Element(Message) {
   let actors = threat_intel_data.all_actors()
   h.div([a.class("threat-intel-controls")], [
     search.search_full(
@@ -227,7 +227,7 @@ fn metric_pill(
   label: String,
   count: Int,
   variant: badge.BadgeVariant,
-) -> Element(Msg) {
+) -> Element(Message) {
   h.div([a.class("threat-metric-pill")], [
     badge.badge(label, variant),
     h.span([a.class("threat-metric-count")], [h.text(int.to_string(count))]),
@@ -254,7 +254,7 @@ fn count_by_severity(actors: List(ThreatActor), sev: String) -> Int {
 // Entity graph (compact, fits the data column)
 // ---------------------------------------------------------------------------
 
-fn graph_panel(model: Model) -> Element(Msg) {
+fn graph_panel(model: Model) -> Element(Message) {
   let nodes = list.map(threat_intel_data.all_actors(), actor_to_node)
   let edges = list.map(threat_intel_data.all_edges(), edge_to_graph_edge)
   let dimmed = case model.threat_severity_filter {
@@ -305,7 +305,7 @@ fn edge_to_graph_edge(te: threat_intel_data.ThreatEdge) -> egc.GraphEdge {
 // Table panel
 // ---------------------------------------------------------------------------
 
-fn table_panel(model: Model) -> Element(Msg) {
+fn table_panel(model: Model) -> Element(Message) {
   let rows = sorted_filtered_actors(model)
   h.div([a.class("threat-intel-table-section")], [
     h.p([a.class("threat-intel-panel-title")], [h.text("Threat Actors")]),
@@ -339,7 +339,7 @@ fn table_panel(model: Model) -> Element(Msg) {
   ])
 }
 
-fn actor_columns() -> List(data_table.DataTableColumn(ThreatActor, Msg)) {
+fn actor_columns() -> List(data_table.DataTableColumn(ThreatActor, Message)) {
   [
     data_table.DataTableColumn(
       header: "Name",
@@ -418,7 +418,7 @@ fn sorted_filtered_actors(model: Model) -> List(ThreatActor) {
 // Timeline panel
 // ---------------------------------------------------------------------------
 
-fn timeline_panel(model: Model) -> Element(Msg) {
+fn timeline_panel(model: Model) -> Element(Message) {
   h.div([a.class("threat-intel-timeline-section")], [
     h.p([a.class("threat-intel-panel-title")], [
       h.text(case model.threat_timeline_entity {

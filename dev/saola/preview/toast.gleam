@@ -4,11 +4,11 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/button
 import saola/preview/model.{
-  type Model, type Msg, AddToast, DismissToast, StartedTrial,
+  type Message, type Model, AddToast, DismissToast, StartedTrial,
 }
 import saola/toast
 
-pub fn view_toasts(model: Model) -> Element(Msg) {
+pub fn view_toasts(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Toasts")]),
     h.p([a.class("page-description")], [

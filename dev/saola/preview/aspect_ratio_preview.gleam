@@ -2,9 +2,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/aspect_ratio
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 
-pub fn view_aspect_ratios() -> Element(Msg) {
+pub fn view_aspect_ratios() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Aspect Ratio")]),
     h.p([a.class("page-description")], [

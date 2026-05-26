@@ -3,11 +3,11 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/date_picker
 import saola/preview/model.{
-  type Model, type Msg, DatePickerDateSelected, DatePickerMonthChanged,
+  type Message, type Model, DatePickerDateSelected, DatePickerMonthChanged,
   DatePickerOpenChanged,
 }
 
-pub fn view_date_pickers(model: Model) -> Element(Msg) {
+pub fn view_date_pickers(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Date Picker")]),
     h.p([a.class("page-description")], [

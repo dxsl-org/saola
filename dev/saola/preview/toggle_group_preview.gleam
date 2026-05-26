@@ -1,10 +1,10 @@
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, ToggleGroupChanged}
+import saola/preview/model.{type Message, type Model, ToggleGroupChanged}
 import saola/toggle_group
 
-pub fn view_toggle_groups(model: Model) -> Element(Msg) {
+pub fn view_toggle_groups(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Toggle Group")]),
     h.p([a.class("page-description")], [

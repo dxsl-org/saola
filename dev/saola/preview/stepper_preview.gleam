@@ -2,10 +2,10 @@ import gleam/option.{Some}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, StepperStepClicked}
+import saola/preview/model.{type Message, type Model, StepperStepClicked}
 import saola/stepper
 
-pub fn view_steppers(model: Model) -> Element(Msg) {
+pub fn view_steppers(model: Model) -> Element(Message) {
   let steps = [
     stepper.StepItem(
       label: "Account",

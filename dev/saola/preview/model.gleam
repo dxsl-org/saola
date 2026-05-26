@@ -92,7 +92,7 @@ pub type Model {
     // Whether the demo dialog is open
     is_dialog_open: Bool,
     // List of active toasts
-    toasts: List(saola_toast.Toast(Msg)),
+    toasts: List(saola_toast.Toast(Message)),
     form_name: String,
     form_email: String,
     form_message: String,
@@ -223,13 +223,13 @@ pub type Model {
   )
 }
 
-pub type Msg {
+pub type Message {
   OnRouteChange(Route)
   ToggleDropdown(String)
   TabChanged(String)
   OpenDialog
   CloseDialog
-  AddToast(saola_toast.Toast(Msg))
+  AddToast(saola_toast.Toast(Message))
   DismissToast(String)
   FormNameChanged(String)
   FormEmailChanged(String)

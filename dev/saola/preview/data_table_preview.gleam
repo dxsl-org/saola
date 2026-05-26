@@ -4,7 +4,7 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/data_table
 import saola/preview/model.{
-  type Model, type Msg, DataTableFilterChanged, DataTablePageChanged,
+  type Message, type Model, DataTableFilterChanged, DataTablePageChanged,
   DataTableSelectChanged, DataTableSortChanged,
 }
 
@@ -29,7 +29,7 @@ fn sample_rows() -> List(Person) {
   ]
 }
 
-fn full_columns() -> List(data_table.DataTableColumn(Person, Msg)) {
+fn full_columns() -> List(data_table.DataTableColumn(Person, Message)) {
   [
     data_table.DataTableColumn(
       header: "Name",
@@ -60,7 +60,7 @@ fn full_columns() -> List(data_table.DataTableColumn(Person, Msg)) {
   ]
 }
 
-fn simple_columns() -> List(data_table.DataTableColumn(Person, Msg)) {
+fn simple_columns() -> List(data_table.DataTableColumn(Person, Message)) {
   [
     data_table.DataTableColumn(
       header: "Name",
@@ -80,7 +80,7 @@ fn simple_columns() -> List(data_table.DataTableColumn(Person, Msg)) {
   ]
 }
 
-pub fn view_data_tables(model: Model) -> Element(Msg) {
+pub fn view_data_tables(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Data Table")]),
     h.p([a.class("page-description")], [

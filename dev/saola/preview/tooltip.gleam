@@ -2,10 +2,10 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/button
-import saola/preview/model.{type Msg, Home, OnRouteChange}
+import saola/preview/model.{type Message, Home, OnRouteChange}
 import saola/tooltip
 
-pub fn view_tooltips() -> Element(Msg) {
+pub fn view_tooltips() -> Element(Message) {
   let noop = OnRouteChange(Home)
   h.div([], [
     h.h1([a.class("page-title")], [text("Tooltip")]),

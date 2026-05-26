@@ -11,7 +11,7 @@ import saola/button
 import saola/canvas_command as canvas
 import saola/lustre_heatmap
 import saola/preview/model.{
-  type Model, type Msg, HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft,
+  type Message, type Model, HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft,
   HeatmapCanvasHovered, HeatmapCellPxChanged, HeatmapPaintEnded,
   HeatmapPaintStarted, HeatmapRandomize, HeatmapSchemeChanged,
   HeatmapSizeChanged, HeatmapSvgCellClicked, HeatmapSvgHoverLeft,
@@ -22,7 +22,7 @@ import saola/preview/model.{
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_heatmap_comparison(model: Model) -> Element(Msg) {
+pub fn view_heatmap_comparison(model: Model) -> Element(Message) {
   let size = model.heatmap_size
   let cell_px = model.heatmap_cell_px
   let scheme = model.heatmap_scheme
@@ -57,15 +57,15 @@ pub fn view_heatmap_comparison(model: Model) -> Element(Msg) {
     let row = int.clamp(float.truncate(my /. cell_px_f), min: 0, max: max_idx)
     #(row, col)
   }
-  let on_svg_click = fn(mx: Float, my: Float) -> Msg {
+  let on_svg_click = fn(mx: Float, my: Float) -> Message {
     let #(row, col) = to_cell(mx, my)
     HeatmapSvgCellClicked(row, col)
   }
-  let on_canvas_click = fn(mx: Float, my: Float) -> Msg {
+  let on_canvas_click = fn(mx: Float, my: Float) -> Message {
     let #(row, col) = to_cell(mx, my)
     HeatmapCanvasCellClicked(row, col)
   }
-  let on_paint_start = fn(mx: Float, my: Float) -> Msg {
+  let on_paint_start = fn(mx: Float, my: Float) -> Message {
     let #(row, col) = to_cell(mx, my)
     HeatmapPaintStarted(row, col)
   }
@@ -244,8 +244,8 @@ pub fn view_heatmap_comparison(model: Model) -> Element(Msg) {
 fn renderer_panel(
   label: String,
   subtitle: String,
-  content: List(Element(Msg)),
-) -> Element(Msg) {
+  content: List(Element(Message)),
+) -> Element(Message) {
   h.div([a.class("grid gap-3 rounded-lg border p-4")], [
     h.div([a.class("flex items-center gap-2 flex-wrap")], [
       badge.badge_default(label),
@@ -257,7 +257,7 @@ fn renderer_panel(
 
 fn hover_tooltip(
   hover: Option(#(Int, Int, Int, Float, Float)),
-) -> Element(Msg) {
+) -> Element(Message) {
   case hover {
     None -> text("")
     Some(#(row, col, dv, mx, my)) ->
@@ -292,11 +292,11 @@ fn hover_tooltip(
   }
 }
 
-fn stat_pill(label: String) -> Element(Msg) {
+fn stat_pill(label: String) -> Element(Message) {
   h.span([a.class("rounded-full border px-3 py-0.5 text-xs")], [text(label)])
 }
 
-fn size_btn(size: Int, current: Int) -> Element(Msg) {
+fn size_btn(size: Int, current: Int) -> Element(Message) {
   let label = int.to_string(size) <> "×" <> int.to_string(size)
   case size == current {
     True ->
@@ -320,7 +320,7 @@ fn size_btn(size: Int, current: Int) -> Element(Msg) {
   }
 }
 
-fn scheme_btn(scheme: String, current: String) -> Element(Msg) {
+fn scheme_btn(scheme: String, current: String) -> Element(Message) {
   case scheme == current {
     True ->
       button.button_full(
@@ -343,7 +343,7 @@ fn scheme_btn(scheme: String, current: String) -> Element(Msg) {
   }
 }
 
-fn info_panel(model: Model) -> Element(Msg) {
+fn info_panel(model: Model) -> Element(Message) {
   let painted_count = dict.size(model.heatmap_painted)
 
   let last_click_content = case model.heatmap_svg_ripple {
@@ -442,7 +442,10 @@ fn info_panel(model: Model) -> Element(Msg) {
   )
 }
 
-fn info_col(label: String, children: List(Element(Msg))) -> Element(Msg) {
+fn info_col(
+  label: String,
+  children: List(Element(Message)),
+) -> Element(Message) {
   h.div([a.class("grid gap-1 content-start")], [
     h.p(
       [
@@ -456,7 +459,7 @@ fn info_col(label: String, children: List(Element(Msg))) -> Element(Msg) {
   ])
 }
 
-fn info_row(label: String, value: String) -> Element(Msg) {
+fn info_row(label: String, value: String) -> Element(Message) {
   case value {
     "" -> h.p([a.class("font-medium tabular-nums")], [text(label)])
     _ ->
@@ -467,7 +470,7 @@ fn info_row(label: String, value: String) -> Element(Msg) {
   }
 }
 
-fn ripple_style() -> Element(Msg) {
+fn ripple_style() -> Element(Message) {
   h.style(
     [],
     "@keyframes saola-ripple-a{"
@@ -482,7 +485,7 @@ fn ripple_style() -> Element(Msg) {
 fn ripple_overlay(
   ripple: Option(#(Int, Int, Int)),
   cell_px: Int,
-) -> Element(Msg) {
+) -> Element(Message) {
   case ripple {
     None -> text("")
     Some(#(row, col, count)) -> {

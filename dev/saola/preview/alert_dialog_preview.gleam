@@ -4,11 +4,11 @@ import lustre/element/html as h
 import lustre/event as e
 import saola/alert_dialog
 import saola/preview/model.{
-  type Model, type Msg, AlertDialogCancelled, AlertDialogConfirmed,
+  type Message, type Model, AlertDialogCancelled, AlertDialogConfirmed,
   AlertDialogOpened,
 }
 
-pub fn view_alert_dialogs(model: Model) -> Element(Msg) {
+pub fn view_alert_dialogs(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Alert Dialog")]),
     h.p([a.class("page-description")], [

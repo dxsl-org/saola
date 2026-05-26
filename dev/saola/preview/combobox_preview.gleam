@@ -3,11 +3,11 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/combobox
 import saola/preview/model.{
-  type Model, type Msg, ComboboxOpenChanged, ComboboxQueryChanged,
+  type Message, type Model, ComboboxOpenChanged, ComboboxQueryChanged,
   ComboboxSelected,
 }
 
-pub fn view_comboboxes(model: Model) -> Element(Msg) {
+pub fn view_comboboxes(model: Model) -> Element(Message) {
   let fruits = [
     combobox.ComboboxOption(value: "apple", label: "Apple"),
     combobox.ComboboxOption(value: "banana", label: "Banana"),

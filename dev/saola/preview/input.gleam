@@ -4,10 +4,10 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/checkbox
 import saola/input
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 import saola/textarea
 
-fn checkbox_examples() -> List(Element(Msg)) {
+fn checkbox_examples() -> List(Element(Message)) {
   [
     checkbox.checkbox_basic("Basic Checkbox"),
     checkbox.checkbox_full(
@@ -41,7 +41,7 @@ fn checkbox_examples() -> List(Element(Msg)) {
   ]
 }
 
-fn input_examples() -> List(Element(Msg)) {
+fn input_examples() -> List(Element(Message)) {
   [
     input.input_text("Enter text...", fn(_) {
       model.OnRouteChange(model.Inputs)
@@ -66,7 +66,7 @@ fn input_examples() -> List(Element(Msg)) {
   ]
 }
 
-fn textarea_examples() -> List(Element(Msg)) {
+fn textarea_examples() -> List(Element(Message)) {
   [
     textarea.textarea_simple("Write something...", fn(_) {
       model.OnRouteChange(model.Inputs)
@@ -87,7 +87,7 @@ fn textarea_examples() -> List(Element(Msg)) {
   ]
 }
 
-pub fn view_inputs() -> Element(Msg) {
+pub fn view_inputs() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Inputs")]),
     h.p([a.class("page-description")], [

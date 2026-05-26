@@ -5,10 +5,10 @@ import lustre/element/html as h
 import lustre/event as e
 import saola/hover_card
 import saola/preview/model.{
-  type Model, type Msg, HoverCardClosed, HoverCardOpened,
+  type Message, type Model, HoverCardClosed, HoverCardOpened,
 }
 
-pub fn view_hover_cards(model: Model) -> Element(Msg) {
+pub fn view_hover_cards(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Hover Card")]),
     h.p([a.class("page-description")], [

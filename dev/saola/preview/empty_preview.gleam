@@ -6,9 +6,9 @@ import saola/button
 import saola/empty
 import saola/icon/li
 import saola/icon/ls
-import saola/preview/model.{type Msg, StartedTrial}
+import saola/preview/model.{type Message, StartedTrial}
 
-pub fn view_empties() -> Element(Msg) {
+pub fn view_empties() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Empty")]),
     h.p([a.class("page-description")], [

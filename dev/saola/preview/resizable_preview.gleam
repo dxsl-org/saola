@@ -1,10 +1,10 @@
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, ResizableSizesChanged}
+import saola/preview/model.{type Message, type Model, ResizableSizesChanged}
 import saola/resizable
 
-pub fn view_resizables(model: Model) -> Element(Msg) {
+pub fn view_resizables(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Resizable")]),
     h.p([a.class("page-description")], [text("Drag-to-resize split panels.")]),

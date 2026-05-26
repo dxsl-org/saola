@@ -6,10 +6,10 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/calendar as cal
 import saola/preview/model.{
-  type Model, type Msg, CalendarDateSelected, CalendarMonthChanged,
+  type Message, type Model, CalendarDateSelected, CalendarMonthChanged,
 }
 
-pub fn view_calendars(model: Model) -> Element(Msg) {
+pub fn view_calendars(model: Model) -> Element(Message) {
   let #(prev_y, prev_m) =
     cal.prev_month(model.calendar_view_year, model.calendar_view_month)
   let #(next_y, next_m) =

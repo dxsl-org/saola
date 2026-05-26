@@ -5,9 +5,9 @@ import lustre/element/html as h
 
 import saola/button
 import saola/icon/lc
-import saola/preview/model.{type Msg, Home, OnRouteChange}
+import saola/preview/model.{type Message, Home, OnRouteChange}
 
-pub fn view_buttons() -> Element(Msg) {
+pub fn view_buttons() -> Element(Message) {
   let attrs_disabled = button.ButtonExtraAttrs(True, None, button.default_aria)
   let attrs_aria_label =
     button.ButtonExtraAttrs(

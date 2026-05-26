@@ -2,9 +2,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/collapsible
-import saola/preview/model.{type Model, type Msg, CollapsibleToggled}
+import saola/preview/model.{type Message, type Model, CollapsibleToggled}
 
-pub fn view_collapsibles(model: Model) -> Element(Msg) {
+pub fn view_collapsibles(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Collapsible")]),
     h.p([a.class("page-description")], [

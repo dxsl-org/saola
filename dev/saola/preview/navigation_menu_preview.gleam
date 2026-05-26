@@ -3,9 +3,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/navigation_menu
-import saola/preview/model.{type Model, type Msg, NavMenuOpenChanged}
+import saola/preview/model.{type Message, type Model, NavMenuOpenChanged}
 
-pub fn view_navigation_menus(model: Model) -> Element(Msg) {
+pub fn view_navigation_menus(model: Model) -> Element(Message) {
   let items = [
     navigation_menu.NavMenuLink(label: "Home", href: "#", active: True),
     navigation_menu.NavMenuLink(label: "About", href: "#", active: False),

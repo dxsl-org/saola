@@ -3,10 +3,10 @@ import gleam/option.{Some}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, RatingChanged}
+import saola/preview/model.{type Message, type Model, RatingChanged}
 import saola/rating
 
-pub fn view_ratings(model: Model) -> Element(Msg) {
+pub fn view_ratings(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Rating")]),
     h.p([a.class("page-description")], [

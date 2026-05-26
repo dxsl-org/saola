@@ -4,9 +4,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/multiselect
-import saola/preview/model.{type Model, type Msg, MultiselectChanged}
+import saola/preview/model.{type Message, type Model, MultiselectChanged}
 
-pub fn view_multiselects(model: Model) -> Element(Msg) {
+pub fn view_multiselects(model: Model) -> Element(Message) {
   let fruits = [
     #("apple", "Apple"),
     #("banana", "Banana"),

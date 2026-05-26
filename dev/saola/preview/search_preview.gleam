@@ -2,10 +2,10 @@ import gleam/option.{None}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, SearchQueryChanged}
+import saola/preview/model.{type Message, type Model, SearchQueryChanged}
 import saola/search
 
-pub fn view_searches(model: Model) -> Element(Msg) {
+pub fn view_searches(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Search")]),
     h.p([a.class("page-description")], [

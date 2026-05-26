@@ -10,7 +10,8 @@ import saola/badge
 import saola/canvas_command as canvas
 import saola/lustre_bar_chart
 import saola/preview/model.{
-  type Model, type Msg, StressBarClicked, StressOffsetChanged, StressZoomChanged,
+  type Message, type Model, StressBarClicked, StressOffsetChanged,
+  StressZoomChanged,
 }
 
 // ---------------------------------------------------------------------------
@@ -51,7 +52,7 @@ fn do_indices(i: Int, acc: List(Int)) -> List(Int) {
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_canvas_stress_test(model: Model) -> Element(Msg) {
+pub fn view_canvas_stress_test(model: Model) -> Element(Message) {
   let all_data = gen_data()
   let total = list.length(all_data)
   let max_offset = total - model.stress_zoom
@@ -147,7 +148,7 @@ pub fn view_canvas_stress_test(model: Model) -> Element(Msg) {
   ])
 }
 
-fn selected_info(sel: Option(String)) -> Element(Msg) {
+fn selected_info(sel: Option(String)) -> Element(Message) {
   case sel {
     None ->
       h.p([a.class("text-sm text-muted-foreground")], [

@@ -10,12 +10,12 @@ import saola/checkbox
 import saola/input
 import saola/label
 import saola/preview/model.{
-  type Model, type Msg, FormEmailChanged, FormMessageChanged, FormNameChanged,
-  FormSubmitted,
+  type Message, type Model, FormEmailChanged, FormMessageChanged,
+  FormNameChanged, FormSubmitted,
 }
 import saola/textarea
 
-pub fn view_form_example(model: Model) -> Element(Msg) {
+pub fn view_form_example(model: Model) -> Element(Message) {
   card.card(card.CardAttrs(
     title: "Contact form",
     description: "A small Saola form wired with Lustre messages.",
@@ -98,12 +98,12 @@ pub fn view_form_example(model: Model) -> Element(Msg) {
 fn field(
   id: String,
   title: String,
-  children: List(Element(Msg)),
-) -> Element(Msg) {
+  children: List(Element(Message)),
+) -> Element(Message) {
   h.div([a.class("grid gap-2")], [label.label_for(title, id), ..children])
 }
 
-fn submitted_summary(values: List(#(String, String))) -> Element(Msg) {
+fn submitted_summary(values: List(#(String, String))) -> Element(Message) {
   case values {
     [] ->
       h.p([a.class("text-muted-foreground text-sm")], [

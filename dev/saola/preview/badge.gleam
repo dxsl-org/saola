@@ -2,9 +2,9 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/badge
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 
-pub fn view_badges() -> Element(Msg) {
+pub fn view_badges() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Badges")]),
     h.p([a.class("page-description")], [

@@ -8,7 +8,7 @@ import saola/icon/lc
 import saola/icon/lp
 import saola/icon/ls
 import saola/icon/lt
-import saola/preview/model.{type Model, type Msg, ToggleDropdown}
+import saola/preview/model.{type Message, type Model, ToggleDropdown}
 
 fn is_dropdown_open(model: Model, id: String) -> Bool {
   case model.open_dropdown {
@@ -17,7 +17,7 @@ fn is_dropdown_open(model: Model, id: String) -> Bool {
   }
 }
 
-pub fn view_dropdown_menus(model: Model) -> Element(Msg) {
+pub fn view_dropdown_menus(model: Model) -> Element(Message) {
   let basic_items = [
     dd.Flat(dd.Item("Save")),
     dd.Flat(dd.Item("Edit")),

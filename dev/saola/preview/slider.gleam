@@ -2,10 +2,10 @@ import gleam/int
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Msg, SliderChanged}
+import saola/preview/model.{type Message, SliderChanged}
 import saola/slider
 
-pub fn view_sliders(volume: Int, brightness: Int) -> Element(Msg) {
+pub fn view_sliders(volume: Int, brightness: Int) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Slider")]),
     h.p([a.class("page-description")], [

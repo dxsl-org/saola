@@ -2,10 +2,10 @@ import gleam/option.{None}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 import saola/timeline
 
-pub fn view_timelines() -> Element(Msg) {
+pub fn view_timelines() -> Element(Message) {
   let basic_items = [
     timeline.TimelineItem(
       time: "09:00",

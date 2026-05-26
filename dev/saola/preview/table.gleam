@@ -2,10 +2,10 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/badge
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 import saola/table
 
-pub fn view_tables() -> Element(Msg) {
+pub fn view_tables() -> Element(Message) {
   let headers = ["Name", "Email", "Status", "Role"]
   let rows = [
     table.TableRow([

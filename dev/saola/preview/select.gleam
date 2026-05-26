@@ -1,7 +1,7 @@
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Msg, SelectChanged}
+import saola/preview/model.{type Message, SelectChanged}
 import saola/select
 
 const fruit_options = [
@@ -20,7 +20,7 @@ const timezone_options = [
   select.SelectOption("america/new_york", "America/New York (UTC-5)"),
 ]
 
-pub fn view_selects(fruit: String, timezone: String) -> Element(Msg) {
+pub fn view_selects(fruit: String, timezone: String) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Select")]),
     h.p([a.class("page-description")], [

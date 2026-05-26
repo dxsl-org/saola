@@ -2,10 +2,10 @@ import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
 import lustre/event as e
-import saola/preview/model.{type Model, type Msg, SheetClosed, SheetOpened}
+import saola/preview/model.{type Message, type Model, SheetClosed, SheetOpened}
 import saola/sheet
 
-pub fn view_sheets(model: Model) -> Element(Msg) {
+pub fn view_sheets(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Sheet")]),
     h.p([a.class("page-description")], [

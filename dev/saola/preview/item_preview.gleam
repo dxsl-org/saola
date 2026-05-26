@@ -6,9 +6,9 @@ import lustre/element/html as h
 import saola/button
 import saola/icon/lu
 import saola/item
-import saola/preview/model.{type Msg, StartedTrial}
+import saola/preview/model.{type Message, StartedTrial}
 
-pub fn view_items() -> Element(Msg) {
+pub fn view_items() -> Element(Message) {
   let actions = [button.button_outline("View", StartedTrial)]
 
   let three_items = [

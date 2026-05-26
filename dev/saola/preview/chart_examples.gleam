@@ -7,9 +7,9 @@ import saola/code_editor
 import saola/d3_bar_chart
 import saola/lustre_bar_chart
 import saola/monaco_editor
-import saola/preview/model.{type Msg}
+import saola/preview/model.{type Message}
 
-pub fn view_d3_charts() -> Element(Msg) {
+pub fn view_d3_charts() -> Element(Message) {
   h.div([a.class("grid gap-6")], [
     h.header([a.class("grid gap-2")], [
       h.h1([a.class("page-title")], [h.text("D3 Charts")]),
@@ -24,7 +24,7 @@ pub fn view_d3_charts() -> Element(Msg) {
   ])
 }
 
-pub fn view_monaco_editor() -> Element(Msg) {
+pub fn view_monaco_editor() -> Element(Message) {
   h.div([a.class("grid gap-6")], [
     h.header([a.class("grid gap-2")], [
       h.h1([a.class("page-title")], [h.text("Code Editor")]),
@@ -39,7 +39,7 @@ pub fn view_monaco_editor() -> Element(Msg) {
   ])
 }
 
-fn codemirror_card() -> Element(Msg) {
+fn codemirror_card() -> Element(Message) {
   card.card(card.CardAttrs(
     title: "CodeMirror 6",
     description: "Lightweight editor — fast startup, tree-sitter grammar, and a small bundle footprint.",
@@ -57,7 +57,7 @@ fn codemirror_card() -> Element(Msg) {
   ))
 }
 
-fn monaco_card() -> Element(Msg) {
+fn monaco_card() -> Element(Message) {
   card.card(card.CardAttrs(
     title: "Monaco Editor",
     description: "VS Code's editor engine — IntelliSense, multi-cursor, diff view, and rich language support.",
@@ -75,7 +75,7 @@ fn monaco_card() -> Element(Msg) {
   ))
 }
 
-fn d3_card() -> Element(Msg) {
+fn d3_card() -> Element(Message) {
   card.card(card.CardAttrs(
     title: "D3 blackbox",
     description: "Rendered by D3, mounted through a Saola custom element.",
@@ -93,7 +93,7 @@ fn d3_card() -> Element(Msg) {
   ))
 }
 
-fn lustre_card() -> Element(Msg) {
+fn lustre_card() -> Element(Message) {
   card.card(card.CardAttrs(
     title: "Pure Lustre SVG",
     description: "Rendered as regular Lustre SVG elements with no D3 runtime.",

@@ -1,10 +1,10 @@
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, TabChanged}
+import saola/preview/model.{type Message, type Model, TabChanged}
 import saola/tabs
 
-pub fn view_tabs(model: Model) -> Element(Msg) {
+pub fn view_tabs(model: Model) -> Element(Message) {
   let demo_tabs = [
     tabs.Tab(
       "account",

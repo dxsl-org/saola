@@ -23,7 +23,7 @@ import saola/toast
 import gleam/time/calendar
 import saola/data_table
 import saola/preview/model.{
-  type Model, type Msg, AccordionToggled, Accordions, AddToast,
+  type Message, type Model, AccordionToggled, Accordions, AddToast,
   AlertDialogCancelled, AlertDialogConfirmed, AlertDialogOpened, AlertDialogs,
   Alerts, AspectRatios, Avatars, Badges, Breadcrumbs, ButtonGroups, Buttons,
   CalendarDateSelected, CalendarMonthChanged, Calendars, CanvasStressTest, Cards,
@@ -64,7 +64,7 @@ import saola/preview/model.{
   ToggleGroupChanged, ToggleGroups, ToggleItalicChanged, Toggles, Tooltips,
   TreeNodeToggled, TreeViews, WidgetDashboard,
 }
-import saola/preview/view as views
+import saola/preview/view
 
 pub fn main() {
   let app = lustre.application(init, update, view)
@@ -73,7 +73,7 @@ pub fn main() {
   Nil
 }
 
-fn init(_args) -> #(Model, Effect(Msg)) {
+fn init(_args) -> #(Model, Effect(Message)) {
   let whatnext = case modem.initial_uri() {
     Ok(uri) -> {
       use dispatch <- effect.from
@@ -189,7 +189,7 @@ fn init(_args) -> #(Model, Effect(Msg)) {
   )
 }
 
-fn on_url_change(uri: Uri) -> Msg {
+fn on_url_change(uri: Uri) -> Message {
   let route = case uri.path {
     "/alerts" -> Alerts
     "/badges" -> Badges
@@ -265,7 +265,7 @@ fn on_url_change(uri: Uri) -> Msg {
   OnRouteChange(route)
 }
 
-fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
+fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
   case msg {
     OnRouteChange(route) -> {
       let eff = case route {
@@ -939,7 +939,7 @@ fn update(model: Model, msg: Msg) -> #(Model, Effect(Msg)) {
   }
 }
 
-fn heatmap_anim_tick_effect(dispatch: fn(Msg) -> Nil) -> Nil {
+fn heatmap_anim_tick_effect(dispatch: fn(Message) -> Nil) -> Nil {
   canvas.request_animation_frame(fn(ts) { dispatch(HeatmapAnimTick(ts)) })
 }
 
@@ -970,7 +970,7 @@ fn result_unwrap(r: Result(a, e), default: a) -> a {
   }
 }
 
-fn view(model: Model) -> Element(Msg) {
+fn view(model: Model) -> Element(Message) {
   let theme_class = case model.theme {
     theme.System ->
       case model.system_os_dark {
@@ -988,7 +988,7 @@ fn view(model: Model) -> Element(Msg) {
 fn sidebar(
   current_route: model.Route,
   current_theme: theme.Theme,
-) -> Element(Msg) {
+) -> Element(Message) {
   h.div([a.class("sidebar")], [
     h.h2([a.class("sidebar-title")], [element.text("UI Showcase")]),
     h.div([a.class("theme-toggle")], [
@@ -1139,7 +1139,7 @@ fn sidebar(
   ])
 }
 
-fn nav_link(path: String, label: String, is_active: Bool) -> Element(Msg) {
+fn nav_link(path: String, label: String, is_active: Bool) -> Element(Message) {
   let active_class = case is_active {
     True -> " active"
     False -> ""
@@ -1147,79 +1147,79 @@ fn nav_link(path: String, label: String, is_active: Bool) -> Element(Msg) {
   h.a([a.href(path), a.class("nav-link" <> active_class)], [element.text(label)])
 }
 
-fn main_pane(model: Model) -> Element(Msg) {
+fn main_pane(model: Model) -> Element(Message) {
   h.div([a.class("main-pane")], [
     case model.route {
       Home -> h.div([], [element.text("Select a widget category to preview.")])
-      Alerts -> views.view_alerts()
-      Badges -> views.view_badges()
-      Cards -> views.view_cards()
-      Buttons -> views.view_buttons()
-      Inputs -> views.view_inputs()
-      Forms -> views.view_forms()
-      Separators -> views.view_separators()
-      Tooltips -> views.view_tooltips()
-      Switches -> views.view_switches(model)
-      Sliders -> views.view_sliders(model)
-      Selects -> views.view_selects(model)
-      Fields -> views.view_fields(model)
-      DropdownMenus -> views.view_dropdown_menus(model)
-      Tabs -> views.view_tabs(model)
-      Dialogs -> views.view_dialogs(model)
-      Tables -> views.view_tables()
-      Toasts -> views.view_toasts(model)
-      Accordions -> views.view_accordions(model)
-      Progresses -> views.view_progresses()
-      Skeletons -> views.view_skeletons()
-      Avatars -> views.view_avatars()
-      RadioGroups -> views.view_radio_groups(model)
-      Toggles -> views.view_toggles(model)
-      ToggleGroups -> views.view_toggle_groups(model)
-      Breadcrumbs -> views.view_breadcrumbs()
-      Paginations -> views.view_paginations(model)
-      ScrollAreas -> views.view_scroll_areas()
-      AspectRatios -> views.view_aspect_ratios()
-      Collapsibles -> views.view_collapsibles(model)
-      Popovers -> views.view_popovers(model)
-      AlertDialogs -> views.view_alert_dialogs(model)
-      HoverCards -> views.view_hover_cards(model)
-      InputOtps -> views.view_input_otps(model)
-      Sheets -> views.view_sheets(model)
-      Menubars -> views.view_menubars(model)
-      Calendars -> views.view_calendars(model)
-      DatePickers -> views.view_date_pickers(model)
-      Spinners -> views.view_spinners()
-      NativeSelects -> views.view_native_selects(model)
-      ButtonGroups -> views.view_button_groups()
-      InputGroups -> views.view_input_groups()
-      ContextMenus -> views.view_context_menus(model)
-      Drawers -> views.view_drawers(model)
-      Sidebars -> views.view_sidebars(model)
-      Commands -> views.view_commands(model)
-      Resizables -> views.view_resizables(model)
-      DataTables -> views.view_data_tables(model)
-      Carousels -> views.view_carousels(model)
-      Comboboxes -> views.view_comboboxes(model)
-      NavigationMenus -> views.view_navigation_menus(model)
-      Empties -> views.view_empties()
-      Items -> views.view_items()
-      FormValidation -> views.view_form_validation(model)
-      Searches -> views.view_searches(model)
-      Ratings -> views.view_ratings(model)
-      NavigationBars -> views.view_navigation_bars()
-      Steppers -> views.view_steppers(model)
-      TreeViews -> views.view_tree_views(model)
-      TimePickers -> views.view_time_pickers(model)
-      Multiselects -> views.view_multiselects(model)
-      Timelines -> views.view_timelines()
-      CanvasStressTest -> views.view_canvas_stress_test(model)
-      WidgetDashboard -> views.view_widget_dashboard(model)
-      HeatmapComparison -> views.view_heatmap_comparison(model)
-      ThreatIntelNetwork -> views.view_threat_intel_network(model)
-      D3Charts -> views.view_d3_charts()
-      MonacoEditor -> views.view_monaco_editor()
-      ExampleForm -> views.view_form_example(model)
-      ExampleSite -> views.view_small_site_example(model)
+      Alerts -> view.view_alerts()
+      Badges -> view.view_badges()
+      Cards -> view.view_cards()
+      Buttons -> view.view_buttons()
+      Inputs -> view.view_inputs()
+      Forms -> view.view_forms()
+      Separators -> view.view_separators()
+      Tooltips -> view.view_tooltips()
+      Switches -> view.view_switches(model)
+      Sliders -> view.view_sliders(model)
+      Selects -> view.view_selects(model)
+      Fields -> view.view_fields(model)
+      DropdownMenus -> view.view_dropdown_menus(model)
+      Tabs -> view.view_tabs(model)
+      Dialogs -> view.view_dialogs(model)
+      Tables -> view.view_tables()
+      Toasts -> view.view_toasts(model)
+      Accordions -> view.view_accordions(model)
+      Progresses -> view.view_progresses()
+      Skeletons -> view.view_skeletons()
+      Avatars -> view.view_avatars()
+      RadioGroups -> view.view_radio_groups(model)
+      Toggles -> view.view_toggles(model)
+      ToggleGroups -> view.view_toggle_groups(model)
+      Breadcrumbs -> view.view_breadcrumbs()
+      Paginations -> view.view_paginations(model)
+      ScrollAreas -> view.view_scroll_areas()
+      AspectRatios -> view.view_aspect_ratios()
+      Collapsibles -> view.view_collapsibles(model)
+      Popovers -> view.view_popovers(model)
+      AlertDialogs -> view.view_alert_dialogs(model)
+      HoverCards -> view.view_hover_cards(model)
+      InputOtps -> view.view_input_otps(model)
+      Sheets -> view.view_sheets(model)
+      Menubars -> view.view_menubars(model)
+      Calendars -> view.view_calendars(model)
+      DatePickers -> view.view_date_pickers(model)
+      Spinners -> view.view_spinners()
+      NativeSelects -> view.view_native_selects(model)
+      ButtonGroups -> view.view_button_groups()
+      InputGroups -> view.view_input_groups()
+      ContextMenus -> view.view_context_menus(model)
+      Drawers -> view.view_drawers(model)
+      Sidebars -> view.view_sidebars(model)
+      Commands -> view.view_commands(model)
+      Resizables -> view.view_resizables(model)
+      DataTables -> view.view_data_tables(model)
+      Carousels -> view.view_carousels(model)
+      Comboboxes -> view.view_comboboxes(model)
+      NavigationMenus -> view.view_navigation_menus(model)
+      Empties -> view.view_empties()
+      Items -> view.view_items()
+      FormValidation -> view.view_form_validation(model)
+      Searches -> view.view_searches(model)
+      Ratings -> view.view_ratings(model)
+      NavigationBars -> view.view_navigation_bars()
+      Steppers -> view.view_steppers(model)
+      TreeViews -> view.view_tree_views(model)
+      TimePickers -> view.view_time_pickers(model)
+      Multiselects -> view.view_multiselects(model)
+      Timelines -> view.view_timelines()
+      CanvasStressTest -> view.view_canvas_stress_test(model)
+      WidgetDashboard -> view.view_widget_dashboard(model)
+      HeatmapComparison -> view.view_heatmap_comparison(model)
+      ThreatIntelNetwork -> view.view_threat_intel_network(model)
+      D3Charts -> view.view_d3_charts()
+      MonacoEditor -> view.view_monaco_editor()
+      ExampleForm -> view.view_form_example(model)
+      ExampleSite -> view.view_small_site_example(model)
     },
   ])
 }

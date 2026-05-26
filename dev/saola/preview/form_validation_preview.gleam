@@ -8,11 +8,11 @@ import saola/button
 import saola/field
 import saola/input
 import saola/preview/model.{
-  type Model, type Msg, SignupConfirmChanged, SignupEmailChanged,
+  type Message, type Model, SignupConfirmChanged, SignupEmailChanged,
   SignupNameChanged, SignupPasswordChanged, SignupReset, SignupSubmitted,
 }
 
-pub fn view_form_validation(model: Model) -> Element(Msg) {
+pub fn view_form_validation(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Form Validation")]),
     h.p([a.class("page-description")], [
@@ -29,7 +29,7 @@ pub fn view_form_validation(model: Model) -> Element(Msg) {
   ])
 }
 
-fn signup_form(model: Model) -> Element(Msg) {
+fn signup_form(model: Model) -> Element(Message) {
   let err = fn(name) {
     dict.get(model.signup_errors, name) |> result_unwrap("")
   }
@@ -128,7 +128,7 @@ fn signup_form(model: Model) -> Element(Msg) {
   ])
 }
 
-fn success_banner(model: Model) -> Element(Msg) {
+fn success_banner(model: Model) -> Element(Message) {
   h.div([a.class("grid gap-4")], [
     h.div([a.class("alert")], [
       h.p([a.class("alert-title")], [text("Account created!")]),

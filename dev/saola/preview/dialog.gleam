@@ -4,9 +4,9 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/button
 import saola/dialog
-import saola/preview/model.{type Model, type Msg, CloseDialog, OpenDialog}
+import saola/preview/model.{type Message, type Model, CloseDialog, OpenDialog}
 
-pub fn view_dialogs(model: Model) -> Element(Msg) {
+pub fn view_dialogs(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Dialogs")]),
     h.p([a.class("page-description")], [

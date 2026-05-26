@@ -3,11 +3,11 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import saola/command
 import saola/preview/model.{
-  type Model, type Msg, CommandNavDown, CommandNavUp, CommandQueryChanged,
+  type Message, type Model, CommandNavDown, CommandNavUp, CommandQueryChanged,
   CommandSelected,
 }
 
-pub fn view_commands(model: Model) -> Element(Msg) {
+pub fn view_commands(model: Model) -> Element(Message) {
   let items = [
     command.CommandGroup("Suggestions", [
       command.CommandAction("calendar", "Calendar", CommandSelected("calendar")),

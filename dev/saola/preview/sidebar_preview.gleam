@@ -2,10 +2,10 @@ import gleam/option.{None, Some}
 import lustre/attribute as a
 import lustre/element.{type Element, text}
 import lustre/element/html as h
-import saola/preview/model.{type Model, type Msg, SidebarToggled}
+import saola/preview/model.{type Message, type Model, SidebarToggled}
 import saola/sidebar
 
-pub fn view_sidebars(model: Model) -> Element(Msg) {
+pub fn view_sidebars(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Sidebar")]),
     h.p([a.class("page-description")], [

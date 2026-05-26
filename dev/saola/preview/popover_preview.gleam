@@ -3,9 +3,9 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import lustre/event as e
 import saola/popover
-import saola/preview/model.{type Model, type Msg, PopoverClosed}
+import saola/preview/model.{type Message, type Model, PopoverClosed}
 
-pub fn view_popovers(model: Model) -> Element(Msg) {
+pub fn view_popovers(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Popover")]),
     h.p([a.class("page-description")], [
