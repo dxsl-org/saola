@@ -5,7 +5,15 @@ import saola/data_table
 import saola/graph_layout.{type NodePosition}
 import saola/theme
 import saola/time_picker.{type TimeValue}
-import saola/toast as saola_toast
+import saola/toast
+
+pub type HeatmapRipple {
+  HeatmapRipple(row: Int, col: Int, counter: Int)
+}
+
+pub type HeatmapHover {
+  HeatmapHover(row: Int, col: Int, value: Int, mouse_x: Float, mouse_y: Float)
+}
 
 // Note: Keep these in sync with the route handlers in view.gleam and the
 // nav links in the sidebar.
@@ -92,7 +100,7 @@ pub type Model {
     // Whether the demo dialog is open
     is_dialog_open: Bool,
     // List of active toasts
-    toasts: List(saola_toast.Toast(Message)),
+    toasts: List(toast.Toast(Message)),
     form_name: String,
     form_email: String,
     form_message: String,
@@ -214,12 +222,10 @@ pub type Model {
     heatmap_painted: Dict(String, Bool),
     heatmap_painting: Bool,
     heatmap_ripple_count: Int,
-    // Option(#(row, col, ripple_counter))
-    heatmap_svg_ripple: Option(#(Int, Int, Int)),
-    heatmap_canvas_ripple: Option(#(Int, Int, Int)),
-    // Option(#(row, col, display_value, mouse_x, mouse_y))
-    heatmap_svg_hover: Option(#(Int, Int, Int, Float, Float)),
-    heatmap_canvas_hover: Option(#(Int, Int, Int, Float, Float)),
+    heatmap_svg_ripple: Option(HeatmapRipple),
+    heatmap_canvas_ripple: Option(HeatmapRipple),
+    heatmap_svg_hover: Option(HeatmapHover),
+    heatmap_canvas_hover: Option(HeatmapHover),
   )
 }
 
@@ -229,7 +235,7 @@ pub type Message {
   TabChanged(String)
   OpenDialog
   CloseDialog
-  AddToast(saola_toast.Toast(Message))
+  AddToast(toast.Toast(Message))
   DismissToast(String)
   FormNameChanged(String)
   FormEmailChanged(String)

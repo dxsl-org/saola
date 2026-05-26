@@ -12,8 +12,8 @@ import saola/canvas_command as canvas
 import saola/lustre_heatmap
 import saola/preview/model.{
   type Message, type Model, HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft,
-  HeatmapCanvasHovered, HeatmapCellPxChanged, HeatmapPaintEnded,
-  HeatmapPaintStarted, HeatmapRandomize, HeatmapSchemeChanged,
+  HeatmapCanvasHovered, HeatmapCellPxChanged, HeatmapHover, HeatmapPaintEnded,
+  HeatmapPaintStarted, HeatmapRandomize, HeatmapRipple, HeatmapSchemeChanged,
   HeatmapSizeChanged, HeatmapSvgCellClicked, HeatmapSvgHoverLeft,
   HeatmapSvgHovered,
 }
@@ -256,11 +256,11 @@ fn renderer_panel(
 }
 
 fn hover_tooltip(
-  hover: Option(#(Int, Int, Int, Float, Float)),
+  hover: Option(model.HeatmapHover),
 ) -> Element(Message) {
   case hover {
     None -> text("")
-    Some(#(row, col, dv, mx, my)) ->
+    Some(HeatmapHover(row, col, dv, mx, my)) ->
       h.div(
         [
           a.attribute(
@@ -350,7 +350,7 @@ fn info_panel(model: Model) -> Element(Message) {
     None -> [
       h.p([a.class("text-muted-foreground text-xs italic")], [text("—")]),
     ]
-    Some(#(row, col, _)) -> {
+    Some(HeatmapRipple(row, col, _)) -> {
       let dv = lustre_heatmap.cell_display_value(row, col, model.heatmap_seed)
       [
         info_row("Row", int.to_string(row)),
@@ -368,7 +368,7 @@ fn info_panel(model: Model) -> Element(Message) {
     None -> [
       h.p([a.class("text-muted-foreground text-xs italic")], [text("—")]),
     ]
-    Some(#(row, col, dv, _, _)) -> [
+    Some(HeatmapHover(row, col, dv, ..)) -> [
       info_row("Row", int.to_string(row)),
       info_row("Col", int.to_string(col)),
       info_row("Value", int.to_string(dv)),
@@ -483,12 +483,12 @@ fn ripple_style() -> Element(Message) {
 }
 
 fn ripple_overlay(
-  ripple: Option(#(Int, Int, Int)),
+  ripple: Option(model.HeatmapRipple),
   cell_px: Int,
 ) -> Element(Message) {
   case ripple {
     None -> text("")
-    Some(#(row, col, count)) -> {
+    Some(HeatmapRipple(row, col, count)) -> {
       let cx = col * cell_px + cell_px / 2
       let cy = row * cell_px + cell_px / 2
       let r = int.max(cell_px, 4)

@@ -63,6 +63,7 @@ import saola/preview/model.{
   TimePickers, Timelines, Toasts, ToggleBoldChanged, ToggleDropdown,
   ToggleGroupChanged, ToggleGroups, ToggleItalicChanged, Toggles, Tooltips,
   TreeNodeToggled, TreeViews, WidgetDashboard,
+  HeatmapHover, HeatmapRipple,
 }
 import saola/preview/view
 
@@ -631,7 +632,7 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       #(
         Model(
           ..model,
-          heatmap_svg_hover: Some(#(row, col, dv, mx, my)),
+          heatmap_svg_hover: Some(HeatmapHover(row, col, dv, mx, my)),
           heatmap_painted: painted,
         ),
         effect.none(),
@@ -663,7 +664,7 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       #(
         Model(
           ..model,
-          heatmap_canvas_hover: Some(#(row, col, dv, mx, my)),
+          heatmap_canvas_hover: Some(HeatmapHover(row, col, dv, mx, my)),
           heatmap_painted: painted,
         ),
         effect.none(),
@@ -684,8 +685,8 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
             col,
           ),
           heatmap_ripple_count: count,
-          heatmap_svg_ripple: Some(#(row, col, count)),
-          heatmap_canvas_ripple: Some(#(row, col, count)),
+          heatmap_svg_ripple: Some(HeatmapRipple(row, col, count)),
+          heatmap_canvas_ripple: Some(HeatmapRipple(row, col, count)),
         ),
         effect.none(),
       )
@@ -701,8 +702,8 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
             col,
           ),
           heatmap_ripple_count: count,
-          heatmap_svg_ripple: Some(#(row, col, count)),
-          heatmap_canvas_ripple: Some(#(row, col, count)),
+          heatmap_svg_ripple: Some(HeatmapRipple(row, col, count)),
+          heatmap_canvas_ripple: Some(HeatmapRipple(row, col, count)),
         ),
         effect.none(),
       )

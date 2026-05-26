@@ -112,6 +112,27 @@ let id = typeid.new(prefix: "dlg") |> result.map(typeid.to_string) |> result.unw
 
 ---
 
+## Gleam Type Rules
+
+### 10. Named types over homogeneous tuples
+
+When a tuple has two or more members of the same type, define a custom type instead. Homogeneous tuples like `#(Int, Int, Int)` or `#(Int, Int, Float, Float)` offer no indication of what each position means — callers must remember positional order, and the compiler cannot catch transpositions.
+
+```gleam
+// WRONG: members are the same type, order is ambiguous
+heatmap_svg_hover: Option(#(Int, Int, Int, Float, Float))
+
+// CORRECT: named fields document intent and prevent transposition
+pub type HeatmapHover {
+  HeatmapHover(row: Int, col: Int, value: Int, mouse_x: Float, mouse_y: Float)
+}
+heatmap_svg_hover: Option(HeatmapHover)
+```
+
+The exception is short, universally-understood pairs like `#(Float, Float)` for `(x, y)` coordinates — but prefer a named type even there once the tuple grows or appears in multiple places.
+
+---
+
 ## Web Component (External Library Wrapper) Rules
 
 ### 1. Properties for structured data, attributes for strings
