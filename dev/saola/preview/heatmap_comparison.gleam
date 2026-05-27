@@ -255,9 +255,7 @@ fn renderer_panel(
   ])
 }
 
-fn hover_tooltip(
-  hover: Option(model.HeatmapHover),
-) -> Element(Message) {
+fn hover_tooltip(hover: Option(model.HeatmapHover)) -> Element(Message) {
   case hover {
     None -> text("")
     Some(HeatmapHover(row, col, dv, mx, my)) ->
