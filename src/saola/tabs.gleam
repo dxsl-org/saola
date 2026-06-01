@@ -14,12 +14,6 @@ pub type Tab(msg) {
   )
 }
 
-pub type TabsExtraAttrs {
-  TabsExtraAttrs(class: String)
-}
-
-pub const default_tabs_attrs = TabsExtraAttrs("")
-
 fn tab_id(id: String) -> String {
   "tab-" <> id
 }
@@ -94,23 +88,12 @@ fn render_panel(tab: Tab(msg), is_active: Bool) -> Element(msg) {
 /// NOTE: `aria-hidden` alone does not remove inactive panels from keyboard
 /// tab order. Add `[role="tabpanel"][aria-hidden="true"] { display: none; }`
 /// to your CSS so focusable elements inside hidden panels are unreachable.
-///
-/// Example:
-/// ```gleam
-/// tabs_full(
-///   tabs: [Tab("account", "Account", account_view), Tab("security", "Security", security_view)],
-///   active_id: model.active_tab,
-///   on_tab_change: TabChanged,
-///   extra_attrs: default_tabs_attrs,
-/// )
-/// ```
 pub fn tabs_full(
   tabs tabs: List(Tab(msg)),
   active_id active_id: String,
   on_tab_change on_tab_change: fn(String) -> msg,
-  extra_attrs extra_attrs: TabsExtraAttrs,
+  class class: String,
 ) -> Element(msg) {
-  let TabsExtraAttrs(class:) = extra_attrs
   let extra_class = case class {
     "" -> a.none()
     c -> a.class(c)
@@ -139,6 +122,6 @@ pub fn tabs_simple(
     tabs: tabs,
     active_id: active_id,
     on_tab_change: on_tab_change,
-    extra_attrs: default_tabs_attrs,
+    class: "",
   )
 }

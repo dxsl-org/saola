@@ -22,12 +22,6 @@ pub type StepItem {
   StepItem(label: String, description: String, status: StepStatus)
 }
 
-pub type StepperAttrs {
-  StepperAttrs(class: String)
-}
-
-pub const default_attrs = StepperAttrs(class: "")
-
 /// Multi-step progress indicator.
 ///
 /// - `active_step`: 0-indexed index of the current step
@@ -37,13 +31,13 @@ pub fn stepper_full(
   steps: List(StepItem),
   active_step: Int,
   on_step_click: Option(fn(Int) -> msg),
-  attrs: StepperAttrs,
+  class: String,
 ) -> Element(msg) {
   let orient_class = case orientation {
     Horizontal -> "stepper stepper-horizontal"
     Vertical -> "stepper stepper-vertical"
   }
-  let root_class = case attrs.class {
+  let root_class = case class {
     "" -> orient_class
     c -> orient_class <> " " <> c
   }
@@ -115,5 +109,5 @@ pub fn stepper_full(
 }
 
 pub fn stepper_simple(steps: List(StepItem), active_step: Int) -> Element(msg) {
-  stepper_full(Horizontal, steps, active_step, None, default_attrs)
+  stepper_full(Horizontal, steps, active_step, None, "")
 }

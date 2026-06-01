@@ -8,21 +8,15 @@ pub type EmptyMediaVariant {
   Icon
 }
 
-pub type EmptyAttrs {
-  EmptyAttrs(class: String)
-}
-
-pub const default_attrs = EmptyAttrs(class: "")
-
 pub fn empty_full(
   media media: Option(Element(msg)),
   media_variant media_variant: EmptyMediaVariant,
   title title: String,
   description description: List(Element(msg)),
   content content: List(Element(msg)),
-  attrs attrs: EmptyAttrs,
+  class class: String,
 ) -> Element(msg) {
-  let root_class = case attrs.class {
+  let root_class = case class {
     "" -> "empty"
     c -> "empty " <> c
   }
@@ -75,6 +69,6 @@ pub fn empty_simple(
     title: title,
     description: desc_children,
     content: content_children,
-    attrs: default_attrs,
+    class: "",
   )
 }

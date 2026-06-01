@@ -41,7 +41,7 @@ pub fn view_empties() -> Element(Message) {
           title: "No results",
           description: [text("Try a different search term.")],
           content: [],
-          attrs: empty.default_attrs,
+          class: "",
         ),
       ]),
       h.div([a.class("grid gap-4")], [
@@ -52,7 +52,7 @@ pub fn view_empties() -> Element(Message) {
           title: "",
           description: [],
           content: [button.button_primary("Get started", StartedTrial)],
-          attrs: empty.default_attrs,
+          class: "",
         ),
       ]),
     ]),

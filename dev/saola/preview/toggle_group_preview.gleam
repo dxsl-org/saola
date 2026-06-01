@@ -34,10 +34,8 @@ pub fn view_toggle_groups(model: Model) -> Element(Message) {
           ],
           model.toggle_group_selected,
           ToggleGroupChanged,
-          toggle_group.ToggleGroupAttrs(
-            ..toggle_group.default_attrs,
-            group_type: toggle_group.MultiSelect,
-          ),
+          toggle_group.MultiSelect,
+          "",
         ),
       ]),
     ]),

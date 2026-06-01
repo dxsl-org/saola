@@ -10,26 +10,21 @@ pub type PopoverSide {
   Right
 }
 
-pub type PopoverAttrs {
-  PopoverAttrs(side: PopoverSide, class: String)
-}
-
-pub const default_attrs = PopoverAttrs(side: Bottom, class: "")
-
 pub fn popover_full(
   open: Bool,
   trigger: Element(msg),
   content: Element(msg),
   on_close: fn() -> msg,
-  attrs: PopoverAttrs,
+  side: PopoverSide,
+  class: String,
 ) -> Element(msg) {
-  let side_attr = case attrs.side {
+  let side_attr = case side {
     Top -> a.attribute("data-side", "top")
     Bottom -> a.attribute("data-side", "bottom")
     Left -> a.attribute("data-side", "left")
     Right -> a.attribute("data-side", "right")
   }
-  let extra_class = case attrs.class {
+  let extra_class = case class {
     "" -> a.none()
     c -> a.class(c)
   }
@@ -68,5 +63,5 @@ pub fn popover_simple(
   content: Element(msg),
   on_close: fn() -> msg,
 ) -> Element(msg) {
-  popover_full(open, trigger, content, on_close, default_attrs)
+  popover_full(open, trigger, content, on_close, Bottom, "")
 }

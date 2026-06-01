@@ -20,7 +20,7 @@ pub fn view_items() -> Element(Message) {
       title: "Alice Smith",
       description: "Software engineer",
       actions: actions,
-      attrs: item.default_attrs,
+      class: "",
     ),
     item.item_full(
       variant: item.Default,
@@ -30,7 +30,7 @@ pub fn view_items() -> Element(Message) {
       title: "Bob Jones",
       description: "Product designer",
       actions: actions,
-      attrs: item.default_attrs,
+      class: "",
     ),
     item.item_full(
       variant: item.Default,
@@ -40,7 +40,7 @@ pub fn view_items() -> Element(Message) {
       title: "Carol Doe",
       description: "Engineering manager",
       actions: actions,
-      attrs: item.default_attrs,
+      class: "",
     ),
   ]
 
@@ -58,7 +58,7 @@ pub fn view_items() -> Element(Message) {
           title: "Default variant",
           description: "Transparent background.",
           actions: actions,
-          attrs: item.default_attrs,
+          class: "",
         ),
         item.item_full(
           variant: item.Outline,
@@ -68,7 +68,7 @@ pub fn view_items() -> Element(Message) {
           title: "Outline variant",
           description: "Bordered.",
           actions: actions,
-          attrs: item.default_attrs,
+          class: "",
         ),
         item.item_full(
           variant: item.Muted,
@@ -78,7 +78,7 @@ pub fn view_items() -> Element(Message) {
           title: "Muted variant",
           description: "Muted background.",
           actions: actions,
-          attrs: item.default_attrs,
+          class: "",
         ),
       ]),
       h.div([a.class("grid gap-4")], [
@@ -91,7 +91,7 @@ pub fn view_items() -> Element(Message) {
           title: "Small size",
           description: "Tighter padding.",
           actions: actions,
-          attrs: item.default_attrs,
+          class: "",
         ),
       ]),
       h.div([a.class("grid gap-4")], [
@@ -105,7 +105,7 @@ pub fn view_items() -> Element(Message) {
           title: "Alice Smith",
           description: "Click to view profile",
           action: Some(button.button_outline("Open", StartedTrial)),
-          attrs: item.default_attrs,
+          class: "",
         ),
       ]),
     ]),

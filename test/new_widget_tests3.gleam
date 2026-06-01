@@ -20,24 +20,21 @@ pub fn spinner_simple_renders_test() {
 
 pub fn spinner_small_has_sm_class_test() {
   let html =
-    spinner.spinner_full(spinner.SpinnerAttrs(size: spinner.Small, class: ""))
+    spinner.spinner_full(spinner.Small, "")
     |> element.to_string
   assert string.contains(html, "spinner-sm")
 }
 
 pub fn spinner_large_has_lg_class_test() {
   let html =
-    spinner.spinner_full(spinner.SpinnerAttrs(size: spinner.Large, class: ""))
+    spinner.spinner_full(spinner.Large, "")
     |> element.to_string
   assert string.contains(html, "spinner-lg")
 }
 
 pub fn spinner_custom_class_test() {
   let html =
-    spinner.spinner_full(spinner.SpinnerAttrs(
-      size: spinner.Medium,
-      class: "my-class",
-    ))
+    spinner.spinner_full(spinner.Medium, "my-class")
     |> element.to_string
   assert string.contains(html, "my-class")
 }

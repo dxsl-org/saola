@@ -20,12 +20,6 @@ pub type ItemMediaVariant {
   MediaImage
 }
 
-pub type ItemAttrs {
-  ItemAttrs(class: String)
-}
-
-pub const default_attrs = ItemAttrs(class: "")
-
 fn variant_class(v: ItemVariant) -> String {
   case v {
     Default -> "item-default"
@@ -95,9 +89,9 @@ pub fn item_full(
   title title: String,
   description description: String,
   actions actions: List(Element(msg)),
-  attrs attrs: ItemAttrs,
+  class class: String,
 ) -> Element(msg) {
-  let cls = root_class(variant, size, attrs.class)
+  let cls = root_class(variant, size, class)
   let body = item_body(media, media_variant, title, description, actions)
   h.div([a.class(cls)], body)
 }
@@ -119,7 +113,7 @@ pub fn item_simple(
     title: title,
     description: description,
     actions: actions,
-    attrs: default_attrs,
+    class: "",
   )
 }
 
@@ -128,9 +122,9 @@ pub fn item_link(
   title title: String,
   description description: String,
   action action: Option(Element(msg)),
-  attrs attrs: ItemAttrs,
+  class class: String,
 ) -> Element(msg) {
-  let cls = root_class(Default, Large, attrs.class)
+  let cls = root_class(Default, Large, class)
   let actions = case action {
     None -> []
     Some(act) -> [act]

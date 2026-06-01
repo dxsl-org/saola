@@ -14,19 +14,14 @@ pub type ToggleGroupType {
   MultiSelect
 }
 
-pub type ToggleGroupAttrs {
-  ToggleGroupAttrs(group_type: ToggleGroupType, class: String)
-}
-
-pub const default_attrs = ToggleGroupAttrs(group_type: SingleSelect, class: "")
-
 pub fn toggle_group_full(
   items: List(ToggleGroupItem),
   selected: List(String),
   on_change: fn(List(String)) -> msg,
-  attrs: ToggleGroupAttrs,
+  group_type: ToggleGroupType,
+  class: String,
 ) -> Element(msg) {
-  let extra_class = case attrs.class {
+  let extra_class = case class {
     "" -> a.none()
     c -> a.class(c)
   }
@@ -38,7 +33,7 @@ pub fn toggle_group_full(
         ToggleGroupItemDisabled(v, l) -> #(v, l, True)
       }
       let is_pressed = list.contains(selected, value)
-      let new_selected = case attrs.group_type, is_pressed {
+      let new_selected = case group_type, is_pressed {
         SingleSelect, True -> []
         SingleSelect, False -> [value]
         MultiSelect, True -> list.filter(selected, fn(s) { s != value })
@@ -70,5 +65,5 @@ pub fn toggle_group_simple(
   selected: List(String),
   on_change: fn(List(String)) -> msg,
 ) -> Element(msg) {
-  toggle_group_full(items, selected, on_change, default_attrs)
+  toggle_group_full(items, selected, on_change, SingleSelect, "")
 }

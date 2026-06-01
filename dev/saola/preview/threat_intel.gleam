@@ -317,7 +317,7 @@ fn table_panel(model: Model) -> Element(Message) {
           title: "No actors match",
           description: [h.text("Adjust the filters or search query.")],
           content: [],
-          attrs: empty.default_attrs,
+          class: "",
         )
       _ ->
         data_table.data_table_full(

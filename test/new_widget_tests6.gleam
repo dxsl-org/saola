@@ -41,7 +41,7 @@ pub fn empty_omits_header_when_all_empty_test() {
       title: "",
       description: [],
       content: [],
-      attrs: empty.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert !string.contains(html, "empty-header")
@@ -56,7 +56,7 @@ pub fn empty_full_default_media_class_test() {
       title: "",
       description: [],
       content: [],
-      attrs: empty.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "class=\"empty-media\"")
@@ -71,7 +71,7 @@ pub fn empty_extra_class_concat_test() {
       title: "T",
       description: [],
       content: [],
-      attrs: empty.EmptyAttrs(class: "custom"),
+      class: "custom",
     )
     |> element.to_string
   assert string.contains(html, "class=\"empty custom\"")
@@ -85,7 +85,7 @@ pub fn empty_omits_content_when_empty_test() {
       title: "T",
       description: [],
       content: [],
-      attrs: empty.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert !string.contains(html, "empty-content")
@@ -99,7 +99,7 @@ pub fn empty_renders_content_when_present_test() {
       title: "",
       description: [],
       content: [h.button([], [h.text("Action")])],
-      attrs: empty.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "empty-content")
@@ -118,7 +118,7 @@ pub fn item_full_default_classes_test() {
       title: "Title",
       description: "Desc",
       actions: [],
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "item item-default item-lg")
@@ -136,7 +136,7 @@ pub fn item_full_outline_small_test() {
       title: "T",
       description: "D",
       actions: [],
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "item-outline")
@@ -153,7 +153,7 @@ pub fn item_full_muted_test() {
       title: "T",
       description: "D",
       actions: [],
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "item-muted")
@@ -184,7 +184,7 @@ pub fn item_omits_content_when_empty_test() {
       title: "",
       description: "",
       actions: [],
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert !string.contains(html, "item-content")
@@ -201,7 +201,7 @@ pub fn item_media_image_class_test() {
       title: "T",
       description: "D",
       actions: [],
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "item-media item-media-image")
@@ -214,7 +214,7 @@ pub fn item_link_emits_anchor_test() {
       title: "Title",
       description: "Desc",
       action: None,
-      attrs: item.default_attrs,
+      class: "",
     )
     |> element.to_string
   assert string.contains(html, "<a")
@@ -247,7 +247,7 @@ pub fn item_extra_class_concat_test() {
       title: "T",
       description: "D",
       actions: [],
-      attrs: item.ItemAttrs(class: "custom"),
+      class: "custom",
     )
     |> element.to_string
   assert string.contains(html, "item item-default item-lg custom")

@@ -201,8 +201,7 @@ pub fn label_for_renders_test() {
 }
 
 pub fn label_without_for_renders_test() {
-  let html =
-    label.label("Username", label.default_label_attrs) |> element.to_string
+  let html = label.label("Username", "", "") |> element.to_string
   assert string.contains(html, "class=\"label")
   assert string.contains(html, "Username")
   assert !string.contains(html, "for=")

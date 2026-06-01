@@ -43,7 +43,7 @@ pub fn view_steppers(model: Model) -> Element(Message) {
           steps,
           model.stepper_step,
           Some(StepperStepClicked),
-          stepper.default_attrs,
+          "",
         ),
       ]),
       h.div([a.class("grid gap-4")], [
@@ -53,7 +53,7 @@ pub fn view_steppers(model: Model) -> Element(Message) {
           steps,
           model.stepper_step,
           Some(StepperStepClicked),
-          stepper.default_attrs,
+          "",
         ),
       ]),
       h.div([a.class("grid gap-4")], [

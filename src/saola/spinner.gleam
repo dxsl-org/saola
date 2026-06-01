@@ -8,19 +8,13 @@ pub type SpinnerSize {
   Large
 }
 
-pub type SpinnerAttrs {
-  SpinnerAttrs(size: SpinnerSize, class: String)
-}
-
-pub const default_attrs = SpinnerAttrs(size: Medium, class: "")
-
-pub fn spinner_full(attrs: SpinnerAttrs) -> Element(msg) {
-  let size_class = case attrs.size {
+pub fn spinner_full(size: SpinnerSize, class: String) -> Element(msg) {
+  let size_class = case size {
     Small -> "spinner spinner-sm"
     Medium -> "spinner spinner-md"
     Large -> "spinner spinner-lg"
   }
-  let full_class = case attrs.class {
+  let full_class = case class {
     "" -> size_class
     c -> size_class <> " " <> c
   }
@@ -35,5 +29,5 @@ pub fn spinner_full(attrs: SpinnerAttrs) -> Element(msg) {
 }
 
 pub fn spinner_simple() -> Element(msg) {
-  spinner_full(default_attrs)
+  spinner_full(Medium, "")
 }

@@ -41,7 +41,29 @@ Use `pub const default_*` for records whose fields are all scalar (String, Bool,
 
 Use `pub fn default_*() -> T` (a function) for records that contain `Element(msg)` or any polymorphic field — because `pub const` cannot hold generic types.
 
-### 4. Form inputs — InitValue / SyncValue
+### 4. Widget `Attrs` types — only for long parameter lists
+
+Introduce a `WidgetAttrs` record type **only** when `widget_full` would otherwise take more parameters than is readable (roughly 4+). The sole purpose of `Attrs` is to reduce the number of positional arguments — not to add abstraction for its own sake.
+
+Keep the most important parameters as direct arguments; bundle secondary or optional ones into `Attrs`. The goal is a balanced signature, not collapsing everything into one record.
+
+```gleam
+// CORRECT: two parameters, no need for a wrapper type
+pub fn spinner_full(size: SpinnerSize, class: String) -> Element(msg)
+
+// CORRECT: primary params stay direct, secondary ones are bundled
+pub type DialogAttrs {
+  DialogAttrs(description: String, icon: Option(Element(msg)), class: String)
+}
+pub fn dialog_full(open: Bool, title: String, attrs: DialogAttrs) -> Element(msg)
+
+// WRONG: wrapping everything into one record just to reduce to a single parameter
+pub fn dialog_full(attrs: DialogAttrs) -> Element(msg)
+```
+
+When an `Attrs` type is justified, pair it with a `pub const default_*` (or `pub fn default_*()` for generic fields) so callers can opt in to just the fields they need.
+
+### 5. Form inputs — InitValue / SyncValue
 
 Form inputs expose a two-mode ADT for value binding:
 

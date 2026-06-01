@@ -4,21 +4,14 @@ import lustre/element/html as h
 
 pub const class_label = "label"
 
-pub type LabelExtraAttrs {
-  LabelExtraAttrs(for_: String, class: String)
-}
-
-pub const default_label_attrs = LabelExtraAttrs("", "")
-
 /// Render a styled label element.
 ///
 /// Example:
 /// ```gleam
-/// label("Email address", default_label_attrs)
-/// label("Username", LabelExtraAttrs(for_: "username-input", class: ""))
+/// label("Email address", "", "")
+/// label("Username", "username-input", "")
 /// ```
-pub fn label(text: String, extra_attrs: LabelExtraAttrs) -> Element(msg) {
-  let LabelExtraAttrs(for_:, class:) = extra_attrs
+pub fn label(text: String, for_: String, class: String) -> Element(msg) {
   let for_attr = case for_ {
     "" -> a.none()
     v -> a.for(v)
@@ -32,5 +25,5 @@ pub fn label(text: String, extra_attrs: LabelExtraAttrs) -> Element(msg) {
 
 /// Shortcut for a label associated with an input by ID.
 pub fn label_for(text: String, input_id: String) -> Element(msg) {
-  label(text, LabelExtraAttrs(for_: input_id, class: ""))
+  label(text, input_id, "")
 }
