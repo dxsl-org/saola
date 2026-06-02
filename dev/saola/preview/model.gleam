@@ -174,7 +174,6 @@ pub type Model {
     // Combobox preview state
     combobox_value: Option(String),
     combobox_query: String,
-    combobox_open: Bool,
     // Navigation menu preview state
     nav_menu_open: Option(String),
     // Active color theme
@@ -297,7 +296,6 @@ pub type Message {
   DataTablePageChanged(Int)
   DataTableSelectChanged(List(String))
   CarouselChanged(Int, Bool, Bool)
-  ComboboxOpenChanged(Bool)
   ComboboxQueryChanged(String)
   ComboboxSelected(String)
   NavMenuOpenChanged(Option(String))

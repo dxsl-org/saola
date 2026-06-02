@@ -14,6 +14,7 @@ import lustre/element/html as h
 import lustre/event as e
 import modem
 import saola/canvas_command as canvas
+import saola/component/combobox as cb
 import saola/graph_layout
 import saola/lustre_heatmap
 import saola/preview/threat_intel_data
@@ -28,8 +29,8 @@ import saola/preview/model.{
   Alerts, AspectRatios, Avatars, Badges, Breadcrumbs, ButtonGroups, Buttons,
   CalendarDateSelected, CalendarMonthChanged, Calendars, CanvasStressTest, Cards,
   CarouselChanged, Carousels, CloseDialog, CollapsibleToggled, Collapsibles,
-  ComboboxOpenChanged, ComboboxQueryChanged, ComboboxSelected, Comboboxes,
-  CommandNavDown, CommandNavUp, CommandQueryChanged, CommandSelected, Commands,
+  ComboboxQueryChanged, ComboboxSelected, Comboboxes, CommandNavDown,
+  CommandNavUp, CommandQueryChanged, CommandSelected, Commands,
   ContextMenuClosed, ContextMenuOpened, ContextMenus, D3Charts, DashDrawerClosed,
   DashPageChanged, DashRowClicked, DashSearchChanged, DataTableFilterChanged,
   DataTablePageChanged, DataTableSelectChanged, DataTableSortChanged, DataTables,
@@ -69,6 +70,7 @@ import saola/preview/model.{
 import saola/preview/view
 
 pub fn main() {
+  let assert Ok(_) = cb.register()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
@@ -139,7 +141,6 @@ fn init(_args) -> #(Model, Effect(Message)) {
       carousel_can_next: True,
       combobox_value: None,
       combobox_query: "",
-      combobox_open: False,
       nav_menu_open: None,
       theme: theme.Light,
       system_os_dark: theme.get_system_dark(),
@@ -522,16 +523,12 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       ),
       effect.none(),
     )
-    ComboboxOpenChanged(open) -> #(
-      Model(..model, combobox_open: open),
-      effect.none(),
-    )
     ComboboxQueryChanged(q) -> #(
       Model(..model, combobox_query: q),
       effect.none(),
     )
     ComboboxSelected(val) -> #(
-      Model(..model, combobox_value: Some(val), combobox_open: False),
+      Model(..model, combobox_value: Some(val)),
       effect.none(),
     )
     NavMenuOpenChanged(id) -> #(

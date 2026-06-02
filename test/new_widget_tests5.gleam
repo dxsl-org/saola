@@ -1,9 +1,11 @@
+import gleam/json
 import gleam/option.{None, Some}
 import gleam/string
+import lustre/attribute as a
 import lustre/element
 import lustre/element/html as h
 import saola/carousel
-import saola/combobox
+import saola/component/combobox as cb
 import saola/navigation_menu
 import saola/toast
 
@@ -64,87 +66,33 @@ pub fn carousel_horizontal_default_test() {
 
 // --- combobox ---
 
-pub fn combobox_closed_renders_trigger_test() {
-  let opts = [
-    combobox.ComboboxOption(value: "a", label: "Apple"),
-    combobox.ComboboxOption(value: "b", label: "Banana"),
-  ]
+pub fn combobox_element_renders_tag_test() {
+  let html = cb.element([]) |> element.to_string
+  assert string.contains(html, "<combo-box")
+}
+
+pub fn combobox_preselect_value_attr_test() {
+  let html = cb.element([cb.preselect_value("cherry")]) |> element.to_string
+  assert string.contains(html, "preselect-value=\"cherry\"")
+}
+
+pub fn combobox_regular_attributes_are_serialized_test() {
+  let html = cb.element([a.id("fruit-combobox")]) |> element.to_string
+  assert string.contains(html, "id=\"fruit-combobox\"")
+}
+
+pub fn combobox_choices_property_is_not_serialized_test() {
   let html =
-    combobox.combobox_simple(opts, None, False, fn(_) { "" }, fn(v) { v })
+    cb.element([
+      a.property(
+        "choices",
+        json.array([cb.Item(value: "apple", name: "Apple")], cb.encode_item),
+      ),
+    ])
     |> element.to_string
-  assert string.contains(html, "role=\"combobox\"")
-  assert string.contains(html, "aria-expanded=\"false\"")
-  assert string.contains(html, "Select...")
-}
-
-pub fn combobox_open_renders_panel_test() {
-  let opts = [combobox.ComboboxOption(value: "a", label: "Apple")]
-  let html =
-    combobox.combobox_simple(opts, None, True, fn(_) { "" }, fn(v) { v })
-    |> element.to_string
-  assert string.contains(html, "aria-expanded=\"true\"")
-  assert string.contains(html, "role=\"listbox\"")
-  assert string.contains(html, "Apple")
-}
-
-pub fn combobox_selected_shows_label_test() {
-  let opts = [
-    combobox.ComboboxOption(value: "a", label: "Apple"),
-    combobox.ComboboxOption(value: "b", label: "Banana"),
-  ]
-  let html =
-    combobox.combobox_simple(opts, Some("b"), False, fn(_) { "" }, fn(v) { v })
-    |> element.to_string
-  assert string.contains(html, "Banana")
-}
-
-pub fn combobox_selected_option_aria_test() {
-  let opts = [combobox.ComboboxOption(value: "x", label: "Xylophone")]
-  let html =
-    combobox.combobox_simple(opts, Some("x"), True, fn(_) { "" }, fn(v) { v })
-    |> element.to_string
-  assert string.contains(html, "aria-selected=\"true\"")
-}
-
-pub fn combobox_filter_includes_match_test() {
-  let opts = [
-    combobox.ComboboxOption(value: "a", label: "Apple"),
-    combobox.ComboboxOption(value: "b", label: "Banana"),
-    combobox.ComboboxOption(value: "c", label: "Cherry"),
-  ]
-  let result = combobox.combobox_filter(opts, "an")
-  assert result == [combobox.ComboboxOption(value: "b", label: "Banana")]
-}
-
-pub fn combobox_filter_empty_query_returns_all_test() {
-  let opts = [
-    combobox.ComboboxOption(value: "a", label: "Apple"),
-    combobox.ComboboxOption(value: "b", label: "Banana"),
-  ]
-  let result = combobox.combobox_filter(opts, "")
-  assert result == opts
-}
-
-pub fn combobox_filter_case_insensitive_test() {
-  let opts = [combobox.ComboboxOption(value: "a", label: "Apple")]
-  let result = combobox.combobox_filter(opts, "APPLE")
-  assert result == opts
-}
-
-pub fn combobox_empty_results_shows_no_results_test() {
-  let html =
-    combobox.combobox_full(
-      [],
-      None,
-      "zzz",
-      True,
-      fn(_) { "" },
-      fn(q) { q },
-      fn(v) { v },
-      combobox.default_attrs,
-    )
-    |> element.to_string
-  assert string.contains(html, "No results.")
+  assert string.contains(html, "<combo-box")
+  assert !string.contains(html, "choices=")
+  assert !string.contains(html, "Apple")
 }
 
 // --- navigation menu ---
