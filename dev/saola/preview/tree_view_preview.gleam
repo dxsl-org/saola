@@ -5,7 +5,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, TreeNodeToggled}
 import saola/tree_view
 
-pub fn view_tree_views(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let items = [
     tree_view.TreeItem(id: "src", label: "src", icon: None, children: [
       tree_view.TreeItem(id: "src-saola", label: "saola", icon: None, children: [

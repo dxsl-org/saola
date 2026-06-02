@@ -6,7 +6,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, RatingChanged}
 import saola/rating
 
-pub fn view_ratings(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Rating")]),
     h.p([a.class("page-description")], [

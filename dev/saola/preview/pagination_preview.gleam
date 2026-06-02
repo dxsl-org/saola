@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/pagination
 import saola/preview/model.{type Message, type Model, PaginationChanged}
 
-pub fn view_paginations(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Pagination")]),
     h.p([a.class("page-description")], [

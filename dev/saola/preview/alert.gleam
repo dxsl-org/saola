@@ -5,7 +5,7 @@ import lustre/element/html as h
 import saola/alert
 import saola/preview/model.{type Message}
 
-pub fn view_alerts() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Alerts")]),
     h.p([a.class("page-description")], [

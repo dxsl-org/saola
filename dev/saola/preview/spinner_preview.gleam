@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message}
 import saola/spinner
 
-pub fn view_spinners() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Spinner")]),
     h.p([a.class("page-description")], [

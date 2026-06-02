@@ -22,7 +22,7 @@ import saola/preview/model.{
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_heatmap_comparison(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let size = model.heatmap_size
   let cell_px = model.heatmap_cell_px
   let scheme = model.heatmap_scheme

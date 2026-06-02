@@ -80,7 +80,7 @@ fn simple_columns() -> List(data_table.DataTableColumn(Person, Message)) {
   ]
 }
 
-pub fn view_data_tables(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Data Table")]),
     h.p([a.class("page-description")], [

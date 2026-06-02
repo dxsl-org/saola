@@ -8,7 +8,7 @@ import saola/preview/model.{
 }
 import saola/toast
 
-pub fn view_toasts(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Toasts")]),
     h.p([a.class("page-description")], [

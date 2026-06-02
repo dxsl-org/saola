@@ -6,7 +6,7 @@ import saola/preview/model.{
   type Message, type Model, MenubarClosed, MenubarOpened,
 }
 
-pub fn view_menubars(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Menubar")]),
     h.p([a.class("page-description")], [

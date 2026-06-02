@@ -10,7 +10,7 @@ import saola/preview/model.{type Message, type Model, StartedTrial, TabChanged}
 import saola/table
 import saola/tabs
 
-pub fn view_small_site_example(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.main([a.class("grid gap-8")], [
     hero(),
     alert.alert_default(

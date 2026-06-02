@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, TabChanged}
 import saola/tabs
 
-pub fn view_tabs(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let demo_tabs = [
     tabs.Tab(
       "account",

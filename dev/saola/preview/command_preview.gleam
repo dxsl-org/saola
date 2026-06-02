@@ -7,7 +7,7 @@ import saola/preview/model.{
   CommandSelected,
 }
 
-pub fn view_commands(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let items = [
     command.CommandGroup("Suggestions", [
       command.CommandAction("calendar", "Calendar", CommandSelected("calendar")),

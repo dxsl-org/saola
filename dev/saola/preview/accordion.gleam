@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/accordion
 import saola/preview/model.{type Message, type Model, AccordionToggled}
 
-pub fn view_accordions(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Accordion")]),
     h.p([a.class("page-description")], [

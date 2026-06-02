@@ -82,7 +82,7 @@ const page_size = 8
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_widget_dashboard(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let all = all_employees()
   let total = list.length(all)
   let filtered = filter_employees(all, model.dash_search)

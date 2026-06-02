@@ -5,7 +5,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, StepperStepClicked}
 import saola/stepper
 
-pub fn view_steppers(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let steps = [
     stepper.StepItem(
       label: "Account",

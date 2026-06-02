@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/input_otp
 import saola/preview/model.{type Message, type Model, InputOtpChanged}
 
-pub fn view_input_otps(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Input OTP")]),
     h.p([a.class("page-description")], [

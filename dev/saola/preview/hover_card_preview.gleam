@@ -8,7 +8,7 @@ import saola/preview/model.{
   type Message, type Model, HoverCardClosed, HoverCardOpened,
 }
 
-pub fn view_hover_cards(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Hover Card")]),
     h.p([a.class("page-description")], [

@@ -71,234 +71,231 @@ import saola/preview/tooltip as tooltip_preview
 import saola/preview/tree_view_preview
 import saola/preview/widget_dashboard
 
-pub fn view_alerts() -> Element(Message) {
-  alert.view_alerts()
+pub fn alerts() -> Element(Message) {
+  alert.view()
 }
 
-pub fn view_badges() -> Element(Message) {
-  badge.view_badges()
+pub fn badges() -> Element(Message) {
+  badge.view()
 }
 
-pub fn view_cards() -> Element(Message) {
-  card.view_cards()
+pub fn cards() -> Element(Message) {
+  card.view()
 }
 
-pub fn view_inputs() -> Element(Message) {
-  input.view_inputs()
+pub fn inputs() -> Element(Message) {
+  input.view()
 }
 
-pub fn view_buttons() -> Element(Message) {
-  button.view_buttons()
+pub fn buttons() -> Element(Message) {
+  button.view()
 }
 
-pub fn view_dropdown_menus(model: Model) -> Element(Message) {
+pub fn dropdown_menus(model: Model) -> Element(Message) {
   dropdown_menu.view(model)
 }
 
-pub fn view_tabs(model: Model) -> Element(Message) {
-  tabs.view_tabs(model)
+pub fn tabs(model: Model) -> Element(Message) {
+  tabs.view(model)
 }
 
-pub fn view_dialogs(model: Model) -> Element(Message) {
-  dialog.view_dialogs(model)
+pub fn dialogs(model: Model) -> Element(Message) {
+  dialog.view(model)
 }
 
-pub fn view_tables() -> Element(Message) {
-  table.view_tables()
+pub fn tables() -> Element(Message) {
+  table.view()
 }
 
-pub fn view_toasts(model: Model) -> Element(Message) {
-  toast.view_toasts(model)
+pub fn toasts(model: Model) -> Element(Message) {
+  toast.view(model)
 }
 
-pub fn view_form_example(model: Model) -> Element(Message) {
-  form_example.view_form_example(model)
+pub fn form_example(model: Model) -> Element(Message) {
+  form_example.view(model)
 }
 
-pub fn view_small_site_example(model: Model) -> Element(Message) {
-  site_example.view_small_site_example(model)
+pub fn small_site_example(model: Model) -> Element(Message) {
+  site_example.view(model)
 }
 
-pub fn view_d3_charts() -> Element(Message) {
-  chart_examples.view_d3_charts()
+pub fn d3_charts() -> Element(Message) {
+  chart_examples.d3_charts()
 }
 
-pub fn view_monaco_editor() -> Element(Message) {
-  chart_examples.view_monaco_editor()
+pub fn monaco_editor() -> Element(Message) {
+  chart_examples.monaco_editor()
 }
 
-pub fn view_separators() -> Element(Message) {
-  separator_preview.view_separators()
+pub fn separators() -> Element(Message) {
+  separator_preview.view()
 }
 
-pub fn view_tooltips() -> Element(Message) {
-  tooltip_preview.view_tooltips()
+pub fn tooltips() -> Element(Message) {
+  tooltip_preview.view()
 }
 
-pub fn view_switches(model: Model) -> Element(Message) {
-  switch_preview.view_switches(
-    model.switch_notifications,
-    model.switch_marketing,
-  )
+pub fn switches(model: Model) -> Element(Message) {
+  switch_preview.view(model.switch_notifications, model.switch_marketing)
 }
 
-pub fn view_sliders(model: Model) -> Element(Message) {
-  slider_preview.view_sliders(model.slider_volume, model.slider_brightness)
+pub fn sliders(model: Model) -> Element(Message) {
+  slider_preview.view(model.slider_volume, model.slider_brightness)
 }
 
-pub fn view_selects(model: Model) -> Element(Message) {
-  select_preview.view_selects(model.select_fruit, model.select_timezone)
+pub fn selects(model: Model) -> Element(Message) {
+  select_preview.view(model.select_fruit, model.select_timezone)
 }
 
-pub fn view_fields(model: Model) -> Element(Message) {
-  field_preview.view_fields(model.form_name, model.form_email)
+pub fn fields(model: Model) -> Element(Message) {
+  field_preview.view(model.form_name, model.form_email)
 }
 
-pub fn view_accordions(model: Model) -> Element(Message) {
-  accordion_preview.view_accordions(model)
+pub fn accordions(model: Model) -> Element(Message) {
+  accordion_preview.view(model)
 }
 
-pub fn view_progresses() -> Element(Message) {
-  progress_preview.view_progresses()
+pub fn progresses() -> Element(Message) {
+  progress_preview.view()
 }
 
-pub fn view_skeletons() -> Element(Message) {
-  skeleton_preview.view_skeletons()
+pub fn skeletons() -> Element(Message) {
+  skeleton_preview.view()
 }
 
-pub fn view_avatars() -> Element(Message) {
-  avatar_preview.view_avatars()
+pub fn avatars() -> Element(Message) {
+  avatar_preview.view()
 }
 
-pub fn view_radio_groups(model: Model) -> Element(Message) {
-  radio_group_preview.view_radio_groups(model)
+pub fn radio_groups(model: Model) -> Element(Message) {
+  radio_group_preview.view(model)
 }
 
-pub fn view_toggles(model: Model) -> Element(Message) {
-  toggle_preview.view_toggles(model)
+pub fn toggles(model: Model) -> Element(Message) {
+  toggle_preview.view(model)
 }
 
-pub fn view_toggle_groups(model: Model) -> Element(Message) {
-  toggle_group_preview.view_toggle_groups(model)
+pub fn toggle_groups(model: Model) -> Element(Message) {
+  toggle_group_preview.view(model)
 }
 
-pub fn view_breadcrumbs() -> Element(Message) {
-  breadcrumb_preview.view_breadcrumbs()
+pub fn breadcrumbs() -> Element(Message) {
+  breadcrumb_preview.view()
 }
 
-pub fn view_paginations(model: Model) -> Element(Message) {
-  pagination_preview.view_paginations(model)
+pub fn paginations(model: Model) -> Element(Message) {
+  pagination_preview.view(model)
 }
 
-pub fn view_scroll_areas() -> Element(Message) {
-  scroll_area_preview.view_scroll_areas()
+pub fn scroll_areas() -> Element(Message) {
+  scroll_area_preview.view()
 }
 
-pub fn view_aspect_ratios() -> Element(Message) {
-  aspect_ratio_preview.view_aspect_ratios()
+pub fn aspect_ratios() -> Element(Message) {
+  aspect_ratio_preview.view()
 }
 
-pub fn view_collapsibles(model: Model) -> Element(Message) {
-  collapsible_preview.view_collapsibles(model)
+pub fn collapsibles(model: Model) -> Element(Message) {
+  collapsible_preview.view(model)
 }
 
-pub fn view_popovers(model: Model) -> Element(Message) {
-  popover_preview.view_popovers(model)
+pub fn popovers(model: Model) -> Element(Message) {
+  popover_preview.view(model)
 }
 
-pub fn view_alert_dialogs(model: Model) -> Element(Message) {
-  alert_dialog_preview.view_alert_dialogs(model)
+pub fn alert_dialogs(model: Model) -> Element(Message) {
+  alert_dialog_preview.view(model)
 }
 
-pub fn view_hover_cards(model: Model) -> Element(Message) {
-  hover_card_preview.view_hover_cards(model)
+pub fn hover_cards(model: Model) -> Element(Message) {
+  hover_card_preview.view(model)
 }
 
-pub fn view_input_otps(model: Model) -> Element(Message) {
-  input_otp_preview.view_input_otps(model)
+pub fn input_otps(model: Model) -> Element(Message) {
+  input_otp_preview.view(model)
 }
 
-pub fn view_sheets(model: Model) -> Element(Message) {
-  sheet_preview.view_sheets(model)
+pub fn sheets(model: Model) -> Element(Message) {
+  sheet_preview.view(model)
 }
 
-pub fn view_menubars(model: Model) -> Element(Message) {
-  menubar_preview.view_menubars(model)
+pub fn menubars(model: Model) -> Element(Message) {
+  menubar_preview.view(model)
 }
 
-pub fn view_calendars(model: Model) -> Element(Message) {
-  calendar_preview.view_calendars(model)
+pub fn calendars(model: Model) -> Element(Message) {
+  calendar_preview.view(model)
 }
 
-pub fn view_date_pickers(model: Model) -> Element(Message) {
-  date_picker_preview.view_date_pickers(model)
+pub fn date_pickers(model: Model) -> Element(Message) {
+  date_picker_preview.view(model)
 }
 
-pub fn view_spinners() -> Element(Message) {
-  spinner_preview.view_spinners()
+pub fn spinners() -> Element(Message) {
+  spinner_preview.view()
 }
 
-pub fn view_native_selects(model: Model) -> Element(Message) {
-  native_select_preview.view_native_selects(model)
+pub fn native_selects(model: Model) -> Element(Message) {
+  native_select_preview.view(model)
 }
 
-pub fn view_button_groups() -> Element(Message) {
-  button_group_preview.view_button_groups()
+pub fn button_groups() -> Element(Message) {
+  button_group_preview.view()
 }
 
-pub fn view_input_groups() -> Element(Message) {
-  input_group_preview.view_input_groups()
+pub fn input_groups() -> Element(Message) {
+  input_group_preview.view()
 }
 
-pub fn view_context_menus(model: Model) -> Element(Message) {
-  context_menu_preview.view_context_menus(model)
+pub fn context_menus(model: Model) -> Element(Message) {
+  context_menu_preview.view(model)
 }
 
-pub fn view_drawers(model: Model) -> Element(Message) {
-  drawer_preview.view_drawers(model)
+pub fn drawers(model: Model) -> Element(Message) {
+  drawer_preview.view(model)
 }
 
-pub fn view_sidebars(model: Model) -> Element(Message) {
-  sidebar_preview.view_sidebars(model)
+pub fn sidebars(model: Model) -> Element(Message) {
+  sidebar_preview.view(model)
 }
 
-pub fn view_commands(model: Model) -> Element(Message) {
-  command_preview.view_commands(model)
+pub fn commands(model: Model) -> Element(Message) {
+  command_preview.view(model)
 }
 
-pub fn view_resizables(model: Model) -> Element(Message) {
-  resizable_preview.view_resizables(model)
+pub fn resizables(model: Model) -> Element(Message) {
+  resizable_preview.view(model)
 }
 
-pub fn view_data_tables(model: Model) -> Element(Message) {
-  data_table_preview.view_data_tables(model)
+pub fn data_tables(model: Model) -> Element(Message) {
+  data_table_preview.view(model)
 }
 
-pub fn view_carousels(model: Model) -> Element(Message) {
-  carousel_preview.view_carousels(model)
+pub fn carousels(model: Model) -> Element(Message) {
+  carousel_preview.view(model)
 }
 
-pub fn view_comboboxes(model: Model) -> Element(Message) {
-  combobox_preview.view_comboboxes(model)
+pub fn comboboxes(model: Model) -> Element(Message) {
+  combobox_preview.view(model)
 }
 
-pub fn view_navigation_menus(model: Model) -> Element(Message) {
-  navigation_menu_preview.view_navigation_menus(model)
+pub fn navigation_menus(model: Model) -> Element(Message) {
+  navigation_menu_preview.view(model)
 }
 
-pub fn view_empties() -> Element(Message) {
-  empty_preview.view_empties()
+pub fn empties() -> Element(Message) {
+  empty_preview.view()
 }
 
-pub fn view_items() -> Element(Message) {
-  item_preview.view_items()
+pub fn items() -> Element(Message) {
+  item_preview.view()
 }
 
-pub fn view_form_validation(model: Model) -> Element(Message) {
-  form_validation_preview.view_form_validation(model)
+pub fn form_validation(model: Model) -> Element(Message) {
+  form_validation_preview.view(model)
 }
 
-pub fn view_forms() -> Element(Message) {
+pub fn forms() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Forms")]),
     h.p([a.class("page-description")], [
@@ -307,50 +304,50 @@ pub fn view_forms() -> Element(Message) {
   ])
 }
 
-pub fn view_searches(model: Model) -> Element(Message) {
-  search_preview.view_searches(model)
+pub fn searches(model: Model) -> Element(Message) {
+  search_preview.view(model)
 }
 
-pub fn view_ratings(model: Model) -> Element(Message) {
-  rating_preview.view_ratings(model)
+pub fn ratings(model: Model) -> Element(Message) {
+  rating_preview.view(model)
 }
 
-pub fn view_navigation_bars() -> Element(Message) {
-  navigation_bar_preview.view_navigation_bars()
+pub fn navigation_bars() -> Element(Message) {
+  navigation_bar_preview.view()
 }
 
-pub fn view_steppers(model: Model) -> Element(Message) {
-  stepper_preview.view_steppers(model)
+pub fn steppers(model: Model) -> Element(Message) {
+  stepper_preview.view(model)
 }
 
-pub fn view_tree_views(model: Model) -> Element(Message) {
-  tree_view_preview.view_tree_views(model)
+pub fn tree_views(model: Model) -> Element(Message) {
+  tree_view_preview.view(model)
 }
 
-pub fn view_time_pickers(model: Model) -> Element(Message) {
-  time_picker_preview.view_time_pickers(model)
+pub fn time_pickers(model: Model) -> Element(Message) {
+  time_picker_preview.view(model)
 }
 
-pub fn view_multiselects(model: Model) -> Element(Message) {
-  multiselect_preview.view_multiselects(model)
+pub fn multiselects(model: Model) -> Element(Message) {
+  multiselect_preview.view(model)
 }
 
-pub fn view_timelines() -> Element(Message) {
-  timeline_preview.view_timelines()
+pub fn timelines() -> Element(Message) {
+  timeline_preview.view()
 }
 
-pub fn view_heatmap_comparison(model: Model) -> Element(Message) {
-  heatmap_comparison.view_heatmap_comparison(model)
+pub fn heatmap_comparison(model: Model) -> Element(Message) {
+  heatmap_comparison.view(model)
 }
 
-pub fn view_canvas_stress_test(model: Model) -> Element(Message) {
-  canvas_stress_test.view_canvas_stress_test(model)
+pub fn canvas_stress_test(model: Model) -> Element(Message) {
+  canvas_stress_test.view(model)
 }
 
-pub fn view_widget_dashboard(model: Model) -> Element(Message) {
-  widget_dashboard.view_widget_dashboard(model)
+pub fn widget_dashboard(model: Model) -> Element(Message) {
+  widget_dashboard.view(model)
 }
 
-pub fn view_threat_intel_network(model: Model) -> Element(Message) {
-  threat_intel.view_threat_intel_network(model)
+pub fn threat_intel_network(model: Model) -> Element(Message) {
+  threat_intel.view(model)
 }

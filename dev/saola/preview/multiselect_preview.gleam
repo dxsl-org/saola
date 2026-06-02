@@ -6,7 +6,7 @@ import lustre/element/html as h
 import saola/multiselect
 import saola/preview/model.{type Message, type Model, MultiselectChanged}
 
-pub fn view_multiselects(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let fruits = [
     #("apple", "Apple"),
     #("banana", "Banana"),

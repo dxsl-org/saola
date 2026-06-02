@@ -87,7 +87,7 @@ fn textarea_examples() -> List(Element(Message)) {
   ]
 }
 
-pub fn view_inputs() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Inputs")]),
     h.p([a.class("page-description")], [

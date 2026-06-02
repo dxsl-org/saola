@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message}
 import saola/skeleton
 
-pub fn view_skeletons() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Skeleton")]),
     h.p([a.class("page-description")], [

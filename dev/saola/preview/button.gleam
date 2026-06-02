@@ -7,7 +7,7 @@ import saola/button
 import saola/icon/lc
 import saola/preview/model.{type Message, Home, OnRouteChange}
 
-pub fn view_buttons() -> Element(Message) {
+pub fn view() -> Element(Message) {
   let attrs_disabled = button.ButtonExtraAttrs(True, None, button.default_aria)
   let attrs_aria_label =
     button.ButtonExtraAttrs(

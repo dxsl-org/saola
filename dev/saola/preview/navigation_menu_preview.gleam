@@ -6,7 +6,7 @@ import saola/navigation_menu
 import saola/preview/event_helper
 import saola/preview/model.{type Message, type Model, NavMenuOpenChanged}
 
-pub fn view_navigation_menus(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let items = [
     navigation_menu.NavMenuLink(label: "Home", href: "#", active: True),
     navigation_menu.NavMenuLink(label: "About", href: "#", active: False),

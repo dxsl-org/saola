@@ -9,7 +9,7 @@ import saola/preview/model.{
   type Message, type Model, CalendarDateSelected, CalendarMonthChanged,
 }
 
-pub fn view_calendars(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let #(prev_y, prev_m) =
     cal.prev_month(model.calendar_view_year, model.calendar_view_month)
   let #(next_y, next_m) =

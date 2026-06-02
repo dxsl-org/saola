@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message}
 import saola/scroll_area
 
-pub fn view_scroll_areas() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Scroll Area")]),
     h.p([a.class("page-description")], [

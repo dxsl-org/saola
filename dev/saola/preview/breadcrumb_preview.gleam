@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/breadcrumb
 import saola/preview/model.{type Message}
 
-pub fn view_breadcrumbs() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Breadcrumb")]),
     h.p([a.class("page-description")], [

@@ -9,7 +9,7 @@ import saola/lustre_bar_chart
 import saola/monaco_editor
 import saola/preview/model.{type Message}
 
-pub fn view_d3_charts() -> Element(Message) {
+pub fn d3_charts() -> Element(Message) {
   h.div([a.class("grid gap-6")], [
     h.header([a.class("grid gap-2")], [
       h.h1([a.class("page-title")], [h.text("D3 Charts")]),
@@ -24,7 +24,7 @@ pub fn view_d3_charts() -> Element(Message) {
   ])
 }
 
-pub fn view_monaco_editor() -> Element(Message) {
+pub fn monaco_editor() -> Element(Message) {
   h.div([a.class("grid gap-6")], [
     h.header([a.class("grid gap-2")], [
       h.h1([a.class("page-title")], [h.text("Code Editor")]),

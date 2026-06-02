@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, SwitchToggled}
 import saola/switch
 
-pub fn view_switches(notifications: Bool, marketing: Bool) -> Element(Message) {
+pub fn view(notifications: Bool, marketing: Bool) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Switch")]),
     h.p([a.class("page-description")], [

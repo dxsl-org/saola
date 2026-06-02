@@ -28,7 +28,7 @@ import saola/world_map
 // Public entry point
 // ---------------------------------------------------------------------------
 
-pub fn view_threat_intel_network(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([a.class("threat-intel-root")], [
     map_column(model),
     data_column(model),

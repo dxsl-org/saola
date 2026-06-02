@@ -8,7 +8,7 @@ import saola/preview/model.{
   ComboboxSelected,
 }
 
-pub fn view_comboboxes(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let fruits = [
     combobox.ComboboxOption(value: "apple", label: "Apple"),
     combobox.ComboboxOption(value: "banana", label: "Banana"),

@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/native_select
 import saola/preview/model.{type Message, type Model, NativeSelectChanged}
 
-pub fn view_native_selects(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Native Select")]),
     h.p([a.class("page-description")], [

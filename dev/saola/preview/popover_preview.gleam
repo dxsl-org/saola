@@ -8,7 +8,7 @@ import saola/preview/model.{
   type Message, type Model, PopoverClosed, PopoverOpened,
 }
 
-pub fn view_popovers(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([event_helper.on_click_outside(".popover-wrapper", PopoverClosed)], [
     h.h1([a.class("page-title")], [text("Popover")]),
     h.p([a.class("page-description")], [

@@ -52,7 +52,7 @@ fn do_indices(i: Int, acc: List(Int)) -> List(Int) {
 // View
 // ---------------------------------------------------------------------------
 
-pub fn view_canvas_stress_test(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let all_data = gen_data()
   let total = list.length(all_data)
   let max_offset = total - model.stress_zoom

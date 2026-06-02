@@ -5,7 +5,7 @@ import saola/badge
 import saola/preview/model.{type Message}
 import saola/table
 
-pub fn view_tables() -> Element(Message) {
+pub fn view() -> Element(Message) {
   let headers = ["Name", "Email", "Status", "Role"]
   let rows = [
     table.TableRow([

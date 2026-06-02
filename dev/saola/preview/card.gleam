@@ -6,7 +6,7 @@ import saola/button
 import saola/card
 import saola/preview/model.{type Message, Home, OnRouteChange}
 
-pub fn view_cards() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Cards")]),
     h.p([a.class("page-description")], [

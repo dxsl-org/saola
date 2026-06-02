@@ -5,7 +5,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, SidebarToggled}
 import saola/sidebar
 
-pub fn view_sidebars(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Sidebar")]),
     h.p([a.class("page-description")], [

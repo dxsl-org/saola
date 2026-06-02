@@ -5,7 +5,7 @@ import lustre/event as e
 import saola/preview/model.{type Message, type Model, SheetClosed, SheetOpened}
 import saola/sheet
 
-pub fn view_sheets(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Sheet")]),
     h.p([a.class("page-description")], [

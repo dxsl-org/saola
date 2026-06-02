@@ -20,7 +20,7 @@ const timezone_options = [
   select.SelectOption("america/new_york", "America/New York (UTC-5)"),
 ]
 
-pub fn view_selects(fruit: String, timezone: String) -> Element(Message) {
+pub fn view(fruit: String, timezone: String) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Select")]),
     h.p([a.class("page-description")], [

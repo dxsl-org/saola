@@ -12,7 +12,7 @@ import saola/preview/model.{
   SignupNameChanged, SignupPasswordChanged, SignupReset, SignupSubmitted,
 }
 
-pub fn view_form_validation(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Form Validation")]),
     h.p([a.class("page-description")], [

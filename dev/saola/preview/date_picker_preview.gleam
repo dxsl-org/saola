@@ -9,7 +9,7 @@ import saola/preview/model.{
   DatePickerOpenChanged, UserClickedOutside,
 }
 
-pub fn view_date_pickers(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([event_helper.on_click_outside(".date-picker", UserClickedOutside)], [
     h.h1([a.class("page-title")], [text("Date Picker")]),
     h.p([a.class("page-description")], [

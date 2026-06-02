@@ -7,7 +7,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message, type Model, TimePickerChanged}
 import saola/time_picker
 
-pub fn view_time_pickers(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   let display_value = case model.time_picker_value {
     None -> "None"
     Some(tv) -> display_time(tv)

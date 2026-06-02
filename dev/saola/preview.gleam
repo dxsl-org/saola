@@ -1138,6 +1138,15 @@ fn sidebar(
     nav_link("/time-pickers", "Time Picker", current_route == TimePickers),
     nav_link("/multiselects", "Multiselect", current_route == Multiselects),
     nav_link("/timelines", "Timeline", current_route == Timelines),
+    nav_link("/tabs", "Tabs", current_route == Tabs),
+    nav_link("/dialogs", "Dialogs", current_route == Dialogs),
+    nav_link("/tables", "Tables", current_route == Tables),
+    nav_link("/toasts", "Toasts", current_route == Toasts),
+    nav_link(
+      "/dropdown-menus",
+      "Dropdown Menus",
+      current_route == DropdownMenus,
+    ),
     nav_link(
       "/canvas-stress-test",
       "Canvas Stress Test",
@@ -1158,15 +1167,6 @@ fn sidebar(
       "Threat Intel Network",
       current_route == ThreatIntelNetwork,
     ),
-    nav_link(
-      "/dropdown-menus",
-      "Dropdown Menus",
-      current_route == DropdownMenus,
-    ),
-    nav_link("/tabs", "Tabs", current_route == Tabs),
-    nav_link("/dialogs", "Dialogs", current_route == Dialogs),
-    nav_link("/tables", "Tables", current_route == Tables),
-    nav_link("/toasts", "Toasts", current_route == Toasts),
     nav_link("/d3-charts", "D3 Charts", current_route == D3Charts),
     nav_link("/monaco-editor", "Code Editor", current_route == MonacoEditor),
     nav_link("/example-form", "Example Form", current_route == ExampleForm),
@@ -1186,75 +1186,75 @@ fn main_pane(model: Model) -> Element(Message) {
   h.div([a.class("main-pane")], [
     case model.route {
       Home -> h.div([], [element.text("Select a widget category to preview.")])
-      Alerts -> view.view_alerts()
-      Badges -> view.view_badges()
-      Cards -> view.view_cards()
-      Buttons -> view.view_buttons()
-      Inputs -> view.view_inputs()
-      Forms -> view.view_forms()
-      Separators -> view.view_separators()
-      Tooltips -> view.view_tooltips()
-      Switches -> view.view_switches(model)
-      Sliders -> view.view_sliders(model)
-      Selects -> view.view_selects(model)
-      Fields -> view.view_fields(model)
-      DropdownMenus -> view.view_dropdown_menus(model)
-      Tabs -> view.view_tabs(model)
-      Dialogs -> view.view_dialogs(model)
-      Tables -> view.view_tables()
-      Toasts -> view.view_toasts(model)
-      Accordions -> view.view_accordions(model)
-      Progresses -> view.view_progresses()
-      Skeletons -> view.view_skeletons()
-      Avatars -> view.view_avatars()
-      RadioGroups -> view.view_radio_groups(model)
-      Toggles -> view.view_toggles(model)
-      ToggleGroups -> view.view_toggle_groups(model)
-      Breadcrumbs -> view.view_breadcrumbs()
-      Paginations -> view.view_paginations(model)
-      ScrollAreas -> view.view_scroll_areas()
-      AspectRatios -> view.view_aspect_ratios()
-      Collapsibles -> view.view_collapsibles(model)
-      Popovers -> view.view_popovers(model)
-      AlertDialogs -> view.view_alert_dialogs(model)
-      HoverCards -> view.view_hover_cards(model)
-      InputOtps -> view.view_input_otps(model)
-      Sheets -> view.view_sheets(model)
-      Menubars -> view.view_menubars(model)
-      Calendars -> view.view_calendars(model)
-      DatePickers -> view.view_date_pickers(model)
-      Spinners -> view.view_spinners()
-      NativeSelects -> view.view_native_selects(model)
-      ButtonGroups -> view.view_button_groups()
-      InputGroups -> view.view_input_groups()
-      ContextMenus -> view.view_context_menus(model)
-      Drawers -> view.view_drawers(model)
-      Sidebars -> view.view_sidebars(model)
-      Commands -> view.view_commands(model)
-      Resizables -> view.view_resizables(model)
-      DataTables -> view.view_data_tables(model)
-      Carousels -> view.view_carousels(model)
-      Comboboxes -> view.view_comboboxes(model)
-      NavigationMenus -> view.view_navigation_menus(model)
-      Empties -> view.view_empties()
-      Items -> view.view_items()
-      FormValidation -> view.view_form_validation(model)
-      Searches -> view.view_searches(model)
-      Ratings -> view.view_ratings(model)
-      NavigationBars -> view.view_navigation_bars()
-      Steppers -> view.view_steppers(model)
-      TreeViews -> view.view_tree_views(model)
-      TimePickers -> view.view_time_pickers(model)
-      Multiselects -> view.view_multiselects(model)
-      Timelines -> view.view_timelines()
-      CanvasStressTest -> view.view_canvas_stress_test(model)
-      WidgetDashboard -> view.view_widget_dashboard(model)
-      HeatmapComparison -> view.view_heatmap_comparison(model)
-      ThreatIntelNetwork -> view.view_threat_intel_network(model)
-      D3Charts -> view.view_d3_charts()
-      MonacoEditor -> view.view_monaco_editor()
-      ExampleForm -> view.view_form_example(model)
-      ExampleSite -> view.view_small_site_example(model)
+      Alerts -> view.alerts()
+      Badges -> view.badges()
+      Cards -> view.cards()
+      Buttons -> view.buttons()
+      Inputs -> view.inputs()
+      Forms -> view.forms()
+      Separators -> view.separators()
+      Tooltips -> view.tooltips()
+      Switches -> view.switches(model)
+      Sliders -> view.sliders(model)
+      Selects -> view.selects(model)
+      Fields -> view.fields(model)
+      DropdownMenus -> view.dropdown_menus(model)
+      Tabs -> view.tabs(model)
+      Dialogs -> view.dialogs(model)
+      Tables -> view.tables()
+      Toasts -> view.toasts(model)
+      Accordions -> view.accordions(model)
+      Progresses -> view.progresses()
+      Skeletons -> view.skeletons()
+      Avatars -> view.avatars()
+      RadioGroups -> view.radio_groups(model)
+      Toggles -> view.toggles(model)
+      ToggleGroups -> view.toggle_groups(model)
+      Breadcrumbs -> view.breadcrumbs()
+      Paginations -> view.paginations(model)
+      ScrollAreas -> view.scroll_areas()
+      AspectRatios -> view.aspect_ratios()
+      Collapsibles -> view.collapsibles(model)
+      Popovers -> view.popovers(model)
+      AlertDialogs -> view.alert_dialogs(model)
+      HoverCards -> view.hover_cards(model)
+      InputOtps -> view.input_otps(model)
+      Sheets -> view.sheets(model)
+      Menubars -> view.menubars(model)
+      Calendars -> view.calendars(model)
+      DatePickers -> view.date_pickers(model)
+      Spinners -> view.spinners()
+      NativeSelects -> view.native_selects(model)
+      ButtonGroups -> view.button_groups()
+      InputGroups -> view.input_groups()
+      ContextMenus -> view.context_menus(model)
+      Drawers -> view.drawers(model)
+      Sidebars -> view.sidebars(model)
+      Commands -> view.commands(model)
+      Resizables -> view.resizables(model)
+      DataTables -> view.data_tables(model)
+      Carousels -> view.carousels(model)
+      Comboboxes -> view.comboboxes(model)
+      NavigationMenus -> view.navigation_menus(model)
+      Empties -> view.empties()
+      Items -> view.items()
+      FormValidation -> view.form_validation(model)
+      Searches -> view.searches(model)
+      Ratings -> view.ratings(model)
+      NavigationBars -> view.navigation_bars()
+      Steppers -> view.steppers(model)
+      TreeViews -> view.tree_views(model)
+      TimePickers -> view.time_pickers(model)
+      Multiselects -> view.multiselects(model)
+      Timelines -> view.timelines()
+      CanvasStressTest -> view.canvas_stress_test(model)
+      WidgetDashboard -> view.widget_dashboard(model)
+      HeatmapComparison -> view.heatmap_comparison(model)
+      ThreatIntelNetwork -> view.threat_intel_network(model)
+      D3Charts -> view.d3_charts()
+      MonacoEditor -> view.monaco_editor()
+      ExampleForm -> view.form_example(model)
+      ExampleSite -> view.small_site_example(model)
     },
   ])
 }

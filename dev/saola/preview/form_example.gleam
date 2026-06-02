@@ -15,7 +15,7 @@ import saola/preview/model.{
 }
 import saola/textarea
 
-pub fn view_form_example(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   card.card(card.CardAttrs(
     title: "Contact form",
     description: "A small Saola form wired with Lustre messages.",

@@ -6,7 +6,7 @@ import saola/preview/model.{
   type Message, type Model, ContextMenuClosed, ContextMenuOpened,
 }
 
-pub fn view_context_menus(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Context Menu")]),
     h.p([a.class("page-description")], [

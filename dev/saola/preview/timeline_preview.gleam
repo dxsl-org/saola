@@ -5,7 +5,7 @@ import lustre/element/html as h
 import saola/preview/model.{type Message}
 import saola/timeline
 
-pub fn view_timelines() -> Element(Message) {
+pub fn view() -> Element(Message) {
   let basic_items = [
     timeline.TimelineItem(
       time: "09:00",

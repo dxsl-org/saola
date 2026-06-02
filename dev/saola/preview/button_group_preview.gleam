@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/button_group
 import saola/preview/model.{type Message}
 
-pub fn view_button_groups() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Button Group")]),
     h.p([a.class("page-description")], [

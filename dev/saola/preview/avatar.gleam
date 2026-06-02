@@ -4,7 +4,7 @@ import lustre/element/html as h
 import saola/avatar
 import saola/preview/model.{type Message}
 
-pub fn view_avatars() -> Element(Message) {
+pub fn view() -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Avatar")]),
     h.p([a.class("page-description")], [

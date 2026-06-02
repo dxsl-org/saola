@@ -5,7 +5,7 @@ import saola/button
 import saola/preview/model.{type Message, Home, OnRouteChange}
 import saola/tooltip
 
-pub fn view_tooltips() -> Element(Message) {
+pub fn view() -> Element(Message) {
   let noop = OnRouteChange(Home)
   h.div([], [
     h.h1([a.class("page-title")], [text("Tooltip")]),

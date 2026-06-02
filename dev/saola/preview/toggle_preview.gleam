@@ -6,7 +6,7 @@ import saola/preview/model.{
 }
 import saola/toggle
 
-pub fn view_toggles(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Toggle")]),
     h.p([a.class("page-description")], [

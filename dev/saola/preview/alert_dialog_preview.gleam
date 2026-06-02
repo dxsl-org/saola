@@ -8,7 +8,7 @@ import saola/preview/model.{
   AlertDialogOpened,
 }
 
-pub fn view_alert_dialogs(model: Model) -> Element(Message) {
+pub fn view(model: Model) -> Element(Message) {
   h.div([], [
     h.h1([a.class("page-title")], [text("Alert Dialog")]),
     h.p([a.class("page-description")], [
