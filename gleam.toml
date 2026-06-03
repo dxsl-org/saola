@@ -4,8 +4,8 @@ target = 'javascript'
 
 description = "A Lustre UI component library — typed, stateless widgets built on Basecoat CSS."
 licences = ["Apache-2.0"]
-repository = { type = "github", user = "tindn", repo = "saola" }
-links = [{ title = "Changelog", href = "https://github.com/tindn/saola/blob/main/CHANGELOG.md" }]
+repository = { type = "github", user = "dxsl-org", repo = "saola" }
+links = [{ title = "Changelog", href = "https://github.com/dxsl-org/saola/blob/main/CHANGELOG.md" }]
 
 [dependencies]
 gleam_stdlib = ">= 0.44.0 and < 2.0.0"

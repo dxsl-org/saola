@@ -1,10 +1,11 @@
 # Saola
 
-Typed, stateless UI widgets for [Lustre](https://hexdocs.pm/lustre) applications.
+Typed UI building blocks for [Lustre](https://hexdocs.pm/lustre) applications — stateless widgets and full-runtime components.
 Built on top of [Basecoat CSS](https://basecoatui.com/) (a pure-HTML port of shadcn/ui).
 
-> **Widget vs Component** — Lustre uses the word "component" for elements with their own runtime instance.
-> Saola elements are called *widgets* to avoid confusion: they are plain view functions, no runtime state.
+> **Widget vs Component** — Saola provides two kinds of UI building blocks:
+> - *Widgets* are plain view functions — stateless, no registration needed.
+> - *Components* are Lustre components with their own runtime instance, backed by a custom HTML element. They require a one-time `register()` call at startup.
 
 ## Widgets
 
@@ -54,7 +55,6 @@ Built on top of [Basecoat CSS](https://basecoatui.com/) (a pure-HTML port of sha
 | `saola/button_group` | `button_group_simple` | `button_group_full` |
 | `saola/calendar` | — | `calendar_full` |
 | `saola/carousel` | `carousel_simple` | `carousel_full` |
-| `saola/combobox` | `combobox_simple` | `combobox_full` |
 | `saola/context_menu` | — | `context_menu_full` |
 | `saola/date_picker` | — | `date_picker_full` |
 | `saola/drawer` | `drawer_simple` | `drawer_full` |
@@ -82,6 +82,15 @@ These wrappers ship as custom elements (`<script>` required separately):
 | `saola/codemirror_editor` | `<saola-codemirror-editor>` | CodeMirror 6 |
 | `saola/monaco_editor` | `<saola-monaco-editor>` | Monaco / VS Code |
 | `saola/d3_bar_chart` | `<saola-d3-bar-chart>` | D3.js v7 |
+
+## Components
+
+Components carry their own Lustre runtime and are backed by a custom HTML element.
+Call `register()` once at application startup before rendering them.
+
+| Module | Custom element | Notes |
+|--------|---------------|-------|
+| `saola/component/combobox` | `<combo-box>` | Searchable dropdown with keyboard navigation and async-safe preselection |
 
 ## Dark Mode / Theming
 
@@ -159,7 +168,8 @@ fn field_from_result(result: Result(String, String), attrs: field.FieldAttrs) ->
 
 ## Design principles
 
-- **Stateless** — every widget is a pure `fn ... -> Element(msg)`. The consumer's `Model` owns all state.
+- **Stateless widgets** — widgets are pure `fn ... -> Element(msg)`. The consumer's `Model` owns all state.
+- **Stateful components** — components (`saola/component/*`) carry their own Lustre runtime for cases where an isolated state machine genuinely simplifies the API.
 - **External-state duality** — form widgets accept `InitValue(v)` (seed once) or `SyncValue(v)` (keep in sync with model).
 - **Two-tier API** — each widget exposes a `_simple` shortcut for the common case and a `_full` function for complete control.
 - **Typed, not stringly typed** — variants (`ButtonVariant`, `BadgeVariant`, …) are Gleam custom types, not magic strings.
