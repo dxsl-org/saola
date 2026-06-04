@@ -73,7 +73,7 @@ pub fn combobox_element_renders_tag_test() {
 
 pub fn combobox_preselect_value_attr_test() {
   let html = cb.element([cb.preselect_value("cherry")]) |> element.to_string
-  assert string.contains(html, "preselect-value=\"cherry\"")
+  assert string.contains(html, "preselect=\"cherry\"")
 }
 
 pub fn combobox_regular_attributes_are_serialized_test() {
