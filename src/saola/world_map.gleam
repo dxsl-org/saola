@@ -108,5 +108,5 @@ pub fn actors_to_markers(
   })
 }
 
-@external(javascript, "./world_map_ffi.mjs", "ensure_registered")
+@external(javascript, "./world-map-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil

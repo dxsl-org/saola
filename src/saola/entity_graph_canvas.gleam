@@ -123,7 +123,7 @@ pub fn entity_graph_element(
   )
 }
 
-@external(javascript, "./canvas_ffi.mjs", "ensure_registered")
+@external(javascript, "./canvas-ffi.mjs", "ensure_registered")
 fn ensure_canvas_registered() -> Nil
 
 fn decode_xy(

@@ -36,11 +36,11 @@ pub fn apply_to_html(theme: Theme, system_os_dark: Bool) -> Effect(msg) {
 }
 
 /// Returns the current OS dark-mode preference. Safe to call at init time.
-@external(javascript, "./theme_ffi.mjs", "getCurrentDarkMode")
+@external(javascript, "./theme-ffi.mjs", "getCurrentDarkMode")
 pub fn get_system_dark() -> Bool
 
-@external(javascript, "./theme_ffi.mjs", "watchMediaQuery")
+@external(javascript, "./theme-ffi.mjs", "watchMediaQuery")
 fn do_watch_media_query(query: String, callback: fn(Bool) -> Nil) -> Nil
 
-@external(javascript, "./theme_ffi.mjs", "setHtmlTheme")
+@external(javascript, "./theme-ffi.mjs", "setHtmlTheme")
 fn do_set_html_theme(is_dark: Bool) -> Nil

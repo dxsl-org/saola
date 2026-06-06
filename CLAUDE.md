@@ -134,6 +134,23 @@ let id = typeid.new(prefix: "dlg") |> result.map(typeid.to_string) |> result.unw
 
 ---
 
+## File Naming
+
+### JavaScript / ES module files (`.mjs`)
+
+Use **kebab-case** for all `.mjs` files — hyphens, not underscores.
+
+```
+canvas-ffi.mjs          ✓
+component-helpers.mjs   ✓
+canvas_ffi.mjs          ✗
+cb_ffi.mjs              ✗
+```
+
+Hyphens are valid in file names and import paths (they appear only in string literals, never as bare identifiers), and are the standard convention for ES modules.
+
+---
+
 ## Gleam Type Rules
 
 ### 10. Named types over homogeneous tuples

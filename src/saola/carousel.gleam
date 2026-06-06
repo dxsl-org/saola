@@ -5,7 +5,7 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
-@external(javascript, "./carousel_ffi.mjs", "ensure_registered")
+@external(javascript, "./carousel-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil
 
 pub type CarouselOrientation {

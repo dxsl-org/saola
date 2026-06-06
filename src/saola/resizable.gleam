@@ -6,7 +6,7 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
-@external(javascript, "./resizable_ffi.mjs", "ensure_registered")
+@external(javascript, "./resizable-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil
 
 pub type ResizableDirection {

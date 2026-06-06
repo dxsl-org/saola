@@ -54,5 +54,5 @@ pub fn entity_graph_3d(
   )
 }
 
-@external(javascript, "./entity_graph_3d_ffi.mjs", "ensure_registered")
+@external(javascript, "./entity-graph-3d-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil

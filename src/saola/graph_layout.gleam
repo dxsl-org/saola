@@ -38,7 +38,7 @@ pub fn request_layout(
   })
 }
 
-@external(javascript, "./graph_layout_ffi.mjs", "request_layout")
+@external(javascript, "./graph-layout-ffi.mjs", "request_layout")
 fn do_request_layout(
   nodes_json: json.Json,
   edges_json: json.Json,

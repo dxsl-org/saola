@@ -3,7 +3,7 @@ import gleam/json
 import lustre/attribute as a
 import lustre/element.{type Element}
 
-@external(javascript, "./d3_bar_chart_ffi.mjs", "ensure_registered")
+@external(javascript, "./d3-bar-chart-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil
 
 pub type ChartPoint {

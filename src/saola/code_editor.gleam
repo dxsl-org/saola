@@ -2,7 +2,7 @@ import gleam/int
 import lustre/attribute as a
 import lustre/element.{type Element}
 
-@external(javascript, "./code_editor_ffi.mjs", "ensure_registered")
+@external(javascript, "./code-editor-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil
 
 pub type EditorAttrs {

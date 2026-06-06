@@ -275,13 +275,13 @@ fn encode_hit_area(area: HitArea(msg)) -> json.Json {
 // Canvas element helper — wraps CanvasOutput in <saola-canvas>
 // ---------------------------------------------------------------------------
 
-@external(javascript, "./canvas_ffi.mjs", "ensure_registered")
+@external(javascript, "./canvas-ffi.mjs", "ensure_registered")
 fn ensure_registered() -> Nil
 
-@external(javascript, "./canvas_ffi.mjs", "measure_text")
+@external(javascript, "./canvas-ffi.mjs", "measure_text")
 pub fn measure_text(font: String, text: String) -> Float
 
-@external(javascript, "./canvas_ffi.mjs", "request_animation_frame")
+@external(javascript, "./canvas-ffi.mjs", "request_animation_frame")
 pub fn request_animation_frame(callback: fn(Float) -> Nil) -> Nil
 
 fn decode_canvas_tap(callback: fn(Float, Float) -> msg) -> decode.Decoder(msg) {
