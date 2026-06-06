@@ -1,0 +1,16 @@
+/*
+ * <multi-select> and <combo-box> are custom elements registered by Lustre's
+ * component runtime. Unknown elements default to display:inline — override
+ * to block so they participate in normal flow and stretch to fill their
+ * container. The inner .select (from Basecoat) is inline-flex by default;
+ * setting width:100% makes the trigger button span the full host width.
+ */
+multi-select,
+combo-box {
+  display: block;
+}
+
+multi-select .select,
+combo-box .select {
+  width: 100%;
+}

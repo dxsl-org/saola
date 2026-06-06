@@ -1,7 +1,8 @@
 import gleam/option.{None}
 import gleam/string
+import lustre/attribute as a
 import lustre/element
-import saola/multiselect
+import saola/component/multi_select
 import saola/navigation_bar
 import saola/rating
 import saola/search
@@ -105,31 +106,17 @@ pub fn time_picker_with_seconds_renders_second_select_test() {
   assert string.contains(html, "aria-label=\"Second\"")
 }
 
-// --- multiselect ---
+// --- multi_select ---
 
-pub fn multiselect_simple_renders_custom_element_test() {
-  let html =
-    multiselect.multiselect_simple([#("a", "Apple")], [], fn(_) { Nil })
-    |> element.to_string
-  assert string.contains(html, "saola-multiselect")
-  assert string.contains(html, "placeholder=\"Select…\"")
+pub fn multi_select_renders_element_test() {
+  let html = multi_select.element([]) |> element.to_string
+  assert string.contains(html, "multi-select")
 }
 
-pub fn multiselect_disabled_has_disabled_attr_test() {
-  let html =
-    multiselect.multiselect_full(
-      [],
-      [],
-      fn(_) { Nil },
-      multiselect.MultiselectAttrs(
-        placeholder: "Pick",
-        disabled: True,
-        max_selected: None,
-        class: "",
-      ),
-    )
-    |> element.to_string
-  assert string.contains(html, "disabled")
+pub fn multi_select_with_id_attr_test() {
+  let html = multi_select.element([a.id("my-select")]) |> element.to_string
+  assert string.contains(html, "multi-select")
+  assert string.contains(html, "id=\"my-select\"")
 }
 
 // --- navigation_bar ---

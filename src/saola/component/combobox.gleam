@@ -424,7 +424,6 @@ fn view(model: Model) -> Element(Message) {
     Some(item) -> item.name
   }
   h.div([], [
-    element.element("link", [a.rel("stylesheet"), a.href("/basecoat.css")], []),
     h.div([a.class("select"), a.id(model.id)], [
       render_trigger(model.is_open, trigger_id, listbox_id, label),
       case model.is_open {

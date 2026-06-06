@@ -15,6 +15,7 @@ import lustre/event as e
 import modem
 import saola/canvas_command as canvas
 import saola/component/combobox as cb
+import saola/component/multi_select as ms
 import saola/graph_layout
 import saola/lustre_heatmap
 import saola/preview/threat_intel_data
@@ -71,6 +72,7 @@ import saola/preview/view
 
 pub fn main() {
   let assert Ok(_) = cb.register()
+  let assert Ok(_) = ms.register()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 

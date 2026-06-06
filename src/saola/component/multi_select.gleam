@@ -212,7 +212,6 @@ fn view(model: Model) -> Element(Message) {
   let trigger_id = model.id <> "-trigger"
   let listbox_id = model.id <> "-listbox"
   h.div([], [
-    element.element("link", [a.rel("stylesheet"), a.href("/basecoat.css")], []),
     h.div([a.class("select"), a.id(model.id)], [
       render_trigger(model, trigger_id, listbox_id),
       case model.is_open {
@@ -253,7 +252,7 @@ fn render_popover(
   trigger_id: String,
   listbox_id: String,
 ) -> Element(Message) {
-  h.div([], [
+  h.div([a.attribute("data-popover", "")], [
     h.div(
       [
         a.role("listbox"),
@@ -281,13 +280,7 @@ fn render_options(model: Model) -> List(Element(Message)) {
         },
         ev.on_click(UserPickedChoice(item.value)),
       ],
-      [
-        case item.selected {
-          True -> lc.check([a.class("size-4")])
-          False -> h.span([a.class("size-4")], [])
-        },
-        h.text(item.name),
-      ],
+      [h.text(item.name)],
     )
   })
 }

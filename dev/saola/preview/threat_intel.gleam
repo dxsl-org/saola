@@ -1,4 +1,6 @@
+import gleam/dynamic/decode
 import gleam/int
+import gleam/json
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
@@ -7,11 +9,11 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 import saola/badge
+import saola/component/multi_select
 import saola/data_table
 import saola/empty
 import saola/entity_graph_3d
 import saola/entity_graph_canvas as egc
-import saola/multiselect
 import saola/preview/model.{
   type Message, type Model, ThreatEntitySelected, ThreatFiltersCleared,
   ThreatMapCountryClicked, ThreatSearchChanged, ThreatSearchCleared,
@@ -183,12 +185,19 @@ fn controls_panel(model: Model) -> Element(Message) {
         class: "threat-intel-search",
       ),
     ),
-    multiselect.multiselect_full(
-      threat_intel_data.all_severity_options(),
-      model.threat_severity_filter,
-      ThreatSeverityFilterChanged,
-      multiselect.default_attrs(),
-    ),
+    multi_select.element([
+      a.property(
+        "choices",
+        json.array(threat_intel_data.all_severity_options(), fn(opt) {
+          let #(val, name) = opt
+          multi_select.item_to_json(multi_select.Item(value: val, name: name))
+        }),
+      ),
+      e.on("change", {
+        use values <- decode.field("detail", decode.list(decode.string))
+        decode.success(ThreatSeverityFilterChanged(values))
+      }),
+    ]),
     h.div([a.class("threat-intel-metrics")], [
       metric_pill(
         "Critical",
