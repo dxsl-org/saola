@@ -339,7 +339,7 @@ pub fn resizable_vertical_has_direction_test() {
   assert string.contains(html, "direction=\"vertical\"")
 }
 
-pub fn resizable_three_panels_have_two_handles_test() {
+pub fn resizable_three_panels_have_slots_test() {
   let html =
     rp.element(
       [
@@ -355,18 +355,11 @@ pub fn resizable_three_panels_have_two_handles_test() {
       ],
     )
     |> element.to_string
-  // Two handles between three panels
-  let handle_count =
-    string.split(html, "resizable-handle")
-    |> fn(parts) { list_len(parts) - 1 }
-  assert handle_count >= 2
-}
-
-fn list_len(lst: List(a)) -> Int {
-  case lst {
-    [] -> 0
-    [_, ..rest] -> 1 + list_len(rest)
-  }
+  // Handles are rendered inside the component's Shadow DOM and are not
+  // visible to element.to_string — assert on the serialisable children instead.
+  assert string.contains(html, "slot=\"panel-0\"")
+  assert string.contains(html, "slot=\"panel-1\"")
+  assert string.contains(html, "slot=\"panel-2\"")
 }
 
 // ── Data Table ────────────────────────────────────────────────────────────────
