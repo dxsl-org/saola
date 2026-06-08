@@ -16,3 +16,4 @@ node_modules
 .codex
 .reference/
 .agents/
+.logs

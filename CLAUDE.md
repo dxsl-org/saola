@@ -223,7 +223,9 @@ set series(value) {
 
 ### 4. Custom element naming convention
 
-`saola-{library}-{type}` — examples: `saola-d3-bar-chart`, `saola-monaco-editor`, `saola-codemirror-editor`.
+`{library}-{type}` — examples: `d3-bar-chart`, `codemirror-editor`.
+
+Use the `saola-` prefix only to avoid collision with another registered element of the same name.
 
 ### 5. Shadow DOM + template
 

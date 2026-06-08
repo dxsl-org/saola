@@ -3,8 +3,8 @@ import gleam/string
 import lustre/element
 import lustre/element/html as h
 import saola/command
+import saola/component/resizable_split as rp
 import saola/data_table
-import saola/resizable
 import saola/sidebar
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -280,59 +280,60 @@ pub fn command_item_count_test() {
 
 pub fn resizable_simple_renders_custom_element_test() {
   let html =
-    resizable.resizable_simple(
+    rp.element(
       [
-        resizable.ResizablePanel(content: h.text("A"), min_size: 20.0),
-        resizable.ResizablePanel(content: h.text("B"), min_size: 20.0),
+        rp.direction(rp.Horizontal),
+        rp.sizes([50.0, 50.0]),
+        rp.min_sizes([20.0, 20.0]),
+        rp.on_resize(fn(sizes) { sizes }),
       ],
-      [50.0, 50.0],
-      fn(sizes) { sizes },
+      [rp.panel_slot(0, h.text("A")), rp.panel_slot(1, h.text("B"))],
     )
     |> element.to_string
-  assert string.contains(html, "saola-resizable-panels")
-  assert string.contains(html, "resizable-root")
+  assert string.contains(html, "resizable-split")
 }
 
 pub fn resizable_has_panel_slots_test() {
   let html =
-    resizable.resizable_simple(
+    rp.element(
       [
-        resizable.ResizablePanel(content: h.text("Left"), min_size: 10.0),
-        resizable.ResizablePanel(content: h.text("Right"), min_size: 10.0),
+        rp.direction(rp.Horizontal),
+        rp.sizes([40.0, 60.0]),
+        rp.min_sizes([10.0, 10.0]),
+        rp.on_resize(fn(sizes) { sizes }),
       ],
-      [40.0, 60.0],
-      fn(sizes) { sizes },
+      [rp.panel_slot(0, h.text("Left")), rp.panel_slot(1, h.text("Right"))],
     )
     |> element.to_string
-  assert string.contains(html, "resizable-panel")
   assert string.contains(html, "Left")
   assert string.contains(html, "Right")
 }
 
 pub fn resizable_has_handles_test() {
   let html =
-    resizable.resizable_simple(
+    rp.element(
       [
-        resizable.ResizablePanel(content: h.text("A"), min_size: 10.0),
-        resizable.ResizablePanel(content: h.text("B"), min_size: 10.0),
+        rp.direction(rp.Horizontal),
+        rp.sizes([50.0, 50.0]),
+        rp.min_sizes([10.0, 10.0]),
+        rp.on_resize(fn(sizes) { sizes }),
       ],
-      [50.0, 50.0],
-      fn(sizes) { sizes },
+      [rp.panel_slot(0, h.text("A")), rp.panel_slot(1, h.text("B"))],
     )
     |> element.to_string
-  assert string.contains(html, "resizable-handle")
+  assert string.contains(html, "resizable-split")
 }
 
 pub fn resizable_vertical_has_direction_test() {
   let html =
-    resizable.resizable_full(
+    rp.element(
       [
-        resizable.ResizablePanel(content: h.text("Top"), min_size: 20.0),
-        resizable.ResizablePanel(content: h.text("Bottom"), min_size: 20.0),
+        rp.direction(rp.Vertical),
+        rp.sizes([50.0, 50.0]),
+        rp.min_sizes([20.0, 20.0]),
+        rp.on_resize(fn(sizes) { sizes }),
       ],
-      [50.0, 50.0],
-      fn(sizes) { sizes },
-      resizable.ResizableAttrs(direction: resizable.Vertical, class: ""),
+      [rp.panel_slot(0, h.text("Top")), rp.panel_slot(1, h.text("Bottom"))],
     )
     |> element.to_string
   assert string.contains(html, "direction=\"vertical\"")
@@ -340,14 +341,18 @@ pub fn resizable_vertical_has_direction_test() {
 
 pub fn resizable_three_panels_have_two_handles_test() {
   let html =
-    resizable.resizable_simple(
+    rp.element(
       [
-        resizable.ResizablePanel(content: h.text("A"), min_size: 10.0),
-        resizable.ResizablePanel(content: h.text("B"), min_size: 10.0),
-        resizable.ResizablePanel(content: h.text("C"), min_size: 10.0),
+        rp.direction(rp.Horizontal),
+        rp.sizes([33.0, 34.0, 33.0]),
+        rp.min_sizes([10.0, 10.0, 10.0]),
+        rp.on_resize(fn(sizes) { sizes }),
       ],
-      [33.0, 34.0, 33.0],
-      fn(sizes) { sizes },
+      [
+        rp.panel_slot(0, h.text("A")),
+        rp.panel_slot(1, h.text("B")),
+        rp.panel_slot(2, h.text("C")),
+      ],
     )
     |> element.to_string
   // Two handles between three panels

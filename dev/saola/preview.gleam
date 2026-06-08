@@ -4,6 +4,7 @@ import gleam/float
 import gleam/int
 import gleam/list
 import gleam/option.{None, Some}
+import gleam/result
 import gleam/uri.{type Uri}
 
 import lustre
@@ -15,6 +16,7 @@ import modem
 import saola/canvas_command as canvas
 import saola/component/combobox as cb
 import saola/component/multi_select as ms
+import saola/component/resizable_split
 import saola/graph_layout
 import saola/lustre_heatmap
 import saola/preview/threat_intel_data
@@ -73,6 +75,7 @@ import saola/preview/view/sidebar
 pub fn main() {
   let assert Ok(_) = cb.register()
   let assert Ok(_) = ms.register()
+  let assert Ok(_) = resizable_split.register()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
@@ -337,7 +340,7 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
         _ -> #(model, effect.none())
       }
     SliderChanged(id, value) -> {
-      let n = int.parse(value) |> result_unwrap(0)
+      let n = int.parse(value) |> result.unwrap(0)
       case id {
         "volume" -> #(Model(..model, slider_volume: n), effect.none())
         "brightness" -> #(Model(..model, slider_brightness: n), effect.none())
@@ -1002,13 +1005,6 @@ fn heatmap_toggle_painted(
   case dict.has_key(painted, key) {
     True -> dict.delete(painted, key)
     False -> dict.insert(painted, key, True)
-  }
-}
-
-fn result_unwrap(r: Result(a, e), default: a) -> a {
-  case r {
-    Ok(v) -> v
-    Error(_) -> default
   }
 }
 
