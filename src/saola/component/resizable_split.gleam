@@ -22,18 +22,19 @@
 ////
 //// fn view(model: Model) -> Element(Msg) {
 ////   rp.element(
+////     [rp.direction(rp.Horizontal), rp.on_resize(UserResized)],
 ////     [
-////       rp.direction(rp.Horizontal),
-////       rp.sizes([50.0, 50.0]),
-////       rp.min_sizes([10.0, 10.0]),
-////       rp.on_resize(UserResized),
-////     ],
-////     [
-////       rp.panel_slot(0, h.div([], [h.text("Left")])),
-////       rp.panel_slot(1, h.div([], [h.text("Right")])),
+////       rp.panel(50.0, h.div([], [h.text("Left")])),
+////       rp.panel(50.0, h.div([], [h.text("Right")])),
 ////     ],
 ////   )
 //// }
+//// ```
+////
+//// Use `panel_full` when you need a custom minimum size:
+////
+//// ```gleam
+//// rp.panel_full(33.0, 15.0, h.div([], [h.text("Left")]))
 //// ```
 
 import gleam/dynamic
@@ -57,6 +58,26 @@ pub const tag = "resizable-split"
 pub type Direction {
   Horizontal
   Vertical
+}
+
+/// Per-panel configuration. Bundles size, minimum size, and content so the
+/// compiler enforces consistent panel counts — mismatched lists are impossible.
+pub type Panel(m) {
+  Panel(size: Float, min_size: Float, content: Element(m))
+}
+
+/// Convenience constructor with a default minimum size of 10.0%.
+pub fn panel(size: Float, content: Element(m)) -> Panel(m) {
+  Panel(size: size, min_size: 10.0, content: content)
+}
+
+/// Full constructor — explicit minimum size.
+pub fn panel_full(
+  size: Float,
+  min_size: Float,
+  content: Element(m),
+) -> Panel(m) {
+  Panel(size: size, min_size: min_size, content: content)
 }
 
 /// Documents the events this component emits to the parent.
@@ -113,28 +134,33 @@ pub fn register() -> Result(Nil, lustre.Error) {
 
 // -- Parent-facing helpers -- //
 
+/// Renders the resizable split layout. Sizes and slot wrappers are derived
+/// from `panels` internally, so count mismatches are impossible.
 pub fn element(
   attributes: List(Attribute(m)),
-  children: List(Element(m)),
+  panels: List(Panel(m)),
 ) -> Element(m) {
-  element.element(tag, attributes, children)
-}
-
-/// Wraps content in `<div slot="panel-N">` so it projects into the named slot.
-pub fn panel_slot(index: Int, content: Element(m)) -> Element(m) {
-  h.div([a.attribute("slot", "panel-" <> int.to_string(index))], [content])
+  let size_values = list.map(panels, fn(p) { p.size })
+  let min_size_values = list.map(panels, fn(p) { p.min_size })
+  let children =
+    list.index_map(panels, fn(p, i) {
+      h.div([a.attribute("slot", "panel-" <> int.to_string(i))], [p.content])
+    })
+  element.element(
+    tag,
+    list.flatten([
+      [
+        a.property("sizes", json.array(size_values, json.float)),
+        a.property("min-sizes", json.array(min_size_values, json.float)),
+      ],
+      attributes,
+    ]),
+    children,
+  )
 }
 
 pub fn direction(dir: Direction) -> Attribute(m) {
   a.attribute("direction", direction_to_string(dir))
-}
-
-pub fn sizes(values: List(Float)) -> Attribute(m) {
-  a.property("sizes", json.array(values, json.float))
-}
-
-pub fn min_sizes(values: List(Float)) -> Attribute(m) {
-  a.property("min-sizes", json.array(values, json.float))
 }
 
 pub fn on_resize(handler: fn(List(Float)) -> m) -> Attribute(m) {

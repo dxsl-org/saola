@@ -164,7 +164,7 @@ pub type Model {
     command_query: String,
     command_highlighted: Int,
     // Resizable preview state
-    resizable_sizes: List(Float),
+    resizable_split_sizes: List(Float),
     // Data table preview state
     data_table_state: data_table.DataTableState,
     // Carousel preview state
@@ -290,7 +290,7 @@ pub type Message {
   CommandNavUp
   CommandNavDown
   CommandSelected(String)
-  ResizableSizesChanged(List(Float))
+  ResizableSplitSizesChanged(List(Float))
   DataTableSortChanged(String)
   DataTableFilterChanged(String)
   DataTablePageChanged(Int)

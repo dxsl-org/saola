@@ -281,13 +281,11 @@ pub fn command_item_count_test() {
 pub fn resizable_simple_renders_custom_element_test() {
   let html =
     rp.element(
+      [rp.direction(rp.Horizontal), rp.on_resize(fn(sizes) { sizes })],
       [
-        rp.direction(rp.Horizontal),
-        rp.sizes([50.0, 50.0]),
-        rp.min_sizes([20.0, 20.0]),
-        rp.on_resize(fn(sizes) { sizes }),
+        rp.panel_full(50.0, 20.0, h.text("A")),
+        rp.panel_full(50.0, 20.0, h.text("B")),
       ],
-      [rp.panel_slot(0, h.text("A")), rp.panel_slot(1, h.text("B"))],
     )
     |> element.to_string
   assert string.contains(html, "resizable-split")
@@ -296,13 +294,11 @@ pub fn resizable_simple_renders_custom_element_test() {
 pub fn resizable_has_panel_slots_test() {
   let html =
     rp.element(
+      [rp.direction(rp.Horizontal), rp.on_resize(fn(sizes) { sizes })],
       [
-        rp.direction(rp.Horizontal),
-        rp.sizes([40.0, 60.0]),
-        rp.min_sizes([10.0, 10.0]),
-        rp.on_resize(fn(sizes) { sizes }),
+        rp.panel_full(40.0, 10.0, h.text("Left")),
+        rp.panel_full(60.0, 10.0, h.text("Right")),
       ],
-      [rp.panel_slot(0, h.text("Left")), rp.panel_slot(1, h.text("Right"))],
     )
     |> element.to_string
   assert string.contains(html, "Left")
@@ -312,13 +308,8 @@ pub fn resizable_has_panel_slots_test() {
 pub fn resizable_has_handles_test() {
   let html =
     rp.element(
-      [
-        rp.direction(rp.Horizontal),
-        rp.sizes([50.0, 50.0]),
-        rp.min_sizes([10.0, 10.0]),
-        rp.on_resize(fn(sizes) { sizes }),
-      ],
-      [rp.panel_slot(0, h.text("A")), rp.panel_slot(1, h.text("B"))],
+      [rp.direction(rp.Horizontal), rp.on_resize(fn(sizes) { sizes })],
+      [rp.panel(50.0, h.text("A")), rp.panel(50.0, h.text("B"))],
     )
     |> element.to_string
   assert string.contains(html, "resizable-split")
@@ -326,15 +317,10 @@ pub fn resizable_has_handles_test() {
 
 pub fn resizable_vertical_has_direction_test() {
   let html =
-    rp.element(
-      [
-        rp.direction(rp.Vertical),
-        rp.sizes([50.0, 50.0]),
-        rp.min_sizes([20.0, 20.0]),
-        rp.on_resize(fn(sizes) { sizes }),
-      ],
-      [rp.panel_slot(0, h.text("Top")), rp.panel_slot(1, h.text("Bottom"))],
-    )
+    rp.element([rp.direction(rp.Vertical), rp.on_resize(fn(sizes) { sizes })], [
+      rp.panel_full(50.0, 20.0, h.text("Top")),
+      rp.panel_full(50.0, 20.0, h.text("Bottom")),
+    ])
     |> element.to_string
   assert string.contains(html, "direction=\"vertical\"")
 }
@@ -342,16 +328,11 @@ pub fn resizable_vertical_has_direction_test() {
 pub fn resizable_three_panels_have_slots_test() {
   let html =
     rp.element(
+      [rp.direction(rp.Horizontal), rp.on_resize(fn(sizes) { sizes })],
       [
-        rp.direction(rp.Horizontal),
-        rp.sizes([33.0, 34.0, 33.0]),
-        rp.min_sizes([10.0, 10.0, 10.0]),
-        rp.on_resize(fn(sizes) { sizes }),
-      ],
-      [
-        rp.panel_slot(0, h.text("A")),
-        rp.panel_slot(1, h.text("B")),
-        rp.panel_slot(2, h.text("C")),
+        rp.panel_full(33.0, 10.0, h.text("A")),
+        rp.panel_full(34.0, 10.0, h.text("B")),
+        rp.panel_full(33.0, 10.0, h.text("C")),
       ],
     )
     |> element.to_string

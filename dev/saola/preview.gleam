@@ -139,7 +139,7 @@ fn init(_args) -> #(Model, Effect(Message)) {
       sidebar_collapsed: False,
       command_query: "",
       command_highlighted: -1,
-      resizable_sizes: [30.0, 70.0],
+      resizable_split_sizes: [30.0, 70.0],
       data_table_state: data_table.default_state,
       carousel_index: 0,
       carousel_can_prev: False,
@@ -485,7 +485,7 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       effect.none(),
     )
     ResizableSizesChanged(sizes) -> #(
-      Model(..model, resizable_sizes: sizes),
+      Model(..model, resizable_split_sizes: sizes),
       effect.none(),
     )
     DataTableSortChanged(key) -> #(
