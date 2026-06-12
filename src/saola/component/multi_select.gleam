@@ -1,3 +1,54 @@
+//// A multi-select dropdown (custom element) implemented as a Lustre component.//// A multi-select dropdown (custom element) implemented as a Lustre component.
+////
+//// ## Setup
+////
+//// Register the custom element once at application startup, before the first
+//// render:
+////
+//// ```gleam
+//// import saola/component/multi_select
+////
+//// pub fn main() {
+////   let assert Ok(_) = multi_select.register()
+////   // ... start your Lustre app
+//// }
+//// ```
+////
+//// ## Basic usage
+////
+//// Pass choices as a JS property and listen for the `change` event:
+////
+//// ```gleam
+//// import gleam/json
+//// import lustre/attribute as a
+//// import saola/component/multi_select.{type Item, Item}
+////
+//// type Msg {
+////   TagsChanged(List(String))
+//// }
+////
+//// fn view(model: Model) -> Element(Msg) {
+////   let tags = [Item("rust", "Rust"), Item("gleam", "Gleam")]
+////   multi_select.element([
+////     a.property("choices", tags |> multi_select.encode_choices),
+////     multi_select.on_changed(TagsChanged),
+////   ])
+//// }
+//// ```
+////
+//// ## Preselecting values
+////
+//// Use `preselect_values` to seed initial selections. Safe to set before
+//// `choices` are loaded — selection is deferred until matching choices arrive:
+////
+//// ```gleam
+//// multi_select.element([
+////   a.property("choices", tags |> multi_select.encode_choices),
+////   multi_select.preselect_values(["rust", "gleam"]),
+////   multi_select.on_changed(TagsChanged),
+//// ])
+//// ```
+
 import gleam/dynamic/decode
 import gleam/json
 import gleam/list
@@ -73,7 +124,7 @@ const attr_preselect = "preselect"
 const attr_choices = "choices"
 
 /// Registers the `<multi-select>` custom element with the browser.
-/// Call once at application startup before rendering any combobox elements.
+/// Call once at application startup before rendering any multi-select elements.
 pub fn register() -> Result(Nil, lustre.Error) {
   let app =
     lustre.component(init, update, view, [
@@ -90,24 +141,52 @@ pub fn register() -> Result(Nil, lustre.Error) {
   lustre.register(app, tag)
 }
 
-/// Creates a `<multi-select>` element. Pass data and event handler attributes produced
-/// by the other functions in this module.
+/// Creates a `<multi-select>` element. Pass data and event handler attributes
+/// produced by the other functions in this module.
 pub fn element(attributes: List(Attribute(m))) -> Element(m) {
   element.element(tag, attributes, [])
 }
 
-/// Sets the initially selected item by value. Safe to set before `choices` are
-/// loaded — selection is deferred until the matching choice arrives.
+/// Sets the initially selected values as a JSON string (e.g. `["a","b"]`).
+/// Safe to set before `choices` are loaded — selection is deferred until
+/// matching choices arrive.
 pub fn preselect_value(value: String) -> Attribute(m) {
   a.attribute(attr_preselect, value)
 }
 
+/// Encodes an `Item` to JSON. Use with `encode_choices` or directly with
+/// `json.array` when building the `choices` property.
 pub fn item_to_json(item: Item) -> json.Json {
   let Item(value:, name:) = item
   json.object([
     #("value", json.string(value)),
     #("name", json.string(name)),
   ])
+}
+
+/// Encodes a list of `Item`s to JSON for the `choices` property.
+///
+/// ```gleam
+/// a.property("choices", tags |> multi_select.encode_choices)
+/// ```
+pub fn encode_choices(items: List(Item)) -> json.Json {
+  json.array(items, item_to_json)
+}
+
+// -- Shortcuts to let parent element easily register event handlers -- //
+
+/// Fires when the multi-select input receives focus.
+pub fn on_focused(message: message) -> Attribute(message) {
+  ev.on("focus", decode.success(message))
+}
+
+/// Fires when the user changes the selection. The handler receives the list of
+/// selected item values.
+pub fn on_changed(handler: fn(List(String)) -> message) -> Attribute(message) {
+  ev.on("change", {
+    use detail <- decode.field("detail", decode.list(decode.string))
+    decode.success(handler(detail))
+  })
 }
 
 // -- Internal implementation -- //
