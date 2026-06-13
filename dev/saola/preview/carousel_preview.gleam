@@ -8,8 +8,8 @@ import lustre/element/html as h
 import saola/button
 import saola/component/carousel
 import saola/preview/model.{
-  type Message, type Model, CarouselHChanged, CarouselHNavNext, CarouselHNavPrev,
-  CarouselVChanged, CarouselVNavNext, CarouselVNavPrev,
+  type Message, type Model, CarouselHasChanged, CarouselHorizontalMessage,
+  CarouselNavNextClicked, CarouselNavPrevClicked, CarouselVerticalMessage,
 }
 
 const slide_class = "carousel-slide-demo"
@@ -21,6 +21,8 @@ pub fn view(model: Model) -> Element(Message) {
     h.div([a.class(slide_class)], [h.span([], [text("Slide 3")])]),
   ]
   let total = list.length(slides)
+  let h_state = model.carousel_horizontal
+  let v_state = model.carousel_vertical
   h.div([], [
     h.h1([a.class("page-title")], [text("Carousel")]),
     h.p([a.class("page-description")], [
@@ -30,35 +32,41 @@ pub fn view(model: Model) -> Element(Message) {
       h.div([a.class("grid gap-4")], [
         h.h2([], [text("Horizontal")]),
         render_nav(
-          model.carousel_can_prev,
-          model.carousel_can_next,
-          model.carousel_index,
+          h_state.has_prev,
+          h_state.has_next,
+          h_state.index,
           total,
-          CarouselHNavPrev,
-          CarouselHNavNext,
+          CarouselHorizontalMessage(CarouselNavPrevClicked),
+          CarouselHorizontalMessage(CarouselNavNextClicked),
           False,
         ),
         h.div([a.style("width", "400px")], [
           carousel.element(
             [
               a.class("carousel-root"),
-              a.property("target-index", json.int(model.carousel_index)),
-              carousel.on_change(CarouselHChanged),
+              a.property("target-index", json.int(h_state.index)),
+              carousel.on_change(fn(index, has_prev, has_next) {
+                CarouselHorizontalMessage(CarouselHasChanged(
+                  index,
+                  has_prev,
+                  has_next,
+                ))
+              }),
             ],
             slides,
           ),
         ]),
-        render_dots(model.carousel_index, total),
+        render_dots(h_state.index, total),
       ]),
       h.div([a.class("grid gap-4")], [
         h.h2([], [text("Vertical")]),
         render_nav(
-          model.carousel_v_can_prev,
-          model.carousel_v_can_next,
-          model.carousel_v_index,
+          v_state.has_prev,
+          v_state.has_next,
+          v_state.index,
           total,
-          CarouselVNavPrev,
-          CarouselVNavNext,
+          CarouselVerticalMessage(CarouselNavPrevClicked),
+          CarouselVerticalMessage(CarouselNavNextClicked),
           True,
         ),
         h.div([a.style("width", "400px"), a.style("height", "250px")], [
@@ -66,8 +74,14 @@ pub fn view(model: Model) -> Element(Message) {
             [
               a.class("carousel-root"),
               a.attribute("orientation", "vertical"),
-              a.property("target-index", json.int(model.carousel_v_index)),
-              carousel.on_change(CarouselVChanged),
+              a.property("target-index", json.int(v_state.index)),
+              carousel.on_change(fn(index, has_prev, has_next) {
+                CarouselVerticalMessage(CarouselHasChanged(
+                  index,
+                  has_prev,
+                  has_next,
+                ))
+              }),
             ],
             slides,
           ),

@@ -31,38 +31,39 @@ import saola/preview/model.{
   AlertDialogCancelled, AlertDialogConfirmed, AlertDialogOpened, AlertDialogs,
   Alerts, AspectRatios, Avatars, Badges, Breadcrumbs, ButtonGroups, Buttons,
   CalendarDateSelected, CalendarMonthChanged, Calendars, CanvasStressTest, Cards,
-  CarouselHChanged, CarouselHNavNext, CarouselHNavPrev, CarouselVChanged,
-  CarouselVNavNext, CarouselVNavPrev, Carousels, CloseDialog, CollapsibleToggled,
-  Collapsibles, ComboboxQueryChanged, ComboboxSelected, Comboboxes,
-  CommandNavDown, CommandNavUp, CommandQueryChanged, CommandSelected, Commands,
-  ContextMenuClosed, ContextMenuOpened, ContextMenus, D3Charts, DashDrawerClosed,
-  DashPageChanged, DashRowClicked, DashSearchChanged, DataTableFilterChanged,
-  DataTablePageChanged, DataTableSelectChanged, DataTableSortChanged, DataTables,
-  DatePicker2DateSelected, DatePicker2MonthChanged, DatePicker2OpenChanged,
-  DatePickerDateSelected, DatePickerMonthChanged, DatePickerOpenChanged,
-  DatePickers, Dialogs, DismissToast, DrawerClosed, DrawerOpened, Drawers,
-  DropdownMenus, Empties, ExampleForm, ExampleSite, Fields, FormEmailChanged,
-  FormMessageChanged, FormNameChanged, FormSubmitted, FormValidation, Forms,
-  HeatmapAnimTick, HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft,
-  HeatmapCanvasHovered, HeatmapCellPxChanged, HeatmapComparison, HeatmapHover,
-  HeatmapPaintEnded, HeatmapPaintStarted, HeatmapRandomize, HeatmapRipple,
-  HeatmapSchemeChanged, HeatmapSizeChanged, HeatmapSvgCellClicked,
-  HeatmapSvgHoverLeft, HeatmapSvgHovered, Home, HoverCardClosed, HoverCardOpened,
-  HoverCards, InputGroups, InputOtpChanged, InputOtps, Inputs, Items,
-  MenubarClosed, MenubarOpened, Menubars, Model, MonacoEditor,
-  MultiselectChanged, Multiselects, NativeSelectChanged, NativeSelects,
-  NavMenuOpenChanged, NavigationBars, NavigationMenus, OnRouteChange, OpenDialog,
-  PaginationChanged, Paginations, PopoverClosed, PopoverOpened, Popovers,
-  Progresses, RadioGroups, RatingChanged, Ratings, ResizableSplitSizesChanged,
-  Resizables, ScrollAreas, SearchQueryChanged, Searches, SelectChanged, Selects,
-  Separators, SheetClosed, SheetOpened, Sheets, SidebarCollapsedToggled,
-  SidebarToggled, Sidebars, SignupConfirmChanged, SignupEmailChanged,
-  SignupNameChanged, SignupPasswordChanged, SignupReset, SignupSubmitted,
-  Skeletons, SliderChanged, Sliders, Spinners, StartedTrial, StepperStepClicked,
-  Steppers, StressBarClicked, StressOffsetChanged, StressZoomChanged,
-  SwitchToggled, Switches, SystemOsDarkChanged, TabChanged, Tables, Tabs,
-  ThemeSelected, ThreatEntityDeselected, ThreatEntitySelected,
-  ThreatFiltersCleared, ThreatGraphPanned, ThreatGraphZoomed, ThreatIntelNetwork,
+  CarouselHasChanged, CarouselHorizontalMessage, CarouselNavNextClicked,
+  CarouselNavPrevClicked, CarouselVerticalMessage, Carousels, CloseDialog,
+  CollapsibleToggled, Collapsibles, ComboboxQueryChanged, ComboboxSelected,
+  Comboboxes, CommandNavDown, CommandNavUp, CommandQueryChanged, CommandSelected,
+  Commands, ContextMenuClosed, ContextMenuOpened, ContextMenus, D3Charts,
+  DashDrawerClosed, DashPageChanged, DashRowClicked, DashSearchChanged,
+  DataTableFilterChanged, DataTablePageChanged, DataTableSelectChanged,
+  DataTableSortChanged, DataTables, DatePicker2DateSelected,
+  DatePicker2MonthChanged, DatePicker2OpenChanged, DatePickerDateSelected,
+  DatePickerMonthChanged, DatePickerOpenChanged, DatePickers, Dialogs,
+  DismissToast, DrawerClosed, DrawerOpened, Drawers, DropdownMenus, Empties,
+  ExampleForm, ExampleSite, Fields, FormEmailChanged, FormMessageChanged,
+  FormNameChanged, FormSubmitted, FormValidation, Forms, HeatmapAnimTick,
+  HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft, HeatmapCanvasHovered,
+  HeatmapCellPxChanged, HeatmapComparison, HeatmapHover, HeatmapPaintEnded,
+  HeatmapPaintStarted, HeatmapRandomize, HeatmapRipple, HeatmapSchemeChanged,
+  HeatmapSizeChanged, HeatmapSvgCellClicked, HeatmapSvgHoverLeft,
+  HeatmapSvgHovered, Home, HoverCardClosed, HoverCardOpened, HoverCards,
+  InputGroups, InputOtpChanged, InputOtps, Inputs, Items, MenubarClosed,
+  MenubarOpened, Menubars, Model, MonacoEditor, MultiselectChanged, Multiselects,
+  NativeSelectChanged, NativeSelects, NavMenuOpenChanged, NavigationBars,
+  NavigationMenus, OnRouteChange, OpenDialog, PaginationChanged, Paginations,
+  PopoverClosed, PopoverOpened, Popovers, Progresses, RadioGroups, RatingChanged,
+  Ratings, ResizableSplitSizesChanged, Resizables, ScrollAreas,
+  SearchQueryChanged, Searches, SelectChanged, Selects, Separators, SheetClosed,
+  SheetOpened, Sheets, SidebarCollapsedToggled, SidebarToggled, Sidebars,
+  SignupConfirmChanged, SignupEmailChanged, SignupNameChanged,
+  SignupPasswordChanged, SignupReset, SignupSubmitted, Skeletons, SliderChanged,
+  Sliders, Spinners, StartedTrial, StepperStepClicked, Steppers,
+  StressBarClicked, StressOffsetChanged, StressZoomChanged, SwitchToggled,
+  Switches, SystemOsDarkChanged, TabChanged, Tables, Tabs, ThemeSelected,
+  ThreatEntityDeselected, ThreatEntitySelected, ThreatFiltersCleared,
+  ThreatGraphPanned, ThreatGraphZoomed, ThreatIntelNetwork,
   ThreatIntelRouteEntered, ThreatLayoutReceived, ThreatMapCountryClicked,
   ThreatNodeHovered, ThreatSearchChanged, ThreatSearchCleared,
   ThreatSeverityFilterChanged, ThreatTablePageChanged, ThreatTableRowSelected,
@@ -144,12 +145,16 @@ fn init(_args) -> #(Model, Effect(Message)) {
       command_highlighted: -1,
       resizable_split_sizes: [30.0, 70.0],
       data_table_state: data_table.default_state,
-      carousel_index: 0,
-      carousel_can_prev: False,
-      carousel_can_next: True,
-      carousel_v_index: 0,
-      carousel_v_can_prev: False,
-      carousel_v_can_next: True,
+      carousel_horizontal: model.CarouselState(
+        index: 0,
+        has_prev: False,
+        has_next: True,
+      ),
+      carousel_vertical: model.CarouselState(
+        index: 0,
+        has_prev: False,
+        has_next: True,
+      ),
       combobox_value: None,
       combobox_query: "",
       nav_menu_open: None,
@@ -525,55 +530,89 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       ),
       effect.none(),
     )
-    CarouselHChanged(idx, can_prev, can_next) -> #(
-      Model(
-        ..model,
-        carousel_index: idx,
-        carousel_can_prev: can_prev,
-        carousel_can_next: can_next,
-      ),
-      effect.none(),
-    )
-    CarouselHNavPrev ->
-      case model.carousel_can_prev {
-        False -> #(model, effect.none())
-        True -> #(
-          Model(..model, carousel_index: model.carousel_index - 1),
+    CarouselHorizontalMessage(carousel_msg) ->
+      case carousel_msg {
+        CarouselHasChanged(idx, has_prev, has_next) -> #(
+          Model(
+            ..model,
+            carousel_horizontal: model.CarouselState(
+              index: idx,
+              has_prev: has_prev,
+              has_next: has_next,
+            ),
+          ),
           effect.none(),
         )
+        CarouselNavPrevClicked ->
+          case model.carousel_horizontal.has_prev {
+            False -> #(model, effect.none())
+            True -> #(
+              Model(
+                ..model,
+                carousel_horizontal: model.CarouselState(
+                  ..model.carousel_horizontal,
+                  index: model.carousel_horizontal.index - 1,
+                ),
+              ),
+              effect.none(),
+            )
+          }
+        CarouselNavNextClicked ->
+          case model.carousel_horizontal.has_next {
+            False -> #(model, effect.none())
+            True -> #(
+              Model(
+                ..model,
+                carousel_horizontal: model.CarouselState(
+                  ..model.carousel_horizontal,
+                  index: model.carousel_horizontal.index + 1,
+                ),
+              ),
+              effect.none(),
+            )
+          }
       }
-    CarouselHNavNext ->
-      case model.carousel_can_next {
-        False -> #(model, effect.none())
-        True -> #(
-          Model(..model, carousel_index: model.carousel_index + 1),
+    CarouselVerticalMessage(carousel_msg) ->
+      case carousel_msg {
+        CarouselHasChanged(idx, has_prev, has_next) -> #(
+          Model(
+            ..model,
+            carousel_vertical: model.CarouselState(
+              index: idx,
+              has_prev: has_prev,
+              has_next: has_next,
+            ),
+          ),
           effect.none(),
         )
-      }
-    CarouselVChanged(idx, can_prev, can_next) -> #(
-      Model(
-        ..model,
-        carousel_v_index: idx,
-        carousel_v_can_prev: can_prev,
-        carousel_v_can_next: can_next,
-      ),
-      effect.none(),
-    )
-    CarouselVNavPrev ->
-      case model.carousel_v_can_prev {
-        False -> #(model, effect.none())
-        True -> #(
-          Model(..model, carousel_v_index: model.carousel_v_index - 1),
-          effect.none(),
-        )
-      }
-    CarouselVNavNext ->
-      case model.carousel_v_can_next {
-        False -> #(model, effect.none())
-        True -> #(
-          Model(..model, carousel_v_index: model.carousel_v_index + 1),
-          effect.none(),
-        )
+        CarouselNavPrevClicked ->
+          case model.carousel_vertical.has_prev {
+            False -> #(model, effect.none())
+            True -> #(
+              Model(
+                ..model,
+                carousel_vertical: model.CarouselState(
+                  ..model.carousel_vertical,
+                  index: model.carousel_vertical.index - 1,
+                ),
+              ),
+              effect.none(),
+            )
+          }
+        CarouselNavNextClicked ->
+          case model.carousel_vertical.has_next {
+            False -> #(model, effect.none())
+            True -> #(
+              Model(
+                ..model,
+                carousel_vertical: model.CarouselState(
+                  ..model.carousel_vertical,
+                  index: model.carousel_vertical.index + 1,
+                ),
+              ),
+              effect.none(),
+            )
+          }
       }
     ComboboxQueryChanged(q) -> #(
       Model(..model, combobox_query: q),

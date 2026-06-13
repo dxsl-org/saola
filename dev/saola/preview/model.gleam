@@ -168,12 +168,8 @@ pub type Model {
     // Data table preview state
     data_table_state: data_table.DataTableState,
     // Carousel preview state
-    carousel_index: Int,
-    carousel_can_prev: Bool,
-    carousel_can_next: Bool,
-    carousel_v_index: Int,
-    carousel_v_can_prev: Bool,
-    carousel_v_can_next: Bool,
+    carousel_horizontal: CarouselState,
+    carousel_vertical: CarouselState,
     // Combobox preview state
     combobox_value: Option(String),
     combobox_query: String,
@@ -233,6 +229,10 @@ pub type Model {
     heatmap_svg_hover: Option(HeatmapHover),
     heatmap_canvas_hover: Option(HeatmapHover),
   )
+}
+
+pub type CarouselState {
+  CarouselState(index: Int, has_prev: Bool, has_next: Bool)
 }
 
 pub type Message {
@@ -298,12 +298,8 @@ pub type Message {
   DataTableFilterChanged(String)
   DataTablePageChanged(Int)
   DataTableSelectChanged(List(String))
-  CarouselHChanged(Int, Bool, Bool)
-  CarouselHNavPrev
-  CarouselHNavNext
-  CarouselVChanged(Int, Bool, Bool)
-  CarouselVNavPrev
-  CarouselVNavNext
+  CarouselHorizontalMessage(CarouselMessage)
+  CarouselVerticalMessage(CarouselMessage)
   ComboboxQueryChanged(String)
   ComboboxSelected(String)
   NavMenuOpenChanged(Option(String))
@@ -363,4 +359,10 @@ pub type Message {
   HeatmapPaintStarted(Int, Int)
   HeatmapPaintEnded
   HeatmapAnimTick(Float)
+}
+
+pub type CarouselMessage {
+  CarouselHasChanged(Int, Bool, Bool)
+  CarouselNavPrevClicked
+  CarouselNavNextClicked
 }
