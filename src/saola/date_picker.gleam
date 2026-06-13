@@ -7,10 +7,19 @@ import lustre/element/html as h
 import lustre/event as e
 import saola/calendar as cal
 
+/// Configuration attributes for date picker input.
 pub type DatePickerAttrs {
-  DatePickerAttrs(placeholder: String, disabled: Bool, class: String)
+  DatePickerAttrs(
+    /// Placeholder text shown when no date is selected.
+    placeholder: String,
+    /// Disable the input and prevent date selection.
+    disabled: Bool,
+    /// Additional CSS classes to apply to the root element.
+    class: String,
+  )
 }
 
+/// Default date picker attributes: "Pick a date" placeholder, enabled, no extra classes.
 pub const default_attrs = DatePickerAttrs(
   placeholder: "Pick a date",
   disabled: False,
@@ -25,6 +34,28 @@ fn format_date(date: Date) -> String {
   <> int.to_string(date.year)
 }
 
+/// Fully customizable date picker with calendar popover.
+///
+/// Displays a text input button with a calendar popover. When clicked, opens
+/// a calendar month view for date selection. The consumer controls the calendar
+/// state (selected date, viewed month) and message handlers.
+///
+/// Example:
+/// ```gleam
+/// date_picker(
+///   selected: Some(current_date),
+///   open: is_picker_open,
+///   view_year: 2026,
+///   view_month: calendar.May,
+///   on_select: DateSelected,
+///   on_month_change: CalendarMonthChanged,
+///   on_open_change: PickerOpenChanged,
+///   attrs: DatePickerAttrs(
+///     ..default_attrs,
+///     placeholder: "Select a date...",
+///   ),
+/// )
+/// ```
 pub fn date_picker(
   selected: Option(Date),
   open: Bool,
@@ -87,6 +118,23 @@ pub fn date_picker(
   ])
 }
 
+/// Simplified date picker using default attributes.
+///
+/// Convenience function that uses `default_attrs` for styling and configuration.
+/// Equivalent to calling `date_picker()` with default attributes.
+///
+/// Example:
+/// ```gleam
+/// date_picker_simple(
+///   selected: Some(current_date),
+///   open: is_picker_open,
+///   view_year: 2026,
+///   view_month: calendar.May,
+///   on_select: DateSelected,
+///   on_month_change: CalendarMonthChanged,
+///   on_open_change: PickerOpenChanged,
+/// )
+/// ```
 pub fn date_picker_simple(
   selected: Option(Date),
   open: Bool,

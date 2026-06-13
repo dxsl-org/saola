@@ -173,6 +173,27 @@ heatmap_svg_hover: Option(HeatmapHover)
 
 The exception is short, universally-understood pairs like `#(Float, Float)` for `(x, y)` coordinates — but prefer a named type even there once the tuple grows or appears in multiple places.
 
+### 11. Function names start with verbs — avoid variable name collisions
+
+When a function might collide with variable names in the same scope (e.g., `days_in_month()` function vs. a `month_days` variable), prefix functions with action verbs: `get_`, `calculate_`, `fetch_`, etc.
+
+```gleam
+// WRONG: function and variable names are too similar
+fn days_in_month(year: Int, month: Month) -> Int { ... }
+// Then later: let days_in_month = days_in_month(view_year, view_month)  // ← shadowing!
+// Confusing for non-English speakers; hard to distinguish action from data.
+
+// CORRECT: function verb-prefix makes intent and allows concise variable names
+fn get_days_in_month(year: Int, month: Month) -> Int { ... }
+// Then: let month_days = get_days_in_month(view_year, view_month)
+// Function action is obvious; variable names can be concise without collision risk.
+```
+
+Benefits:
+- **Clarity for international teams**: verb-prefixed functions are immediately recognizable as actions
+- **Enables concise variables**: no need for verbose names like `days_in_current_month` when `month_days` is unambiguous
+- **Consistency**: follows Python conventions (PEP 8) where functions use verb-based names
+
 ---
 
 ## Web Component (External Library Wrapper) Rules

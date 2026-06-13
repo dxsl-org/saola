@@ -11,10 +11,19 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 
+/// Configuration attributes for calendar display.
 pub type CalendarAttrs {
-  CalendarAttrs(today: Option(Date), show_outside_days: Bool, class: String)
+  CalendarAttrs(
+    /// Highlight today's date. Set to `None` to disable.
+    today: Option(Date),
+    /// Show days from previous/next month in empty cells.
+    show_outside_days: Bool,
+    /// Additional CSS classes to apply to the calendar root.
+    class: String,
+  )
 }
 
+/// Default calendar attributes: no highlight, show outside days, no extra classes.
 pub const default_attrs = CalendarAttrs(
   today: None,
   show_outside_days: True,
@@ -23,7 +32,7 @@ pub const default_attrs = CalendarAttrs(
 
 // ── Date helpers ──────────────────────────────────────────
 
-fn days_in_month(year: Int, month: Month) -> Int {
+fn count_days_in_month(year: Int, month: Month) -> Int {
   case month {
     January | March | May | July | August | October | December -> 31
     April | June | September | November -> 30
@@ -36,7 +45,7 @@ fn days_in_month(year: Int, month: Month) -> Int {
 }
 
 // Zeller's congruence — returns 0=Sunday … 6=Saturday
-fn day_of_week(year: Int, month: Month) -> Int {
+fn get_month_start_day_of_week(year: Int, month: Month) -> Int {
   let m = month_to_int(month)
   let #(zm, zy) = case m <= 2 {
     True -> #(m + 12, year - 1)
@@ -52,6 +61,10 @@ fn day_of_week(year: Int, month: Month) -> Int {
   }
 }
 
+/// Get the previous month.
+///
+/// Returns a tuple of `#(year, month)` for the month before the given month.
+/// Handles year transitions correctly (e.g., January → previous December).
 pub fn prev_month(year: Int, month: Month) -> #(Int, Month) {
   case month {
     January -> #(year - 1, December)
@@ -69,6 +82,10 @@ pub fn prev_month(year: Int, month: Month) -> #(Int, Month) {
   }
 }
 
+/// Get the next month.
+///
+/// Returns a tuple of `#(year, month)` for the month after the given month.
+/// Handles year transitions correctly (e.g., December → next January).
 pub fn next_month(year: Int, month: Month) -> #(Int, Month) {
   case month {
     January -> #(year, February)
@@ -106,27 +123,27 @@ fn cell_date(
   idx: Int,
   year: Int,
   month: Month,
-  first_dow: Int,
-  dim: Int,
+  start_day: Int,
+  month_days: Int,
 ) -> #(Date, Bool) {
-  case idx < first_dow {
+  case idx < start_day {
     True -> {
       let #(py, pm) = prev_month(year, month)
-      let prev_dim = days_in_month(py, pm)
-      #(Date(py, pm, prev_dim - first_dow + idx + 1), False)
+      let prev_days = count_days_in_month(py, pm)
+      #(Date(py, pm, prev_days - start_day + idx + 1), False)
     }
     False ->
-      case idx < first_dow + dim {
-        True -> #(Date(year, month, idx - first_dow + 1), True)
+      case idx < start_day + month_days {
+        True -> #(Date(year, month, idx - start_day + 1), True)
         False -> {
           let #(ny, nm) = next_month(year, month)
-          #(Date(ny, nm, idx - first_dow - dim + 1), False)
+          #(Date(ny, nm, idx - start_day - month_days + 1), False)
         }
       }
   }
 }
 
-fn dates_equal(a: Date, b: Date) -> Bool {
+fn is_same_day(a: Date, b: Date) -> Bool {
   a.year == b.year && a.month == b.month && a.day == b.day
 }
 
@@ -141,11 +158,11 @@ fn render_day_cell(
   on_select: fn(Date) -> msg,
 ) -> Element(msg) {
   let is_selected = case selected {
-    Some(s) -> dates_equal(date, s)
+    Some(s) -> is_same_day(date, s)
     None -> False
   }
   let is_today = case today {
-    Some(t) -> dates_equal(date, t)
+    Some(t) -> is_same_day(date, t)
     None -> False
   }
   let base_class = case is_selected {
@@ -167,20 +184,19 @@ fn render_day_cell(
         [
           a.type_("button"),
           a.class(base_class),
-          a.attribute(
-            "aria-label",
+          a.aria_label(
             month_to_string(date.month)
-              <> " "
-              <> int.to_string(date.day)
-              <> ", "
-              <> int.to_string(date.year),
+            <> " "
+            <> int.to_string(date.day)
+            <> ", "
+            <> int.to_string(date.year),
           ),
           case is_selected {
-            True -> a.attribute("aria-selected", "true")
+            True -> a.aria_selected(True)
             False -> a.none()
           },
           case !is_current_month {
-            True -> a.attribute("aria-disabled", "true")
+            True -> a.aria_disabled(True)
             False -> a.none()
           },
           e.on_click(on_select(date)),
@@ -190,6 +206,27 @@ fn render_day_cell(
   }
 }
 
+/// Fully customizable calendar widget.
+///
+/// Displays a month view with day cells, navigation buttons, and optional
+/// highlighting for today's date and selected date.
+///
+/// Example:
+/// ```gleam
+/// calendar(
+///   selected: Some(current_date),
+///   view_year: 2026,
+///   view_month: calendar.May,
+///   on_select: DateSelected,
+///   on_prev_month: PrevMonthClicked,
+///   on_next_month: NextMonthClicked,
+///   attrs: CalendarAttrs(
+///     ..default_attrs,
+///     today: Some(today_date),
+///     show_outside_days: True,
+///   ),
+/// )
+/// ```
 pub fn calendar(
   selected: Option(Date),
   view_year: Int,
@@ -199,8 +236,8 @@ pub fn calendar(
   on_next_month: msg,
   attrs: CalendarAttrs,
 ) -> Element(msg) {
-  let dim = days_in_month(view_year, view_month)
-  let first_dow = day_of_week(view_year, view_month)
+  let month_days = count_days_in_month(view_year, view_month)
+  let start_day = get_month_start_day_of_week(view_year, view_month)
   let extra_class = case attrs.class {
     "" -> a.none()
     c -> a.class(c)
@@ -212,7 +249,7 @@ pub fn calendar(
     cell_indices(42)
     |> list.map(fn(idx) {
       let #(date, is_current) =
-        cell_date(idx, view_year, view_month, first_dow, dim)
+        cell_date(idx, view_year, view_month, start_day, month_days)
       render_day_cell(
         date,
         is_current,
@@ -228,7 +265,7 @@ pub fn calendar(
         [
           a.type_("button"),
           a.class("calendar-nav-btn"),
-          a.attribute("aria-label", "Previous month"),
+          a.aria_label("Previous month"),
           e.on_click(on_prev_month),
         ],
         [h.text("‹")],
@@ -240,7 +277,7 @@ pub fn calendar(
         [
           a.type_("button"),
           a.class("calendar-nav-btn"),
-          a.attribute("aria-label", "Next month"),
+          a.aria_label("Next month"),
           e.on_click(on_next_month),
         ],
         [h.text("›")],
@@ -250,6 +287,22 @@ pub fn calendar(
   ])
 }
 
+/// Simplified calendar using default attributes.
+///
+/// Convenience function that uses `default_attrs` for configuration.
+/// Equivalent to calling `calendar()` with default styling options.
+///
+/// Example:
+/// ```gleam
+/// calendar_simple(
+///   selected: Some(current_date),
+///   view_year: 2026,
+///   view_month: calendar.May,
+///   on_select: DateSelected,
+///   on_prev_month: PrevMonthClicked,
+///   on_next_month: NextMonthClicked,
+/// )
+/// ```
 pub fn calendar_simple(
   selected: Option(Date),
   view_year: Int,

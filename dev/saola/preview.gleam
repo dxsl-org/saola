@@ -38,32 +38,31 @@ import saola/preview/model.{
   Commands, ContextMenuClosed, ContextMenuOpened, ContextMenus, D3Charts,
   DashDrawerClosed, DashPageChanged, DashRowClicked, DashSearchChanged,
   DataTableFilterChanged, DataTablePageChanged, DataTableSelectChanged,
-  DataTableSortChanged, DataTables, DatePicker2DateSelected,
-  DatePicker2MonthChanged, DatePicker2OpenChanged, DatePickerDateSelected,
-  DatePickerMonthChanged, DatePickerOpenChanged, DatePickers, Dialogs,
-  DismissToast, DrawerClosed, DrawerOpened, Drawers, DropdownMenus, Empties,
-  ExampleForm, ExampleSite, Fields, FormEmailChanged, FormMessageChanged,
-  FormNameChanged, FormSubmitted, FormValidation, Forms, HeatmapAnimTick,
-  HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft, HeatmapCanvasHovered,
-  HeatmapCellPxChanged, HeatmapComparison, HeatmapHover, HeatmapPaintEnded,
-  HeatmapPaintStarted, HeatmapRandomize, HeatmapRipple, HeatmapSchemeChanged,
-  HeatmapSizeChanged, HeatmapSvgCellClicked, HeatmapSvgHoverLeft,
-  HeatmapSvgHovered, Home, HoverCardClosed, HoverCardOpened, HoverCards,
-  InputGroups, InputOtpChanged, InputOtps, Inputs, Items, MenubarClosed,
-  MenubarOpened, Menubars, Model, MonacoEditor, MultiselectChanged, Multiselects,
-  NativeSelectChanged, NativeSelects, NavMenuOpenChanged, NavigationBars,
-  NavigationMenus, OnRouteChange, OpenDialog, PaginationChanged, Paginations,
-  PopoverClosed, PopoverOpened, Popovers, Progresses, RadioGroups, RatingChanged,
-  Ratings, ResizableSplitSizesChanged, Resizables, ScrollAreas,
-  SearchQueryChanged, Searches, SelectChanged, Selects, Separators, SheetClosed,
-  SheetOpened, Sheets, SidebarCollapsedToggled, SidebarToggled, Sidebars,
-  SignupConfirmChanged, SignupEmailChanged, SignupNameChanged,
-  SignupPasswordChanged, SignupReset, SignupSubmitted, Skeletons, SliderChanged,
-  Sliders, Spinners, StartedTrial, StepperStepClicked, Steppers,
-  StressBarClicked, StressOffsetChanged, StressZoomChanged, SwitchToggled,
-  Switches, SystemOsDarkChanged, TabChanged, Tables, Tabs, ThemeSelected,
-  ThreatEntityDeselected, ThreatEntitySelected, ThreatFiltersCleared,
-  ThreatGraphPanned, ThreatGraphZoomed, ThreatIntelNetwork,
+  DataTableSortChanged, DataTables, DatePicker1Changed, DatePicker2Changed,
+  DatePickerClose, DatePickerDateSelected, DatePickerMonthChanged,
+  DatePickerOpen, DatePickers, Dialogs, DismissToast, DrawerClosed, DrawerOpened,
+  Drawers, DropdownMenus, Empties, ExampleForm, ExampleSite, Fields,
+  FormEmailChanged, FormMessageChanged, FormNameChanged, FormSubmitted,
+  FormValidation, Forms, HeatmapAnimTick, HeatmapCanvasCellClicked,
+  HeatmapCanvasHoverLeft, HeatmapCanvasHovered, HeatmapCellPxChanged,
+  HeatmapComparison, HeatmapHover, HeatmapPaintEnded, HeatmapPaintStarted,
+  HeatmapRandomize, HeatmapRipple, HeatmapSchemeChanged, HeatmapSizeChanged,
+  HeatmapSvgCellClicked, HeatmapSvgHoverLeft, HeatmapSvgHovered, Home,
+  HoverCardClosed, HoverCardOpened, HoverCards, InputGroups, InputOtpChanged,
+  InputOtps, Inputs, Items, MenubarClosed, MenubarOpened, Menubars, Model,
+  MonacoEditor, MultiselectChanged, Multiselects, NativeSelectChanged,
+  NativeSelects, NavMenuOpenChanged, NavigationBars, NavigationMenus,
+  OnRouteChange, OpenDialog, PaginationChanged, Paginations, PopoverClosed,
+  PopoverOpened, Popovers, Progresses, RadioGroups, RatingChanged, Ratings,
+  ResizableSplitSizesChanged, Resizables, ScrollAreas, SearchQueryChanged,
+  Searches, SelectChanged, Selects, Separators, SheetClosed, SheetOpened, Sheets,
+  SidebarCollapsedToggled, SidebarToggled, Sidebars, SignupConfirmChanged,
+  SignupEmailChanged, SignupNameChanged, SignupPasswordChanged, SignupReset,
+  SignupSubmitted, Skeletons, SliderChanged, Sliders, Spinners, StartedTrial,
+  StepperStepClicked, Steppers, StressBarClicked, StressOffsetChanged,
+  StressZoomChanged, SwitchToggled, Switches, SystemOsDarkChanged, TabChanged,
+  Tables, Tabs, ThemeSelected, ThreatEntityDeselected, ThreatEntitySelected,
+  ThreatFiltersCleared, ThreatGraphPanned, ThreatGraphZoomed, ThreatIntelNetwork,
   ThreatIntelRouteEntered, ThreatLayoutReceived, ThreatMapCountryClicked,
   ThreatNodeHovered, ThreatSearchChanged, ThreatSearchCleared,
   ThreatSeverityFilterChanged, ThreatTablePageChanged, ThreatTableRowSelected,
@@ -126,14 +125,18 @@ fn init(_args) -> #(Model, Effect(Message)) {
       calendar_selected: None,
       calendar_view_year: 2026,
       calendar_view_month: calendar.May,
-      date_picker_selected: None,
-      date_picker_open: False,
-      date_picker_view_year: 2026,
-      date_picker_view_month: calendar.May,
-      date_picker_2_selected: None,
-      date_picker_2_open: False,
-      date_picker_2_view_year: 2026,
-      date_picker_2_view_month: calendar.May,
+      date_picker_1_state: model.DatePickerState(
+        selected_date: calendar.Date(2026, calendar.May, 1),
+        open: False,
+        viewed_year: 2026,
+        viewed_month: calendar.May,
+      ),
+      date_picker_2_state: model.DatePickerState(
+        selected_date: calendar.Date(2026, calendar.May, 1),
+        open: False,
+        viewed_year: 2026,
+        viewed_month: calendar.May,
+      ),
       native_select_value: "apple",
       context_menu_open: False,
       context_menu_x: 0,
@@ -311,8 +314,14 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       Model(
         ..model,
         open_dropdown: None,
-        date_picker_open: False,
-        date_picker_2_open: False,
+        date_picker_1_state: model.DatePickerState(
+          ..model.date_picker_1_state,
+          open: False,
+        ),
+        date_picker_2_state: model.DatePickerState(
+          ..model.date_picker_2_state,
+          open: False,
+        ),
       ),
       effect.none(),
     )
@@ -420,38 +429,96 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       Model(..model, calendar_view_year: year, calendar_view_month: month),
       effect.none(),
     )
-    DatePickerDateSelected(date) -> #(
-      Model(..model, date_picker_selected: Some(date), date_picker_open: False),
-      effect.none(),
-    )
-    DatePickerMonthChanged(year, month) -> #(
-      Model(..model, date_picker_view_year: year, date_picker_view_month: month),
-      effect.none(),
-    )
-    DatePickerOpenChanged(open) -> #(
-      Model(..model, date_picker_open: open),
-      effect.none(),
-    )
-    DatePicker2DateSelected(date) -> #(
-      Model(
-        ..model,
-        date_picker_2_selected: Some(date),
-        date_picker_2_open: False,
-      ),
-      effect.none(),
-    )
-    DatePicker2MonthChanged(year, month) -> #(
-      Model(
-        ..model,
-        date_picker_2_view_year: year,
-        date_picker_2_view_month: month,
-      ),
-      effect.none(),
-    )
-    DatePicker2OpenChanged(open) -> #(
-      Model(..model, date_picker_2_open: open),
-      effect.none(),
-    )
+    DatePicker1Changed(msg) ->
+      case msg {
+        DatePickerDateSelected(date) -> #(
+          Model(
+            ..model,
+            date_picker_1_state: model.DatePickerState(
+              ..model.date_picker_1_state,
+              selected_date: date,
+              open: False,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerMonthChanged(year, month) -> #(
+          Model(
+            ..model,
+            date_picker_1_state: model.DatePickerState(
+              ..model.date_picker_1_state,
+              viewed_year: year,
+              viewed_month: month,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerOpen -> #(
+          Model(
+            ..model,
+            date_picker_1_state: model.DatePickerState(
+              ..model.date_picker_1_state,
+              open: True,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerClose -> #(
+          Model(
+            ..model,
+            date_picker_1_state: model.DatePickerState(
+              ..model.date_picker_1_state,
+              open: False,
+            ),
+          ),
+          effect.none(),
+        )
+      }
+    DatePicker2Changed(msg) ->
+      case msg {
+        DatePickerDateSelected(date) -> #(
+          Model(
+            ..model,
+            date_picker_2_state: model.DatePickerState(
+              ..model.date_picker_2_state,
+              selected_date: date,
+              open: False,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerMonthChanged(year, month) -> #(
+          Model(
+            ..model,
+            date_picker_2_state: model.DatePickerState(
+              ..model.date_picker_2_state,
+              viewed_year: year,
+              viewed_month: month,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerOpen -> #(
+          Model(
+            ..model,
+            date_picker_2_state: model.DatePickerState(
+              ..model.date_picker_2_state,
+              open: True,
+            ),
+          ),
+          effect.none(),
+        )
+        DatePickerClose -> #(
+          Model(
+            ..model,
+            date_picker_2_state: model.DatePickerState(
+              ..model.date_picker_2_state,
+              open: False,
+            ),
+          ),
+          effect.none(),
+        )
+      }
     NativeSelectChanged(val) -> #(
       Model(..model, native_select_value: val),
       effect.none(),

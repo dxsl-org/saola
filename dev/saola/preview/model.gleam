@@ -141,14 +141,8 @@ pub type Model {
     calendar_selected: Option(Date),
     calendar_view_year: Int,
     calendar_view_month: Month,
-    date_picker_selected: Option(Date),
-    date_picker_open: Bool,
-    date_picker_view_year: Int,
-    date_picker_view_month: Month,
-    date_picker_2_selected: Option(Date),
-    date_picker_2_open: Bool,
-    date_picker_2_view_year: Int,
-    date_picker_2_view_month: Month,
+    date_picker_1_state: DatePickerState,
+    date_picker_2_state: DatePickerState,
     // Native select preview state
     native_select_value: String,
     // Context menu preview state
@@ -235,6 +229,15 @@ pub type CarouselState {
   CarouselState(index: Int, has_prev: Bool, has_next: Bool)
 }
 
+pub type DatePickerState {
+  DatePickerState(
+    selected_date: Date,
+    open: Bool,
+    viewed_year: Int,
+    viewed_month: Month,
+  )
+}
+
 pub type Message {
   OnRouteChange(Route)
   // Hold the ID of the Dropdown to be toggled
@@ -276,12 +279,8 @@ pub type Message {
   ToggleItalicChanged(Bool)
   CalendarDateSelected(Date)
   CalendarMonthChanged(Int, Month)
-  DatePickerDateSelected(Date)
-  DatePickerMonthChanged(Int, Month)
-  DatePickerOpenChanged(Bool)
-  DatePicker2DateSelected(Date)
-  DatePicker2MonthChanged(Int, Month)
-  DatePicker2OpenChanged(Bool)
+  DatePicker1Changed(DatePickerMessage)
+  DatePicker2Changed(DatePickerMessage)
   NativeSelectChanged(String)
   ContextMenuOpened(Int, Int)
   ContextMenuClosed
@@ -365,4 +364,11 @@ pub type CarouselMessage {
   CarouselHasChanged(Int, Bool, Bool)
   CarouselNavPrevClicked
   CarouselNavNextClicked
+}
+
+pub type DatePickerMessage {
+  DatePickerDateSelected(Date)
+  DatePickerMonthChanged(Int, Month)
+  DatePickerOpen
+  DatePickerClose
 }
