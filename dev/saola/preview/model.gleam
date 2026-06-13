@@ -171,6 +171,9 @@ pub type Model {
     carousel_index: Int,
     carousel_can_prev: Bool,
     carousel_can_next: Bool,
+    carousel_v_index: Int,
+    carousel_v_can_prev: Bool,
+    carousel_v_can_next: Bool,
     // Combobox preview state
     combobox_value: Option(String),
     combobox_query: String,
@@ -295,7 +298,12 @@ pub type Message {
   DataTableFilterChanged(String)
   DataTablePageChanged(Int)
   DataTableSelectChanged(List(String))
-  CarouselChanged(Int, Bool, Bool)
+  CarouselHChanged(Int, Bool, Bool)
+  CarouselHNavPrev
+  CarouselHNavNext
+  CarouselVChanged(Int, Bool, Bool)
+  CarouselVNavPrev
+  CarouselVNavNext
   ComboboxQueryChanged(String)
   ComboboxSelected(String)
   NavMenuOpenChanged(Option(String))

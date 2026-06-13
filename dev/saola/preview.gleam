@@ -14,6 +14,7 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import modem
 import saola/canvas_command as canvas
+import saola/component/carousel
 import saola/component/combobox as cb
 import saola/component/multi_select as ms
 import saola/component/resizable_split
@@ -30,9 +31,10 @@ import saola/preview/model.{
   AlertDialogCancelled, AlertDialogConfirmed, AlertDialogOpened, AlertDialogs,
   Alerts, AspectRatios, Avatars, Badges, Breadcrumbs, ButtonGroups, Buttons,
   CalendarDateSelected, CalendarMonthChanged, Calendars, CanvasStressTest, Cards,
-  CarouselChanged, Carousels, CloseDialog, CollapsibleToggled, Collapsibles,
-  ComboboxQueryChanged, ComboboxSelected, Comboboxes, CommandNavDown,
-  CommandNavUp, CommandQueryChanged, CommandSelected, Commands,
+  CarouselHChanged, CarouselHNavNext, CarouselHNavPrev, CarouselVChanged,
+  CarouselVNavNext, CarouselVNavPrev, Carousels, CloseDialog, CollapsibleToggled,
+  Collapsibles, ComboboxQueryChanged, ComboboxSelected, Comboboxes,
+  CommandNavDown, CommandNavUp, CommandQueryChanged, CommandSelected, Commands,
   ContextMenuClosed, ContextMenuOpened, ContextMenus, D3Charts, DashDrawerClosed,
   DashPageChanged, DashRowClicked, DashSearchChanged, DataTableFilterChanged,
   DataTablePageChanged, DataTableSelectChanged, DataTableSortChanged, DataTables,
@@ -73,6 +75,7 @@ import saola/preview/view
 import saola/preview/view/sidebar
 
 pub fn main() {
+  let assert Ok(_) = carousel.register()
   let assert Ok(_) = cb.register()
   let assert Ok(_) = ms.register()
   let assert Ok(_) = resizable_split.register()
@@ -144,6 +147,9 @@ fn init(_args) -> #(Model, Effect(Message)) {
       carousel_index: 0,
       carousel_can_prev: False,
       carousel_can_next: True,
+      carousel_v_index: 0,
+      carousel_v_can_prev: False,
+      carousel_v_can_next: True,
       combobox_value: None,
       combobox_query: "",
       nav_menu_open: None,
@@ -519,7 +525,7 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       ),
       effect.none(),
     )
-    CarouselChanged(idx, can_prev, can_next) -> #(
+    CarouselHChanged(idx, can_prev, can_next) -> #(
       Model(
         ..model,
         carousel_index: idx,
@@ -528,6 +534,47 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
       ),
       effect.none(),
     )
+    CarouselHNavPrev ->
+      case model.carousel_can_prev {
+        False -> #(model, effect.none())
+        True -> #(
+          Model(..model, carousel_index: model.carousel_index - 1),
+          effect.none(),
+        )
+      }
+    CarouselHNavNext ->
+      case model.carousel_can_next {
+        False -> #(model, effect.none())
+        True -> #(
+          Model(..model, carousel_index: model.carousel_index + 1),
+          effect.none(),
+        )
+      }
+    CarouselVChanged(idx, can_prev, can_next) -> #(
+      Model(
+        ..model,
+        carousel_v_index: idx,
+        carousel_v_can_prev: can_prev,
+        carousel_v_can_next: can_next,
+      ),
+      effect.none(),
+    )
+    CarouselVNavPrev ->
+      case model.carousel_v_can_prev {
+        False -> #(model, effect.none())
+        True -> #(
+          Model(..model, carousel_v_index: model.carousel_v_index - 1),
+          effect.none(),
+        )
+      }
+    CarouselVNavNext ->
+      case model.carousel_v_can_next {
+        False -> #(model, effect.none())
+        True -> #(
+          Model(..model, carousel_v_index: model.carousel_v_index + 1),
+          effect.none(),
+        )
+      }
     ComboboxQueryChanged(q) -> #(
       Model(..model, combobox_query: q),
       effect.none(),

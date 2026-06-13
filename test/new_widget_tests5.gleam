@@ -4,62 +4,40 @@ import gleam/string
 import lustre/attribute as a
 import lustre/element
 import lustre/element/html as h
-import saola/carousel
+import saola/component/carousel
 import saola/component/combobox as cb
 import saola/navigation_menu
 import saola/toast
 
 // --- carousel ---
 
-pub fn carousel_simple_renders_test() {
+pub fn carousel_renders_tag_test() {
   let slides = [h.div([], [h.text("Slide 1")]), h.div([], [h.text("Slide 2")])]
-  let html =
-    carousel.carousel_simple(slides, 0, fn(i, p, n) { #(i, p, n) })
-    |> element.to_string
+  let html = carousel.element([], slides) |> element.to_string
   assert string.contains(html, "saola-carousel")
 }
 
 pub fn carousel_orientation_attr_test() {
   let html =
-    carousel.carousel(
-      [h.div([], [h.text("S")])],
-      0,
-      False,
-      True,
-      fn(i, p, n) { #(i, p, n) },
-      carousel.CarouselAttrs(
-        orientation: carousel.Vertical,
-        loop: False,
-        class: "",
-      ),
-    )
+    carousel.element([a.attribute("orientation", "vertical")], [
+      h.div([], [h.text("S")]),
+    ])
     |> element.to_string
   assert string.contains(html, "orientation=\"vertical\"")
 }
 
 pub fn carousel_loop_attr_test() {
   let html =
-    carousel.carousel(
-      [h.div([], [h.text("S")])],
-      0,
-      False,
-      True,
-      fn(i, p, n) { #(i, p, n) },
-      carousel.CarouselAttrs(
-        orientation: carousel.Horizontal,
-        loop: True,
-        class: "",
-      ),
-    )
+    carousel.element([a.attribute("loop", "true")], [h.div([], [h.text("S")])])
     |> element.to_string
-  assert string.contains(html, " loop")
+  assert string.contains(html, "loop=\"true\"")
 }
 
-pub fn carousel_horizontal_default_test() {
+pub fn carousel_horizontal_orientation_attr_test() {
   let html =
-    carousel.carousel_simple([h.div([], [h.text("S")])], 0, fn(i, p, n) {
-      #(i, p, n)
-    })
+    carousel.element([a.attribute("orientation", "horizontal")], [
+      h.div([], [h.text("S")]),
+    ])
     |> element.to_string
   assert string.contains(html, "orientation=\"horizontal\"")
 }
