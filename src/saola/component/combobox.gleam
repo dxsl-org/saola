@@ -475,7 +475,7 @@ fn render_popover(
     None -> None
     Some(i) -> iv.get(model.filtered_choices, i) |> option.from_result
   }
-  h.div([a.attribute("data-popover", ""), a.style("width", "12rem")], [
+  h.div([a.data("popover", ""), a.style("width", "12rem")], [
     h.header([], [
       ls.search([]),
       h.input([
@@ -483,7 +483,7 @@ fn render_popover(
         a.value(model.filter_text),
         a.placeholder("Search..."),
         a.autocomplete("off"),
-        a.attribute("autocorrect", "off"),
+        a.autocorrect(False),
         a.spellcheck(False),
         a.aria_autocomplete("list"),
         a.role("combobox"),
@@ -500,7 +500,7 @@ fn render_popover(
         a.id(listbox_id),
         a.aria_orientation("vertical"),
         a.aria_labelledby(trigger_id),
-        a.attribute("data-empty", "No results."),
+        a.data("empty", "No results."),
       ],
       render_options(model),
     ),
@@ -520,7 +520,7 @@ fn render_options(model: Model) -> List(#(String, Element(Message))) {
       h.div(
         [
           a.role("option"),
-          a.attribute("data-value", item.value),
+          a.data("value", item.value),
           a.aria_selected(is_selected),
           case is_focused {
             True -> a.class("active")

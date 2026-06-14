@@ -31,11 +31,8 @@ pub fn collapsible(
       [
         a.type_("button"),
         a.class("collapsible-trigger"),
-        a.attribute("aria-expanded", case open {
-          True -> "true"
-          False -> "false"
-        }),
-        a.attribute("aria-controls", id),
+        a.aria_expanded(open),
+        a.aria_controls(id),
         case attrs.disabled {
           True -> a.disabled(True)
           False -> a.none()
@@ -48,9 +45,9 @@ pub fn collapsible(
       [
         a.class("collapsible-content"),
         a.id(id),
-        a.attribute("aria-hidden", case open {
-          True -> "false"
-          False -> "true"
+        a.aria_hidden(case open {
+          True -> False
+          False -> True
         }),
       ],
       [content],

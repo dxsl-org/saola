@@ -57,7 +57,7 @@ pub fn dialog(
     |> result.map(typeid.to_string)
     |> result.unwrap("dlg-title")
   let open_attr = case is_open {
-    True -> a.attribute("open", "")
+    True -> a.open(True)
     False -> a.none()
   }
   let labelledby_attr = case title {

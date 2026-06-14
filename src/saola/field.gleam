@@ -46,12 +46,12 @@ pub fn field(attrs: FieldAttrs, input: Element(msg)) -> Element(msg) {
     [
       a.class(class_field),
       case is_invalid {
-        True -> a.attribute("data-invalid", "true")
+        True -> a.data("invalid", "true")
         False -> a.none()
       },
       case orientation {
         Vertical -> a.none()
-        Horizontal -> a.attribute("data-orientation", "horizontal")
+        Horizontal -> a.data("orientation", "horizontal")
       },
     ],
     [
@@ -65,7 +65,7 @@ pub fn field(attrs: FieldAttrs, input: Element(msg)) -> Element(msg) {
                 h.span(
                   [
                     a.class("field-required"),
-                    a.attribute("aria-hidden", "true"),
+                    a.aria_hidden(True),
                   ],
                   [h.text(" *")],
                 )

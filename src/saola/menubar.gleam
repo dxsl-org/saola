@@ -48,11 +48,8 @@ pub fn menubar(
               [
                 a.type_("button"),
                 a.class("menubar-trigger"),
-                a.attribute("aria-haspopup", "menu"),
-                a.attribute("aria-expanded", case is_open {
-                  True -> "true"
-                  False -> "false"
-                }),
+                a.aria_haspopup("menu"),
+                a.aria_expanded(is_open),
                 e.on_click(case is_open {
                   True -> on_close()
                   False -> on_open(label)
@@ -76,7 +73,7 @@ pub fn menubar(
                         h.div(
                           [
                             a.class("dropdown-item"),
-                            a.attribute("aria-disabled", "true"),
+                            a.aria_disabled(True),
                           ],
                           [h.text(l)],
                         )

@@ -24,7 +24,7 @@ pub fn breadcrumb(
     c -> a.class(c)
   }
   let item_count = list.length(items)
-  h.nav([a.attribute("aria-label", "Breadcrumb"), extra_class], [
+  h.nav([a.aria_label("Breadcrumb"), extra_class], [
     h.ol(
       [a.class("breadcrumb")],
       list.index_map(items, fn(item, idx) {
@@ -36,7 +36,7 @@ pub fn breadcrumb(
             h.span(
               [
                 a.class("breadcrumb-page"),
-                a.attribute("aria-current", "page"),
+                a.aria_current("page"),
               ],
               [h.text(label)],
             )
@@ -50,7 +50,7 @@ pub fn breadcrumb(
               h.span(
                 [
                   a.class("breadcrumb-separator"),
-                  a.attribute("aria-hidden", "true"),
+                  a.aria_hidden(True),
                 ],
                 [h.text(attrs.separator)],
               ),

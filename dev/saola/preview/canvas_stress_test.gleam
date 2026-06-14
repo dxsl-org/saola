@@ -107,8 +107,8 @@ pub fn view(model: Model) -> Element(Message) {
         ),
         h.input([
           a.type_("range"),
-          a.attribute("min", "0"),
-          a.attribute("max", int.to_string(int.max(0, max_offset))),
+          a.min("0"),
+          a.max(int.to_string(int.max(0, max_offset))),
           a.value(int.to_string(offset)),
           e.on_input(fn(v) { StressOffsetChanged(parse_int(v, 0)) }),
           a.class("w-64"),
@@ -118,8 +118,8 @@ pub fn view(model: Model) -> Element(Message) {
         text("Bars in view: " <> int.to_string(model.stress_zoom)),
         h.input([
           a.type_("range"),
-          a.attribute("min", "10"),
-          a.attribute("max", "500"),
+          a.min("10"),
+          a.max("500"),
           a.value(int.to_string(model.stress_zoom)),
           e.on_input(fn(v) { StressZoomChanged(parse_int(v, 50)) }),
           a.class("w-48"),

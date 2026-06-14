@@ -53,7 +53,7 @@ fn render_item(
           [
             a.type_("button"),
             a.class(cls),
-            a.attribute("role", "option"),
+            a.role("option"),
             e.on_click(on_select),
           ],
           [h.span([], [h.text(label)])],
@@ -72,7 +72,7 @@ fn render_item(
           [
             a.type_("button"),
             a.class(cls),
-            a.attribute("role", "option"),
+            a.role("option"),
             e.on_click(on_select),
           ],
           [
@@ -87,17 +87,14 @@ fn render_item(
       h.div(
         [
           a.class("command-item command-item-disabled"),
-          a.attribute("aria-disabled", "true"),
+          a.aria_disabled(True),
         ],
         [h.text(label)],
       ),
       idx + 1,
     )
     CommandSeparator -> #(
-      h.div(
-        [a.class("command-separator"), a.attribute("role", "separator")],
-        [],
-      ),
+      h.div([a.class("command-separator"), a.role("separator")], []),
       idx,
     )
     CommandGroup(group_label, sub_items) -> {
@@ -172,8 +169,8 @@ pub fn command(
   h.div(
     [
       a.class("command"),
-      a.attribute("role", "combobox"),
-      a.attribute("aria-expanded", "true"),
+      a.role("combobox"),
+      a.aria_expanded(True),
       extra_class,
     ],
     [
@@ -183,7 +180,7 @@ pub fn command(
           a.class("command-input"),
           a.value(query),
           a.placeholder(attrs.placeholder),
-          a.attribute("aria-autocomplete", "list"),
+          a.aria_autocomplete("list"),
           e.on_input(on_query_change),
           e.on(
             "keydown",
@@ -198,15 +195,11 @@ pub fn command(
           )
             |> e.prevent_default,
         ]),
-        h.span(
-          [a.class("command-input-icon"), a.attribute("aria-hidden", "true")],
-          [h.text("⌕")],
-        ),
+        h.span([a.class("command-input-icon"), a.aria_hidden(True)], [
+          h.text("⌕"),
+        ]),
       ]),
-      h.div(
-        [a.class("command-list"), a.attribute("role", "listbox")],
-        list_content,
-      ),
+      h.div([a.class("command-list"), a.role("listbox")], list_content),
     ],
   )
 }

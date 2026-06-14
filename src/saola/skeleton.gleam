@@ -23,10 +23,10 @@ pub fn skeleton(class: String) -> Element(msg) {
       a.class("skeleton"),
       extra_class,
       a.role("status"),
-      a.attribute("aria-busy", "true"),
-      a.attribute("aria-live", "polite"),
+      a.aria_busy(True),
+      a.aria_live("polite"),
     ],
-    [h.span([a.attribute("aria-hidden", "true")], [])],
+    [h.span([a.aria_hidden(True)], [])],
   )
 }
 

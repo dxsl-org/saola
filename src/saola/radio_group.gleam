@@ -100,7 +100,7 @@ pub fn radio_group(
     |> result.map(typeid.to_string)
     |> result.unwrap("radio-group")
   let orientation_attr = case attrs.orientation {
-    Horizontal -> a.attribute("data-orientation", "horizontal")
+    Horizontal -> a.data("orientation", "horizontal")
     Vertical -> a.none()
   }
   let extra_class = case attrs.class {

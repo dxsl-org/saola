@@ -49,8 +49,8 @@ pub fn drawer(
           [
             a.class(full_class),
             a.role("dialog"),
-            a.attribute("aria-modal", "true"),
-            a.attribute("aria-labelledby", "drawer-title"),
+            a.aria_modal(True),
+            a.aria_labelledby("drawer-title"),
           ],
           [
             case show_handle {

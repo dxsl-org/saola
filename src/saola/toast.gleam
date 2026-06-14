@@ -69,7 +69,7 @@ fn render_action(action: Option(ToastAction(msg))) -> Element(msg) {
         [
           a.type_("button"),
           a.class("btn-sm"),
-          a.attribute("data-toast-action", ""),
+          a.data("toast-action", ""),
           e.on_click(act.on_click),
         ],
         [h.text(act.label)],
@@ -95,7 +95,7 @@ fn render_toast(
         a.type_("button"),
         a.class("btn-sm-icon-outline"),
         a.aria_label("Dismiss"),
-        a.attribute("data-toast-cancel", ""),
+        a.data("toast-cancel", ""),
         e.on_click(on_dismiss(toast.id)),
       ],
       [lx.x([])],

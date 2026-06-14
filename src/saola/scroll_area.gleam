@@ -18,13 +18,13 @@ pub fn scroll_area(
       extra_class,
       a.style("height", height),
       a.style("width", width),
-      a.attribute("data-radix-scroll-area-root", ""),
+      a.data("radix-scroll-area-root", ""),
     ],
     [
       h.div(
         [
           a.class("scroll-area-viewport"),
-          a.attribute("tabindex", "0"),
+          a.tabindex(0),
         ],
         [content],
       ),

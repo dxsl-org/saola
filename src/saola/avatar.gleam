@@ -43,7 +43,7 @@ pub fn avatar(
     ImageSrc(src:, alt:) ->
       h.img([a.class("avatar-image"), a.src(src), a.alt(alt)])
     Initials(text:) ->
-      h.span([a.class("avatar-fallback"), a.attribute("aria-hidden", "true")], [
+      h.span([a.class("avatar-fallback"), a.aria_hidden(True)], [
         h.text(text),
       ])
   }

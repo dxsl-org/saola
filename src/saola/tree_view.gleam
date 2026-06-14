@@ -72,7 +72,7 @@ fn render_node(
       h.span(
         [
           a.class("tree-node-expand"),
-          a.attribute("aria-hidden", "true"),
+          a.aria_hidden(True),
         ],
         [
           h.text(case is_open {
@@ -86,10 +86,7 @@ fn render_node(
     True -> [
       a.class("tree-node-row"),
       a.style("padding-left", calc_indent(depth)),
-      a.attribute("aria-expanded", case is_open {
-        True -> "true"
-        False -> "false"
-      }),
+      a.aria_expanded(is_open),
       e.on_click(on_toggle(item.id)),
     ]
     False -> [

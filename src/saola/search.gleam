@@ -45,7 +45,7 @@ pub fn search(
         [
           a.type_("button"),
           a.class("btn-icon btn-ghost search-clear"),
-          a.attribute("aria-label", "Clear search"),
+          a.aria_label("Clear search"),
           e.on_click(msg),
         ],
         [h.text("✕")],

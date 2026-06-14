@@ -19,10 +19,10 @@ pub fn popover(
   class: String,
 ) -> Element(msg) {
   let side_attr = case side {
-    Top -> a.attribute("data-side", "top")
-    Bottom -> a.attribute("data-side", "bottom")
-    Left -> a.attribute("data-side", "left")
-    Right -> a.attribute("data-side", "right")
+    Top -> a.data("side", "top")
+    Bottom -> a.data("side", "bottom")
+    Left -> a.data("side", "left")
+    Right -> a.data("side", "right")
   }
   let extra_class = case class {
     "" -> a.none()
@@ -37,8 +37,8 @@ pub fn popover(
           [
             a.class("popover"),
             side_attr,
-            a.attribute("data-popover", ""),
-            a.attribute("role", "dialog"),
+            a.data("popover", ""),
+            a.role("dialog"),
           ],
           [
             content,
@@ -46,7 +46,7 @@ pub fn popover(
               [
                 a.type_("button"),
                 a.class("popover-close"),
-                a.attribute("aria-label", "Close"),
+                a.aria_label("Close"),
                 e.on_click(on_close()),
               ],
               [h.text("×")],

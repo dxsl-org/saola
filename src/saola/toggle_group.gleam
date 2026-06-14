@@ -43,11 +43,11 @@ pub fn toggle_group(
         [
           a.type_("button"),
           a.class("btn btn-ghost"),
-          a.attribute("aria-pressed", case is_pressed {
+          a.aria_pressed(case is_pressed {
             True -> "true"
             False -> "false"
           }),
-          a.attribute("data-value", value),
+          a.data("value", value),
           case is_disabled {
             True -> a.disabled(True)
             False -> a.none()

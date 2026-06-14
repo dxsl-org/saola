@@ -88,11 +88,8 @@ pub fn date_picker(
           True -> a.disabled(True)
           False -> a.none()
         },
-        a.attribute("aria-haspopup", "dialog"),
-        a.attribute("aria-expanded", case open {
-          True -> "true"
-          False -> "false"
-        }),
+        a.aria_haspopup("dialog"),
+        a.aria_expanded(open),
         e.on_click(on_open_change(!open)),
       ],
       [

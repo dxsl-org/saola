@@ -59,7 +59,7 @@ pub fn time_picker(
       h.select(
         [
           a.class("select time-picker-select"),
-          a.attribute("aria-label", "Hour"),
+          a.aria_label("Hour"),
           case attrs.disabled {
             True -> a.disabled(True)
             False -> a.none()
@@ -92,7 +92,7 @@ pub fn time_picker(
       h.select(
         [
           a.class("select time-picker-select"),
-          a.attribute("aria-label", "Minute"),
+          a.aria_label("Minute"),
           case attrs.disabled {
             True -> a.disabled(True)
             False -> a.none()
@@ -131,7 +131,7 @@ pub fn time_picker(
           h.select(
             [
               a.class("select time-picker-select"),
-              a.attribute("aria-label", "Second"),
+              a.aria_label("Second"),
               case attrs.disabled {
                 True -> a.disabled(True)
                 False -> a.none()

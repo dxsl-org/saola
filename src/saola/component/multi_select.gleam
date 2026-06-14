@@ -331,7 +331,7 @@ fn render_popover(
   trigger_id: String,
   listbox_id: String,
 ) -> Element(Message) {
-  h.div([a.attribute("data-popover", "")], [
+  h.div([a.data("popover", "")], [
     h.div(
       [
         a.role("listbox"),
@@ -351,7 +351,7 @@ fn render_options(model: Model) -> List(Element(Message)) {
     h.div(
       [
         a.role("option"),
-        a.attribute("data-value", item.value),
+        a.data("value", item.value),
         a.aria_selected(item.selected),
         case is_focused {
           True -> a.class("active")

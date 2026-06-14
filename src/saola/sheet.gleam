@@ -39,14 +39,14 @@ pub fn sheet(
       h.div(
         [
           a.class("dialog-overlay"),
-          a.attribute("aria-modal", "true"),
+          a.aria_modal(True),
         ],
         [
           h.div(
             [
               a.class(full_class),
               a.role("dialog"),
-              a.attribute("aria-labelledby", "sheet-title"),
+              a.aria_labelledby("sheet-title"),
             ],
             [
               h.div([a.class("sheet-header")], [
@@ -57,7 +57,7 @@ pub fn sheet(
                   [
                     a.type_("button"),
                     a.class("btn btn-ghost btn-sm"),
-                    a.attribute("aria-label", "Close"),
+                    a.aria_label("Close"),
                     e.on_click(on_close()),
                   ],
                   [h.text("×")],

@@ -9,5 +9,5 @@ pub fn separator() -> Element(msg) {
 
 /// A vertical rule. Use inside flex rows.
 pub fn separator_vertical() -> Element(msg) {
-  h.hr([a.role("separator"), a.attribute("aria-orientation", "vertical")])
+  h.hr([a.role("separator"), a.aria_orientation("vertical")])
 }

@@ -44,7 +44,7 @@ pub fn stepper(
   let indexed = list.index_map(steps, fn(step, idx) { #(idx, step) })
   let total = list.length(steps)
   h.ol(
-    [a.class(root_class), a.attribute("aria-label", "Progress")],
+    [a.class(root_class), a.aria_label("Progress")],
     list.map(indexed, fn(pair) {
       let #(idx, step) = pair
       let status = case step.status {
@@ -82,7 +82,7 @@ pub fn stepper(
           [
             a.type_("button"),
             a.class("stepper-trigger"),
-            a.attribute("aria-current", case status {
+            a.aria_current(case status {
               Active -> "step"
               _ -> "false"
             }),

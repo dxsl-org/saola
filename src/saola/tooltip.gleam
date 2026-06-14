@@ -16,12 +16,12 @@ pub type TooltipSide {
 /// h.button([tooltip.attr("Save file"), e.on_click(Save)], [text("Save")])
 /// ```
 pub fn attr(text: String) -> Attribute(msg) {
-  a.attribute("data-tooltip", text)
+  a.data("tooltip", text)
 }
 
 /// Add a tooltip with explicit positioning.
 pub fn side_attr(side: TooltipSide) -> Attribute(msg) {
-  a.attribute("data-side", case side {
+  a.data("side", case side {
     Top -> "top"
     Bottom -> "bottom"
     Left -> "left"
@@ -32,7 +32,7 @@ pub fn side_attr(side: TooltipSide) -> Attribute(msg) {
 /// Wrap a child element in a span with a tooltip.
 /// Use this when you cannot add attributes directly to the child element.
 pub fn tooltip(text: String, child: Element(msg)) -> Element(msg) {
-  h.span([a.attribute("data-tooltip", text)], [child])
+  h.span([a.data("tooltip", text)], [child])
 }
 
 /// Wrap with explicit tooltip side.
@@ -43,8 +43,8 @@ pub fn tooltip_side(
 ) -> Element(msg) {
   h.span(
     [
-      a.attribute("data-tooltip", text),
-      a.attribute("data-side", case side {
+      a.data("tooltip", text),
+      a.data("side", case side {
         Top -> "top"
         Bottom -> "bottom"
         Left -> "left"

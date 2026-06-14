@@ -109,8 +109,8 @@ pub fn view(model: Model) -> Element(Message) {
         text("Cell size: " <> int.to_string(cell_px) <> " px"),
         h.input([
           a.type_("range"),
-          a.attribute("min", "2"),
-          a.attribute("max", "14"),
+          a.min("2"),
+          a.max("14"),
           a.value(int.to_string(cell_px)),
           e.on_input(fn(v) { HeatmapCellPxChanged(parse_int(v, 6)) }),
           a.class("w-32"),

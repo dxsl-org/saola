@@ -96,7 +96,7 @@ pub fn sidebar_menu_item(
       case attrs.badge {
         "" -> h.text("")
         b ->
-          h.span([a.class("sidebar-menu-badge"), a.attribute("aria-label", b)], [
+          h.span([a.class("sidebar-menu-badge"), a.aria_label(b)], [
             h.text(b),
           ])
       },
@@ -109,7 +109,7 @@ pub fn sidebar_trigger(on_click: msg) -> Element(msg) {
     [
       a.type_("button"),
       a.class("sidebar-trigger"),
-      a.attribute("aria-label", "Toggle sidebar"),
+      a.aria_label("Toggle sidebar"),
       e.on_click(on_click),
     ],
     [h.text("☰")],
@@ -150,7 +150,7 @@ pub fn sidebar(
   let full_class =
     "sidebar " <> side_class <> variant_class <> collapsible_class <> open_class
   h.aside(
-    [a.class(full_class), a.attribute("aria-label", "Sidebar"), extra_class],
+    [a.class(full_class), a.aria_label("Sidebar"), extra_class],
     list.flatten([
       [
         case header {

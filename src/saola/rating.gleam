@@ -38,13 +38,12 @@ pub fn rating(
         [
           a.class(root_class <> " rating-readonly"),
           a.role("img"),
-          a.attribute(
-            "aria-label",
+          a.aria_label(
             attrs.aria_label
-              <> ": "
-              <> int.to_string(value)
-              <> " out of "
-              <> int.to_string(attrs.max),
+            <> ": "
+            <> int.to_string(value)
+            <> " out of "
+            <> int.to_string(attrs.max),
           ),
         ],
         list.map(stars, fn(n) {
@@ -54,7 +53,7 @@ pub fn rating(
                 True -> "rating-star rating-star-filled"
                 False -> "rating-star"
               }),
-              a.attribute("aria-hidden", "true"),
+              a.aria_hidden(True),
             ],
             [h.text("★")],
           )
@@ -65,7 +64,7 @@ pub fn rating(
         [
           a.class(root_class),
           a.role("group"),
-          a.attribute("aria-label", attrs.aria_label),
+          a.aria_label(attrs.aria_label),
         ],
         list.map(stars, fn(n) {
           let cb = case on_change {
@@ -79,8 +78,7 @@ pub fn rating(
                 True -> "rating-star rating-star-filled"
                 False -> "rating-star"
               }),
-              a.attribute(
-                "aria-label",
+              a.aria_label(
                 int.to_string(n) <> " out of " <> int.to_string(attrs.max),
               ),
               cb,

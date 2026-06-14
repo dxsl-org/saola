@@ -22,7 +22,7 @@ pub fn spinner(size: SpinnerSize, class: String) -> Element(msg) {
     [
       a.class(full_class),
       a.role("status"),
-      a.attribute("aria-label", "Loading"),
+      a.aria_label("Loading"),
     ],
     [],
   )

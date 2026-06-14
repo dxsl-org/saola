@@ -85,7 +85,7 @@ pub fn select(
         False -> a.none()
       },
       case aria_invalid {
-        True -> a.attribute("aria-invalid", "true")
+        True -> a.aria_invalid("true")
         False -> a.none()
       },
       e.on_input(on_change),

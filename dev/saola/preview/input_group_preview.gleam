@@ -39,13 +39,13 @@ pub fn view() -> Element(Message) {
       h.div([a.class("grid gap-4")], [
         h.h2([], [text("Prefix icon")]),
         input_group.input_group_simple(
-          Some(h.span([a.attribute("aria-hidden", "true")], [text("$")])),
+          Some(h.span([a.aria_hidden(True)], [text("$")])),
           h.input([
             a.type_("number"),
             a.class("input input-group-control"),
             a.placeholder("0.00"),
           ]),
-          Some(h.span([a.attribute("aria-hidden", "true")], [text("USD")])),
+          Some(h.span([a.aria_hidden(True)], [text("USD")])),
         ),
       ]),
       h.div([a.class("grid gap-4")], [

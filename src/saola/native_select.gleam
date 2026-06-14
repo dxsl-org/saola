@@ -67,7 +67,7 @@ pub fn native_select(
       ],
       list.map(options, fn(o) { render_option(o, value) }),
     ),
-    h.span([a.class("native-select-icon"), a.attribute("aria-hidden", "true")], [
+    h.span([a.class("native-select-icon"), a.aria_hidden(True)], [
       h.text("▾"),
     ]),
   ])

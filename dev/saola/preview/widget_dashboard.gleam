@@ -196,7 +196,7 @@ fn employee_table(
             h.td(
               [
                 a.class("px-4 py-8 text-center text-muted-foreground"),
-                a.attribute("colspan", "3"),
+                a.colspan(3),
               ],
               [text("No employees match the search.")],
             ),

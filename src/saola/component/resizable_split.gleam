@@ -354,7 +354,7 @@ fn view(model: Model) -> Element(Message) {
                 a.style("justify-content", "center"),
                 a.style("background-color", "var(--color-border, #dee2e6)"),
                 a.style("transition", "background-color 0.15s"),
-                a.attribute("data-handle-index", int.to_string(i)),
+                a.data("handle-index", int.to_string(i)),
                 a.attribute("part", "handle"),
                 ev.on("pointerdown", pointerdown_decoder(model.direction, i)),
               ],

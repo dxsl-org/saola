@@ -29,10 +29,10 @@ pub fn alert_dialog(
       h.div(
         [
           a.class("dialog-overlay"),
-          a.attribute("aria-modal", "true"),
+          a.aria_modal(True),
           a.role("alertdialog"),
-          a.attribute("aria-labelledby", "alert-dialog-title"),
-          a.attribute("aria-describedby", "alert-dialog-desc"),
+          a.aria_labelledby("alert-dialog-title"),
+          a.aria_describedby("alert-dialog-desc"),
         ],
         [
           h.div([a.class("dialog"), extra_class], [

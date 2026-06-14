@@ -70,7 +70,7 @@ pub fn nav_bar_link(
         False -> "nav-bar-link"
       }),
       case is_active {
-        True -> a.attribute("aria-current", "page")
+        True -> a.aria_current("page")
         False -> a.none()
       },
     ],

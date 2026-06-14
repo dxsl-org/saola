@@ -68,7 +68,7 @@ fn render_item(
       let panel = case is_open {
         False -> element.none()
         True ->
-          h.div([a.class("nav-menu-content"), a.attribute("role", "menu")], [
+          h.div([a.class("nav-menu-content"), a.role("menu")], [
             render_content(content),
           ])
       }
@@ -77,11 +77,8 @@ fn render_item(
           [
             a.type_("button"),
             a.class("nav-menu-trigger"),
-            a.attribute("aria-expanded", case is_open {
-              True -> "true"
-              False -> "false"
-            }),
-            a.attribute("aria-haspopup", "true"),
+            a.aria_expanded(is_open),
+            a.aria_haspopup("true"),
             e.on_click(on_open_change(next_open)),
           ],
           [
@@ -105,7 +102,7 @@ pub fn navigation_menu(
     "" -> a.none()
     c -> a.class(c)
   }
-  h.nav([a.class("nav-menu"), a.attribute("aria-label", "Main"), extra_class], [
+  h.nav([a.class("nav-menu"), a.aria_label("Main"), extra_class], [
     h.ul(
       [a.class("nav-menu-list")],
       list.map(items, fn(i) { render_item(i, open_id, on_open_change) }),

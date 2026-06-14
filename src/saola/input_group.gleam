@@ -20,7 +20,7 @@ pub fn input_group(
     c -> a.class(c)
   }
   let invalid_attr = case attrs.invalid {
-    True -> a.attribute("aria-invalid", "true")
+    True -> a.aria_invalid("true")
     False -> a.none()
   }
   h.div([a.role("group"), a.class("input-group"), extra_class, invalid_attr], [

@@ -25,10 +25,10 @@ pub fn hover_card(
   attrs: HoverCardAttrs,
 ) -> Element(msg) {
   let side_attr = case attrs.side {
-    Top -> a.attribute("data-side", "top")
-    Bottom -> a.attribute("data-side", "bottom")
-    Left -> a.attribute("data-side", "left")
-    Right -> a.attribute("data-side", "right")
+    Top -> a.data("side", "top")
+    Bottom -> a.data("side", "bottom")
+    Left -> a.data("side", "left")
+    Right -> a.data("side", "right")
   }
   let extra_class = case attrs.class {
     "" -> a.none()

@@ -56,10 +56,10 @@ pub fn input_otp(
         a.class("input input-otp-slot"),
         a.id("otp-slot-" <> int.to_string(idx)),
         a.value(slot_val),
-        a.attribute("maxlength", "1"),
-        a.attribute("inputmode", "numeric"),
-        a.attribute("autocomplete", "one-time-code"),
-        a.attribute("aria-label", "Digit " <> int.to_string(idx + 1)),
+        a.maxlength(1),
+        a.inputmode("numeric"),
+        a.autocomplete("one-time-code"),
+        a.aria_label("Digit " <> int.to_string(idx + 1)),
         case attrs.disabled {
           True -> a.disabled(True)
           False -> a.none()
@@ -76,7 +76,7 @@ pub fn input_otp(
     [
       a.class("input-otp"),
       extra_class,
-      a.attribute("aria-label", "One-time password"),
+      a.aria_label("One-time password"),
     ],
     slots,
   )

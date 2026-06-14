@@ -52,7 +52,7 @@ pub fn toggle(
     [
       a.type_("button"),
       a.class(full_class),
-      a.attribute("aria-pressed", case pressed {
+      a.aria_pressed(case pressed {
         True -> "true"
         False -> "false"
       }),
