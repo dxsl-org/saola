@@ -1,4 +1,4 @@
-name: test
+name: build-test-deploy
 
 on:
   push:
@@ -8,7 +8,41 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: erlef/setup-beam@v1.24.0
+        with:
+          otp-version: "28"
+          gleam-version: "1.16.0"
+          rebar3-version: "3"
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            build
+          key: ${{ runner.os }}-bun-gleam-${{ hashFiles('bun.lock', 'gleam.toml') }}
+          restore-keys: ${{ runner.os }}-bun-gleam-
+      - run: bun install
+      - run: gleam deps download
+      - run: bun run vite build --base /saola/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -18,9 +52,32 @@ jobs:
           otp-version: "28"
           gleam-version: "1.16.0"
           rebar3-version: "3"
-          # elixir-version: "1"
       - uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            build
+          key: ${{ runner.os }}-bun-gleam-${{ hashFiles('bun.lock', 'gleam.toml') }}
+          restore-keys: ${{ runner.os }}-bun-gleam-
       - run: bun install
       - run: gleam deps download
       - run: gleam test
       - run: gleam format --check src test dev
+
+  deploy-preview:
+    needs: [build, test]
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v5.0.0
+        id: deployment
