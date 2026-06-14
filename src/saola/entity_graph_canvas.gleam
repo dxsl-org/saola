@@ -109,7 +109,6 @@ pub fn entity_graph_element(
   on_drag: fn(Float, Float) -> msg,
   on_zoom: fn(Float) -> msg,
 ) -> Element(msg) {
-  ensure_canvas_registered()
   element.element(
     "saola-canvas",
     [
@@ -122,9 +121,6 @@ pub fn entity_graph_element(
     [],
   )
 }
-
-@external(javascript, "./canvas.ffi.mjs", "ensure_registered")
-fn ensure_canvas_registered() -> Nil
 
 fn decode_xy(
   key_x: String,
