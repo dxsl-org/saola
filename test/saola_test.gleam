@@ -2,7 +2,7 @@ import form_example
 import gleam/string
 import gleeunit
 import lustre/element
-import saola/d3_bar_chart
+import saola/component/d3_bar_chart
 import saola/lustre_bar_chart
 import saola/monaco_editor
 import small_site_example

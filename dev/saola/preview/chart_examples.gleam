@@ -4,7 +4,7 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import saola/card
 import saola/code_editor
-import saola/d3_bar_chart
+import saola/component/d3_bar_chart
 import saola/lustre_bar_chart
 import saola/monaco_editor
 import saola/preview/model.{type Message}

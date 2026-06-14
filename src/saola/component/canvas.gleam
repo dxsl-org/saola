@@ -41,7 +41,6 @@ import lustre/attribute.{type Attribute} as a
 import lustre/component
 import lustre/effect.{type Effect}
 import lustre/element.{type Element}
-import lustre/element/html as h
 import lustre/event as ev
 
 // ---------------------------------------------------------------------------
@@ -434,8 +433,16 @@ fn update(model: Model, message: Message) -> #(Model, Effect(Message)) {
 }
 
 fn view(_: Model) -> Element(Message) {
-  h.div([], [])
+  // Custom elements default to display:inline; :host overrides to block so
+  // host.clientWidth/clientHeight read the parent's dimensions for canvas sizing.
+  element.element("style", [], [element.text(shadow_css)])
 }
+
+// shadow_css must live here (not in the FFI) because Lustre components use
+// Shadow DOM — global stylesheets don't reach inside the shadow boundary.
+const shadow_css = "
+  :host { display: block; width: 100%; height: 100%; }
+"
 
 /// Measure the width of text when rendered in the given font.
 pub fn measure_text(font: String, text: String) -> Float {
