@@ -9,10 +9,10 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event as e
 import saola/badge
+import saola/component/entity_graph_3d
 import saola/component/multi_select
 import saola/data_table
 import saola/empty
-import saola/entity_graph_3d
 import saola/entity_graph_canvas as egc
 import saola/preview/model.{
   type Message, type Model, ThreatEntitySelected, ThreatFiltersCleared,

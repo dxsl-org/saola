@@ -205,6 +205,9 @@ fn view(_: Model) -> Element(Message) {
   ])
 }
 
+// Custom elements default to display:inline; shadow_css overrides that via
+// :host and sets up the scroll-snap viewport entirely inside the shadow DOM
+// so the styles are scoped and never leak to the surrounding document.
 const shadow_css = "
   :host { display: block; position: relative; width: 100%; height: 100%; }
   :host > div { height: 100%; }
