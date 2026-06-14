@@ -1,6 +1,6 @@
 import gleam/list
 import gleam/option
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/entity_graph_canvas.{
   type GraphEdge, type GraphNode, EntityGraphCanvasAttrs, GraphEdge, GraphNode,
   default_entity_graph_canvas_attrs, entity_graph_canvas,

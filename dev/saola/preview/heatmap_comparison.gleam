@@ -8,7 +8,7 @@ import lustre/element/html as h
 import lustre/event as e
 import saola/badge
 import saola/button
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/lustre_heatmap
 import saola/preview/model.{
   type Message, type Model, HeatmapCanvasCellClicked, HeatmapCanvasHoverLeft,
@@ -185,17 +185,19 @@ pub fn view(model: Model) -> Element(Message) {
         [
           h.div([a.attribute("style", "position:relative; overflow:auto;")], [
             h.div([a.attribute("style", canvas_style)], [
-              canvas.canvas_element_interactive(
+              canvas.element(
+                [
+                  canvas.on_tap(on_canvas_click),
+                  canvas.on_hover(HeatmapCanvasHovered),
+                  canvas.on_leave(HeatmapCanvasHoverLeft),
+                  canvas.on_mouse_down(on_paint_start),
+                  canvas.on_mouse_up(HeatmapPaintEnded),
+                ],
                 lustre_heatmap.heatmap_canvas(
                   data,
                   attrs,
                   model.heatmap_painted,
                 ),
-                on_canvas_click,
-                HeatmapCanvasHovered,
-                HeatmapCanvasHoverLeft,
-                on_paint_start,
-                HeatmapPaintEnded,
               ),
             ]),
             hover_tooltip(model.heatmap_canvas_hover),

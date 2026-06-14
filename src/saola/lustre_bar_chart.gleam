@@ -5,7 +5,7 @@ import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/element/svg
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/lustre_bar_chart_helpers as chart
 
 pub type ChartPoint {

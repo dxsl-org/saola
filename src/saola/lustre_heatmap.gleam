@@ -7,7 +7,7 @@ import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/svg
 import lustre/event as e
-import saola/canvas_command as canvas
+import saola/component/canvas
 
 // ---------------------------------------------------------------------------
 // Public types

@@ -1,6 +1,6 @@
 import gleam/list
 import gleam/option
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/lustre_bar_chart.{
   BarChartAttrs, ChartPoint, bar_chart_canvas, default_bar_chart_attrs,
 }

@@ -7,7 +7,7 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import lustre/event as e
 import saola/badge
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/lustre_bar_chart
 import saola/preview/model.{
   type Message, type Model, StressBarClicked, StressOffsetChanged,
@@ -127,7 +127,7 @@ pub fn view(model: Model) -> Element(Message) {
       ]),
     ]),
     // ---- Chart --------------------------------------------------------------
-    canvas.canvas_element(output, fn(_, _) { StressBarClicked("") }),
+    canvas.element([canvas.on_tap(fn(_, _) { StressBarClicked("") })], output),
     // ---- Selection info -----------------------------------------------------
     selected_info(model.stress_selected),
     // ---- Architecture note --------------------------------------------------
@@ -140,8 +140,8 @@ pub fn view(model: Model) -> Element(Message) {
           "gen_data() produces a List(ChartPoint) of length 2 000 in pure Gleam. "
           <> "list.drop + list.take slice the viewport. bar_chart_canvas() maps each "
           <> "point to FillRect + RectHit commands — no DOM nodes per bar. "
-          <> "canvas_element() serialises the command list to JSON and sets it as a "
-          <> "property on <saola-canvas>; the web component replays in requestAnimationFrame.",
+          <> "canvas.element() wraps the output and sets commands as a property; "
+          <> "the Lustre component handles rendering in requestAnimationFrame.",
         ),
       ]),
     ]),

@@ -8,7 +8,7 @@ import gleam/result
 import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/event as e
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/graph_layout.{type NodePosition}
 
 pub type GraphNode {

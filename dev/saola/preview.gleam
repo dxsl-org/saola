@@ -13,7 +13,8 @@ import lustre/effect.{type Effect}
 import lustre/element.{type Element}
 import lustre/element/html as h
 import modem
-import saola/canvas_command as canvas
+import plinth/browser/window
+import saola/component/canvas as canvas_component
 import saola/component/carousel
 import saola/component/combobox as cb
 import saola/component/multi_select as ms
@@ -78,6 +79,7 @@ pub fn main() {
   let assert Ok(_) = cb.register()
   let assert Ok(_) = ms.register()
   let assert Ok(_) = resizable_split.register()
+  let assert Ok(_) = canvas_component.register()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
@@ -971,7 +973,9 @@ fn update(model: Model, msg: Message) -> #(Model, Effect(Message)) {
 }
 
 fn heatmap_anim_tick_effect(dispatch: fn(Message) -> Nil) -> Nil {
-  canvas.request_animation_frame(fn(ts) { dispatch(HeatmapAnimTick(ts)) })
+  let _ =
+    window.request_animation_frame(fn(ts) { dispatch(HeatmapAnimTick(ts)) })
+  Nil
 }
 
 fn heatmap_add_painted(

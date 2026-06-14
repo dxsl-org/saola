@@ -7,7 +7,7 @@ import lustre/element.{type Element, text}
 import lustre/element/html as h
 import lustre/event as e
 import saola/badge
-import saola/canvas_command as canvas
+import saola/component/canvas
 import saola/drawer
 import saola/lustre_bar_chart
 import saola/preview/model.{
@@ -292,7 +292,7 @@ fn score_chart(employees: List(Employee), no_op: Message) -> Element(Message) {
       ),
       None,
     )
-  canvas.canvas_element(output, fn(_, _) { no_op })
+  canvas.element([canvas.on_tap(fn(_, _) { no_op })], output)
 }
 
 fn employee_detail(emp: Employee) -> Element(Message) {
