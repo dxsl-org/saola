@@ -143,11 +143,11 @@ Use **kebab-case** for all `.mjs` files — hyphens, not underscores.
 FFI bridge files follow the Lustre convention and use a **dot separator** before `ffi`:
 
 ```
-canvas.ffi.mjs          ✓  (FFI bridge file)
-graph-layout.ffi.mjs    ✓  (FFI bridge file)
-component-helpers.mjs   ✓  (helper module, not an FFI bridge)
-canvas_ffi.mjs          ✗
-canvas-ffi.mjs          ✗
+canvas.ffi.mjs              ✓  (FFI bridge file)
+graph-layout.ffi.mjs        ✓  (FFI bridge file)
+component-helpers.ffi.mjs   ✓  (FFI bridge file)
+canvas_ffi.mjs              ✗
+canvas-ffi.mjs              ✗
 ```
 
 Hyphens are valid in file names and import paths (they appear only in string literals, never as bare identifiers), and are the standard convention for ES modules.

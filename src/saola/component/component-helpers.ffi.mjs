@@ -1,17 +1,6 @@
 // @ts-check
 
 /**
- * Queries all matching elements from a ShadowRoot or Element.
- *
- * @param {ShadowRoot|Element} root
- * @param {string} selector
- * @returns {Element[]}
- */
-export function querySelectorAll(root, selector) {
-  return Array.from(root.querySelectorAll(selector))
-}
-
-/**
  * Returns true if element is scrolled out of view within its container.
  *
  * @param {Element} element

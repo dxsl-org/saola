@@ -385,24 +385,27 @@ fn scroll_to_focused(focused_index: Option(Int)) -> effect.Effect(Message) {
     None -> effect.none()
     Some(index) -> {
       use _dispatch, root <- effect.after_paint
-      let options = ffi.query_selector_all(root, "[role='option']")
-      let scroll_target = {
-        use el_dyn <- result.try(array.get(options, index))
-        use el <- result.try(
-          web_element.cast(el_dyn) |> result.map_error(fn(_) { Nil }),
-        )
-        use container <- result.try(web_element.parent_element(el))
-        Ok(#(el, container))
-      }
-      case scroll_target {
-        Error(_) -> False
-        Ok(#(el, container)) -> {
-          use <- on.true(ffi.is_out_of_view(el, container))
-          web_element.scroll_into_view(el)
-          True
+      case web_element.cast(root) {
+        Error(_) -> Nil
+        Ok(root_elem) -> {
+          let options =
+            web_element.query_selector_all(root_elem, "[role='option']")
+          let scroll_target = {
+            use el <- result.try(array.get(options, index))
+            use container <- result.try(web_element.parent_element(el))
+            Ok(#(el, container))
+          }
+          case scroll_target {
+            Error(_) -> False
+            Ok(#(el, container)) -> {
+              use <- on.true(ffi.is_out_of_view(el, container))
+              web_element.scroll_into_view(el)
+              True
+            }
+          }
+          Nil
         }
       }
-      Nil
     }
   }
 }
