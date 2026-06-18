@@ -11,6 +11,7 @@ import lustre/event as e
 import saola/badge
 import saola/component/entity_graph_3d
 import saola/component/multi_select
+import saola/component/world_map
 import saola/data_table
 import saola/empty
 import saola/entity_graph_canvas as egc
@@ -24,7 +25,6 @@ import saola/preview/threat_intel_data.{type ThreatActor}
 import saola/progress
 import saola/search
 import saola/timeline
-import saola/world_map
 
 // ---------------------------------------------------------------------------
 // Public entry point
@@ -73,17 +73,17 @@ fn map_column(model: Model) -> Element(Message) {
           None -> False
           Some(c) -> actor.country != c
         },
+        country: actor.country,
       )
     })
   let arcs = compute_arcs(model.threat_selected_ids)
   h.div([a.class("threat-intel-map-col")], [
     map_overlay_header(model),
-    world_map.world_map_element(
+    world_map.world_map(
       markers,
       arcs,
-      world_map.default_world_map_attrs,
-      fn(id) { ThreatEntitySelected(id) },
-      fn(country) { ThreatMapCountryClicked(country) },
+      Some(fn(id) { ThreatEntitySelected(id) }),
+      Some(fn(country) { ThreatMapCountryClicked(country) }),
     ),
   ])
 }

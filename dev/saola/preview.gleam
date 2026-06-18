@@ -21,6 +21,7 @@ import saola/component/d3_bar_chart
 import saola/component/entity_graph_3d
 import saola/component/multi_select as ms
 import saola/component/resizable_split
+import saola/component/world_map
 import saola/graph_layout
 import saola/lustre_heatmap
 import saola/preview/threat_intel_data
@@ -84,6 +85,7 @@ pub fn main() {
   let assert Ok(_) = ms.register()
   let assert Ok(_) = resizable_split.register()
   let assert Ok(_) = canvas_component.register()
+  let assert Ok(_) = world_map.register()
   let app = lustre.application(init, update, view)
   let assert Ok(_) = lustre.start(app, "#app", Nil)
 
