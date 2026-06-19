@@ -46,10 +46,11 @@ pub fn d3_bar_chart_renders_custom_element_test() {
         d3_bar_chart.ChartPoint("Q1", 10.0),
         d3_bar_chart.ChartPoint("Q2", 20.0),
       ],
-      attrs: d3_bar_chart.BarChartAttrs(
-        ..d3_bar_chart.default_bar_chart_attrs,
-        title: "Revenue",
-      ),
+      id: "",
+      title: "Revenue",
+      height: 280,
+      class: "",
+      aria_label: "Bar chart",
     )
     |> element.to_string
 
@@ -65,10 +66,12 @@ pub fn lustre_bar_chart_renders_svg_test() {
         lustre_bar_chart.ChartPoint("Q1", 10.0),
         lustre_bar_chart.ChartPoint("Q2", 20.0),
       ],
-      attrs: lustre_bar_chart.BarChartAttrs(
-        ..lustre_bar_chart.default_bar_chart_attrs,
-        title: "Revenue",
-      ),
+      id: "",
+      title: "Revenue",
+      width: 640,
+      height: 320,
+      class: "",
+      aria_label: "Bar chart",
     )
     |> element.to_string
 
@@ -81,12 +84,11 @@ pub fn lustre_bar_chart_renders_svg_test() {
 pub fn monaco_editor_renders_custom_element_test() {
   let html =
     monaco_editor.editor(
-      attrs: monaco_editor.EditorAttrs(
-        ..monaco_editor.default_editor_attrs,
-        value: "console.log(\"hello\")",
-        language: "javascript",
-        height: 420,
-      ),
+      value: "console.log(\"hello\")",
+      language: "javascript",
+      theme: "vs-dark",
+      height: 420,
+      attrs: monaco_editor.default_editor_attrs,
     )
     |> element.to_string
 

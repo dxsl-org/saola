@@ -135,6 +135,7 @@ pub fn view(model: Model) -> Element(Message) {
       ]),
       progress.progress(
         matched * 100 / int.max(total, 1),
+        progress.Default,
         progress.ProgressAttrs(..progress.default_attrs, label: "Match ratio"),
       ),
     ]),
@@ -285,12 +286,10 @@ fn score_chart(employees: List(Employee), no_op: Message) -> Element(Message) {
   let output =
     lustre_bar_chart.bar_chart_canvas(
       chart_data,
-      lustre_bar_chart.BarChartAttrs(
-        ..lustre_bar_chart.default_bar_chart_attrs,
-        width: 280,
-        height: 200,
-      ),
-      None,
+      title: "",
+      width: 280,
+      height: 200,
+      on_bar_click: None,
     )
   canvas.element([canvas.on_tap(fn(_, _) { no_op })], output)
 }
@@ -312,14 +311,14 @@ fn employee_detail(emp: Employee) -> Element(Message) {
         h.div([a.class("flex-1")], [
           progress.progress(
             emp.score,
+            case emp.score {
+              s if s >= 85 -> progress.Success
+              s if s < 65 -> progress.Destructive
+              _ -> progress.Default
+            },
             progress.ProgressAttrs(
               ..progress.default_attrs,
               label: "Performance score",
-              variant: case emp.score {
-                s if s >= 85 -> progress.Success
-                s if s < 65 -> progress.Destructive
-                _ -> progress.Default
-              },
             ),
           ),
         ]),

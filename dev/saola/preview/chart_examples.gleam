@@ -3,7 +3,7 @@ import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
 import saola/card
-import saola/code_editor
+import saola/component/code_editor
 import saola/component/d3_bar_chart
 import saola/lustre_bar_chart
 import saola/monaco_editor
@@ -40,75 +40,73 @@ pub fn monaco_editor() -> Element(Message) {
 }
 
 fn codemirror_card() -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "CodeMirror 6",
     description: "Lightweight editor — fast startup, tree-sitter grammar, and a small bundle footprint.",
     content: [
       code_editor.editor(
-        attrs: code_editor.EditorAttrs(
-          ..code_editor.default_editor_attrs,
-          value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + CodeMirror\")\n}\n",
-          language: "javascript",
-          height: 300,
-        ),
+        value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + CodeMirror\")\n}\n",
+        language: "javascript",
+        height: 300,
+        attrs: code_editor.default_editor_attrs,
       ),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn monaco_card() -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "Monaco Editor",
     description: "VS Code's editor engine — IntelliSense, multi-cursor, diff view, and rich language support.",
     content: [
       monaco_editor.editor(
-        attrs: monaco_editor.EditorAttrs(
-          ..monaco_editor.default_editor_attrs,
-          value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + Monaco\")\n}\n",
-          language: "javascript",
-          height: 300,
-        ),
+        value: "import gleam/io\n\npub fn main() {\n  io.println(\"Hello from Saola + Monaco\")\n}\n",
+        language: "javascript",
+        theme: "vs-dark",
+        height: 300,
+        attrs: monaco_editor.default_editor_attrs,
       ),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn d3_card() -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "D3 blackbox",
     description: "Rendered by D3, mounted through a Saola custom element.",
     content: [
       d3_bar_chart.bar_chart(
         chart_data_d3(),
-        attrs: d3_bar_chart.BarChartAttrs(
-          ..d3_bar_chart.default_bar_chart_attrs,
-          title: "Revenue",
-          height: 320,
-        ),
+        id: "",
+        title: "Revenue",
+        height: 320,
+        class: "",
+        aria_label: "Bar chart",
       ),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn lustre_card() -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "Pure Lustre SVG",
     description: "Rendered as regular Lustre SVG elements with no D3 runtime.",
     content: [
       lustre_bar_chart.bar_chart(
         chart_data_lustre(),
-        attrs: lustre_bar_chart.BarChartAttrs(
-          ..lustre_bar_chart.default_bar_chart_attrs,
-          title: "Revenue",
-          height: 320,
-        ),
+        id: "",
+        title: "Revenue",
+        width: 640,
+        height: 320,
+        class: "",
+        aria_label: "Bar chart",
       ),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn chart_data_d3() -> List(d3_bar_chart.ChartPoint) {

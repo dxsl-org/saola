@@ -76,7 +76,7 @@ Install only the ones you use:
 
 ```sh
 npm install d3          # saola/d3_bar_chart
-npm install codemirror @codemirror/lang-javascript @codemirror/state  # saola/code_editor
+npm install codemirror @codemirror/lang-javascript @codemirror/state  # saola/component/code_editor
 npm install cytoscape cytoscape-fcose  # saola/entity_graph
 ```
 
@@ -86,7 +86,7 @@ npm install cytoscape cytoscape-fcose  # saola/entity_graph
 | Resizable panels | `saola/resizable` | — |
 | Multi-select | `saola/multiselect` | — |
 | D3 bar chart | `saola/d3_bar_chart` | `d3` |
-| CodeMirror editor | `saola/code_editor` | `codemirror`, `@codemirror/lang-javascript`, `@codemirror/state` |
+| CodeMirror editor | `saola/component/code_editor` | `codemirror`, `@codemirror/lang-javascript`, `@codemirror/state` |
 | Entity graph | `saola/entity_graph` | `cytoscape`, `cytoscape-fcose` |
 
 ---

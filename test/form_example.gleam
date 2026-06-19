@@ -51,7 +51,7 @@ pub fn update(model: Model, msg: Msg) {
 }
 
 pub fn view(model: Model) -> Element(Msg) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "Contact form",
     description: "A small Saola form wired with Lustre messages.",
     content: [
@@ -127,7 +127,7 @@ pub fn view(model: Model) -> Element(Msg) {
       submitted_summary(model.submitted_values),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn field(

@@ -10,22 +10,10 @@ pub type ProgressVariant {
 }
 
 pub type ProgressAttrs {
-  ProgressAttrs(
-    min: Int,
-    max: Int,
-    variant: ProgressVariant,
-    label: String,
-    class: String,
-  )
+  ProgressAttrs(min: Int, max: Int, label: String, class: String)
 }
 
-pub const default_attrs = ProgressAttrs(
-  min: 0,
-  max: 100,
-  variant: Default,
-  label: "",
-  class: "",
-)
+pub const default_attrs = ProgressAttrs(min: 0, max: 100, label: "", class: "")
 
 fn fill_pct(value: Int, min: Int, max: Int) -> String {
   let range = max - min
@@ -39,15 +27,18 @@ fn fill_pct(value: Int, min: Int, max: Int) -> String {
 /// Render a progress bar.
 ///
 /// `value` must be within `[attrs.min, attrs.max]`.
-/// The fill width is computed as a CSS custom property `--progress-value`.
 ///
 /// Example:
 /// ```gleam
 /// progress_simple(65)
-/// progress(3, ProgressAttrs(min: 0, max: 5, variant: Success, label: "Step 3 of 5", class: ""))
+/// progress(3, Default, ProgressAttrs(min: 0, max: 5, label: "Step 3 of 5", class: ""))
 /// ```
-pub fn progress(value: Int, attrs: ProgressAttrs) -> Element(msg) {
-  let ProgressAttrs(min:, max:, variant:, label:, class:) = attrs
+pub fn progress(
+  value value: Int,
+  variant variant: ProgressVariant,
+  attrs attrs: ProgressAttrs,
+) -> Element(msg) {
+  let ProgressAttrs(min:, max:, label:, class:) = attrs
   let pct = fill_pct(value, min, max)
   let bar_class = case variant {
     Default -> "progress-bar"
@@ -77,7 +68,7 @@ pub fn progress(value: Int, attrs: ProgressAttrs) -> Element(msg) {
   )
 }
 
-/// Simple progress bar, 0–100 range.
+/// Simple progress bar, 0–100 range, default variant.
 pub fn progress_simple(value: Int) -> Element(msg) {
-  progress(value, default_attrs)
+  progress(value, Default, default_attrs)
 }

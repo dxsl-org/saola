@@ -22,25 +22,22 @@ pub fn view() -> Element(Message) {
         h.h2([], [text("Variants")]),
         progress.progress(
           50,
-          progress.ProgressAttrs(
-            ..progress.default_attrs,
-            variant: progress.Default,
-            label: "Loading…",
-          ),
+          progress.Default,
+          progress.ProgressAttrs(..progress.default_attrs, label: "Loading…"),
         ),
         progress.progress(
           75,
+          progress.Success,
           progress.ProgressAttrs(
             ..progress.default_attrs,
-            variant: progress.Success,
             label: "75% complete",
           ),
         ),
         progress.progress(
           25,
+          progress.Destructive,
           progress.ProgressAttrs(
             ..progress.default_attrs,
-            variant: progress.Destructive,
             label: "Error — 25% processed",
           ),
         ),
@@ -49,10 +46,10 @@ pub fn view() -> Element(Message) {
         h.h2([], [text("Custom range (0–5 steps)")]),
         progress.progress(
           3,
+          progress.Default,
           progress.ProgressAttrs(
             min: 0,
             max: 5,
-            variant: progress.Default,
             label: "Step 3 of 5",
             class: "",
           ),

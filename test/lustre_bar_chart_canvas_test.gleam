@@ -1,16 +1,21 @@
 import gleam/list
 import gleam/option
 import saola/component/canvas
-import saola/lustre_bar_chart.{
-  BarChartAttrs, ChartPoint, bar_chart_canvas, default_bar_chart_attrs,
-}
+import saola/lustre_bar_chart.{ChartPoint, bar_chart_canvas}
 
 // ---------------------------------------------------------------------------
 // Empty data
 // ---------------------------------------------------------------------------
 
 pub fn empty_data_no_data_text_test() {
-  let output = bar_chart_canvas([], default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      [],
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_no_data =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -22,12 +27,26 @@ pub fn empty_data_no_data_text_test() {
 }
 
 pub fn empty_data_no_hit_areas_test() {
-  let output = bar_chart_canvas([], default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      [],
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   assert output.hit_areas == []
 }
 
 pub fn empty_data_no_fill_rect_test() {
-  let output = bar_chart_canvas([], default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      [],
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_rect =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -44,7 +63,14 @@ pub fn empty_data_no_fill_rect_test() {
 
 pub fn single_bar_has_fill_rect_test() {
   let data = [ChartPoint("A", 100.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let rects =
     list.filter(output.commands, fn(cmd) {
       case cmd {
@@ -57,14 +83,27 @@ pub fn single_bar_has_fill_rect_test() {
 
 pub fn single_bar_no_hit_areas_when_none_test() {
   let data = [ChartPoint("A", 100.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   assert output.hit_areas == []
 }
 
 pub fn single_bar_one_hit_area_when_handler_test() {
   let data = [ChartPoint("A", 100.0)]
   let output =
-    bar_chart_canvas(data, default_bar_chart_attrs, option.Some(fn(p) { p }))
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.Some(fn(p) { p }),
+    )
   assert list.length(output.hit_areas) == 1
 }
 
@@ -79,7 +118,14 @@ pub fn bar_count_matches_data_test() {
     ChartPoint("Mar", 30.0),
     ChartPoint("Apr", 40.0),
   ]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let rects =
     list.filter(output.commands, fn(cmd) {
       case cmd {
@@ -97,7 +143,13 @@ pub fn hit_area_count_matches_data_test() {
     ChartPoint("C", 30.0),
   ]
   let output =
-    bar_chart_canvas(data, default_bar_chart_attrs, option.Some(fn(p) { p }))
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.Some(fn(p) { p }),
+    )
   assert list.length(output.hit_areas) == 3
 }
 
@@ -107,7 +159,14 @@ pub fn hit_area_count_matches_data_test() {
 
 pub fn translate_command_present_test() {
   let data = [ChartPoint("A", 50.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_translate =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -120,7 +179,14 @@ pub fn translate_command_present_test() {
 
 pub fn grid_begin_path_present_test() {
   let data = [ChartPoint("A", 100.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_begin_path =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -133,7 +199,14 @@ pub fn grid_begin_path_present_test() {
 
 pub fn x_axis_labels_present_test() {
   let data = [ChartPoint("Q1", 10.0), ChartPoint("Q2", 20.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_q1 =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -154,8 +227,14 @@ pub fn x_axis_labels_present_test() {
 
 pub fn title_command_present_when_set_test() {
   let data = [ChartPoint("X", 5.0)]
-  let attrs = BarChartAttrs(..default_bar_chart_attrs, title: "Revenue")
-  let output = bar_chart_canvas(data, attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "Revenue",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   let has_title =
     list.any(output.commands, fn(cmd) {
       case cmd {
@@ -168,7 +247,14 @@ pub fn title_command_present_when_set_test() {
 
 pub fn no_title_command_when_empty_test() {
   let data = [ChartPoint("X", 5.0)]
-  let output = bar_chart_canvas(data, default_bar_chart_attrs, option.None)
+  let output =
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.None,
+    )
   // default title is "", so no title FillText for "" specifically —
   // but we just verify no FillText with empty string
   let has_empty_title =
@@ -188,7 +274,13 @@ pub fn no_title_command_when_empty_test() {
 pub fn hit_areas_have_positive_dimensions_test() {
   let data = [ChartPoint("A", 50.0), ChartPoint("B", 100.0)]
   let output =
-    bar_chart_canvas(data, default_bar_chart_attrs, option.Some(fn(p) { p }))
+    bar_chart_canvas(
+      data,
+      title: "",
+      width: 640,
+      height: 320,
+      on_bar_click: option.Some(fn(p) { p }),
+    )
   let all_positive =
     list.all(output.hit_areas, fn(area) {
       case area {

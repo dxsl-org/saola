@@ -3,24 +3,11 @@ import lustre/attribute as a
 import lustre/element.{type Element}
 
 pub type EditorAttrs {
-  EditorAttrs(
-    id: String,
-    value: String,
-    language: String,
-    theme: String,
-    height: Int,
-    read_only: Bool,
-    class: String,
-    aria_label: String,
-  )
+  EditorAttrs(id: String, read_only: Bool, class: String, aria_label: String)
 }
 
 pub const default_editor_attrs = EditorAttrs(
   id: "",
-  value: "",
-  language: "javascript",
-  theme: "vs-dark",
-  height: 360,
   read_only: False,
   class: "",
   aria_label: "Code editor",
@@ -30,17 +17,14 @@ pub const default_editor_attrs = EditorAttrs(
 ///
 /// Import `assets/saola-monaco-editor.mjs` once in the host app. Monaco owns
 /// the editor runtime, workers, keyboard interaction, and text model.
-pub fn editor(attrs attrs: EditorAttrs) -> Element(msg) {
-  let EditorAttrs(
-    id:,
-    value:,
-    language:,
-    theme:,
-    height:,
-    read_only:,
-    class:,
-    aria_label:,
-  ) = attrs
+pub fn editor(
+  value value: String,
+  language language: String,
+  theme theme: String,
+  height height: Int,
+  attrs attrs: EditorAttrs,
+) -> Element(msg) {
+  let EditorAttrs(id:, read_only:, class:, aria_label:) = attrs
   element.element(
     "saola-monaco-editor",
     [

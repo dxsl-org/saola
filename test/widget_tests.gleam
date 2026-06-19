@@ -153,12 +153,12 @@ pub fn card_simple_renders_test() {
 
 pub fn card_with_description_renders_test() {
   let html =
-    card.card(card.CardAttrs(
+    card.card(
       title: "Profile",
       description: "Manage your account.",
       content: [],
       footer: None,
-    ))
+    )
     |> element.to_string
   assert string.contains(html, "Profile")
   assert string.contains(html, "Manage your account.")
@@ -168,12 +168,12 @@ pub fn card_with_description_renders_test() {
 pub fn card_with_footer_renders_test() {
   let footer = button.button_primary("Save", Nil)
   let html =
-    card.card(card.CardAttrs(
+    card.card(
       title: "Account",
       description: "",
       content: [],
       footer: Some(footer),
-    ))
+    )
     |> element.to_string
   assert string.contains(html, "<footer")
   assert string.contains(html, "Save")
@@ -181,12 +181,7 @@ pub fn card_with_footer_renders_test() {
 
 pub fn card_empty_header_omitted_test() {
   let html =
-    card.card(card.CardAttrs(
-      title: "",
-      description: "",
-      content: [],
-      footer: None,
-    ))
+    card.card(title: "", description: "", content: [], footer: None)
     |> element.to_string
   assert !string.contains(html, "<header")
 }

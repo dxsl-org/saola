@@ -16,7 +16,7 @@ import saola/preview/model.{
 import saola/textarea
 
 pub fn view(model: Model) -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "Contact form",
     description: "A small Saola form wired with Lustre messages.",
     content: [
@@ -92,7 +92,7 @@ pub fn view(model: Model) -> Element(Message) {
       submitted_summary(model.form_submitted_values),
     ],
     footer: None,
-  ))
+  )
 }
 
 fn field(

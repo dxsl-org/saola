@@ -12,31 +12,15 @@ pub type ChartPoint {
   ChartPoint(label: String, value: Float)
 }
 
-pub type BarChartAttrs {
-  BarChartAttrs(
-    id: String,
-    title: String,
-    width: Int,
-    height: Int,
-    class: String,
-    aria_label: String,
-  )
-}
-
-pub const default_bar_chart_attrs = BarChartAttrs(
-  id: "",
-  title: "",
-  width: 640,
-  height: 320,
-  class: "",
-  aria_label: "Bar chart",
-)
-
 pub fn bar_chart(
   data: List(ChartPoint),
-  attrs attrs: BarChartAttrs,
+  id id: String,
+  title title: String,
+  width width: Int,
+  height height: Int,
+  class class: String,
+  aria_label aria_label: String,
 ) -> Element(msg) {
-  let BarChartAttrs(id:, title:, width:, height:, class:, aria_label:) = attrs
   let layout = chart.new_layout(width, height)
   h.figure(
     [
@@ -216,10 +200,12 @@ fn values(data: List(ChartPoint)) -> List(Float) {
 
 pub fn bar_chart_canvas(
   data: List(ChartPoint),
-  attrs: BarChartAttrs,
-  on_bar_click: Option(fn(ChartPoint) -> msg),
+  title title: String,
+  width width: Int,
+  height height: Int,
+  on_bar_click on_bar_click: Option(fn(ChartPoint) -> msg),
 ) -> canvas.CanvasOutput(msg) {
-  let layout = chart.new_layout(attrs.width, attrs.height)
+  let layout = chart.new_layout(width, height)
   let max_val = data |> values |> chart.max_value
   let inner = case data {
     [] -> [
@@ -240,7 +226,7 @@ pub fn bar_chart_canvas(
         canvas_y_axis(layout, max_val),
       ])
   }
-  let title_cmds = case attrs.title {
+  let title_cmds = case title {
     "" -> []
     t -> [
       canvas.SetFill("currentColor"),

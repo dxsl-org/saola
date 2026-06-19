@@ -66,12 +66,12 @@ fn metric_card(
   value: String,
   description: String,
 ) -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: title,
     description: description,
     content: [h.p([a.class("text-3xl font-semibold")], [h.text(value)])],
     footer: None,
-  ))
+  )
 }
 
 fn overview_panel() -> Element(Message) {
@@ -104,7 +104,7 @@ fn plans_panel() -> Element(Message) {
 }
 
 fn team_panel() -> Element(Message) {
-  card.card(card.CardAttrs(
+  card.card(
     title: "Team workflow",
     description: "A compact panel rendered inside a Saola tab.",
     content: [
@@ -115,5 +115,5 @@ fn team_panel() -> Element(Message) {
       ]),
     ],
     footer: Some(button.button_primary("Invite", StartedTrial)),
-  ))
+  )
 }

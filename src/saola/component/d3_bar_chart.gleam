@@ -18,7 +18,11 @@
 //// ```gleam
 //// d3_bar_chart.bar_chart(
 ////   data,
-////   attrs: d3_bar_chart.default_bar_chart_attrs,
+////   id: "",
+////   title: "Revenue",
+////   height: 280,
+////   class: "",
+////   aria_label: "Bar chart",
 //// )
 //// ```
 
@@ -39,24 +43,6 @@ pub const tag = "saola-d3-bar-chart"
 pub type ChartPoint {
   ChartPoint(label: String, value: Float)
 }
-
-pub type BarChartAttrs {
-  BarChartAttrs(
-    id: String,
-    title: String,
-    height: Int,
-    class: String,
-    aria_label: String,
-  )
-}
-
-pub const default_bar_chart_attrs = BarChartAttrs(
-  id: "",
-  title: "",
-  height: 280,
-  class: "",
-  aria_label: "Bar chart",
-)
 
 // ---------------------------------------------------------------------------
 // Lustre component
@@ -114,9 +100,12 @@ pub fn element(attrs: List(Attribute(m))) -> Element(m) {
 /// Convenience wrapper — encodes data and attrs into properties/attributes.
 pub fn bar_chart(
   data: List(ChartPoint),
-  attrs attrs: BarChartAttrs,
+  id id: String,
+  title title: String,
+  height height: Int,
+  class class: String,
+  aria_label aria_label: String,
 ) -> Element(msg) {
-  let BarChartAttrs(id:, title:, height:, class:, aria_label:) = attrs
   element([
     case id {
       "" -> a.none()
@@ -130,9 +119,16 @@ pub fn bar_chart(
   ])
 }
 
-/// Simple bar chart with default attributes.
+/// Simple bar chart with no title, default height, and no extra attributes.
 pub fn bar_chart_simple(data: List(ChartPoint)) -> Element(msg) {
-  bar_chart(data, attrs: default_bar_chart_attrs)
+  bar_chart(
+    data,
+    id: "",
+    title: "",
+    height: 280,
+    class: "",
+    aria_label: "Bar chart",
+  )
 }
 
 // ---------------------------------------------------------------------------

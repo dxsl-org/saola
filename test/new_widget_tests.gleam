@@ -131,6 +131,7 @@ pub fn progress_with_label_renders_test() {
   let html =
     progress.progress(
       75,
+      progress.Default,
       progress.ProgressAttrs(..progress.default_attrs, label: "Loading 75%"),
     )
     |> element.to_string
@@ -139,26 +140,14 @@ pub fn progress_with_label_renders_test() {
 
 pub fn progress_success_variant_renders_test() {
   let html =
-    progress.progress(
-      60,
-      progress.ProgressAttrs(
-        ..progress.default_attrs,
-        variant: progress.Success,
-      ),
-    )
+    progress.progress(60, progress.Success, progress.default_attrs)
     |> element.to_string
   assert string.contains(html, "progress-bar-success")
 }
 
 pub fn progress_destructive_variant_renders_test() {
   let html =
-    progress.progress(
-      20,
-      progress.ProgressAttrs(
-        ..progress.default_attrs,
-        variant: progress.Destructive,
-      ),
-    )
+    progress.progress(20, progress.Destructive, progress.default_attrs)
     |> element.to_string
   assert string.contains(html, "progress-bar-destructive")
 }
@@ -167,13 +156,8 @@ pub fn progress_custom_range_renders_test() {
   let html =
     progress.progress(
       3,
-      progress.ProgressAttrs(
-        min: 0,
-        max: 5,
-        variant: progress.Default,
-        label: "",
-        class: "",
-      ),
+      progress.Default,
+      progress.ProgressAttrs(min: 0, max: 5, label: "", class: ""),
     )
     |> element.to_string
   assert string.contains(html, "aria-valuemin=\"0\"")

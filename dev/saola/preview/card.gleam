@@ -16,22 +16,22 @@ pub fn view() -> Element(Message) {
       card.card_simple("Simple Card", [
         h.p([], [text("This is a card with just a title and some content.")]),
       ]),
-      card.card(card.CardAttrs(
+      card.card(
         title: "Card with Description",
         description: "A short description of what this card contains.",
         content: [
           h.p([], [text("Main content area goes here.")]),
         ],
         footer: None,
-      )),
-      card.card(card.CardAttrs(
+      ),
+      card.card(
         title: "Card with Footer",
         description: "This card has a footer with an action button.",
         content: [
           h.p([], [text("Card body content.")]),
         ],
         footer: Some(button.button_primary("Save changes", OnRouteChange(Home))),
-      )),
+      ),
     ]),
   ])
 }

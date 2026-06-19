@@ -74,13 +74,10 @@ pub fn view(model: Model) -> Element(Message) {
   let output =
     lustre_bar_chart.bar_chart_canvas(
       viewport,
-      lustre_bar_chart.BarChartAttrs(
-        ..lustre_bar_chart.default_bar_chart_attrs,
-        title: chart_title,
-        width: 900,
-        height: 380,
-      ),
-      Some(fn(pt: lustre_bar_chart.ChartPoint) {
+      title: chart_title,
+      width: 900,
+      height: 380,
+      on_bar_click: Some(fn(pt: lustre_bar_chart.ChartPoint) {
         StressBarClicked(pt.label <> "  =  " <> float.to_string(pt.value))
       }),
     )

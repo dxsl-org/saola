@@ -16,6 +16,7 @@ import modem
 import plinth/browser/window
 import saola/component/canvas as canvas_component
 import saola/component/carousel
+import saola/component/code_editor
 import saola/component/combobox as cb
 import saola/component/d3_bar_chart
 import saola/component/entity_graph_3d
@@ -79,6 +80,7 @@ import saola/preview/view/sidebar
 
 pub fn main() {
   let assert Ok(_) = carousel.register()
+  let assert Ok(_) = code_editor.register()
   let assert Ok(_) = cb.register()
   let assert Ok(_) = d3_bar_chart.register()
   let assert Ok(_) = entity_graph_3d.register()

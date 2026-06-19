@@ -242,10 +242,10 @@ fn metric_pill(
     h.span([a.class("threat-metric-count")], [h.text(int.to_string(count))]),
     progress.progress(
       count,
+      progress.Default,
       progress.ProgressAttrs(
         min: 0,
         max: 30,
-        variant: progress.Default,
         label: label,
         class: "threat-metric-bar",
       ),
